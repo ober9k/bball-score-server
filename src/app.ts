@@ -1,6 +1,17 @@
+import { dbConnect } from "@/database";
 import { Route } from "@/interfaces/route.interface";
 import cors from "cors";
+import * as dotenv from "dotenv";
 import express, { Application } from "express";
+
+dotenv.config();
+
+const { ATLAS_URI } = process.env;
+
+if (!ATLAS_URI) {
+    console.error("No ATLAS_URI environment variable has been defined in .env");
+    process.exit(1);
+}
 
 export class App {
 
@@ -16,9 +27,16 @@ export class App {
     }
 
     public listen(): void {
-        this.app.listen(App.BasePort, () => {
-            console.log(`Server running at http://localhost:${App.BasePort}/`);
-        });
+
+        dbConnect(ATLAS_URI as string)
+            .then((client) => {
+                this.app.locals.db = client.db("bballScore");
+
+                this.app.listen(App.BasePort, () => {
+                    console.log(`Server running at http://localhost:${App.BasePort}/`);
+                });
+            });
+
     }
 
     private initMiddlewares(): void {
