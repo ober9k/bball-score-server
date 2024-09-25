@@ -1,6 +1,6 @@
+import { Model } from "@/interfaces/model.interface";
 import * as mongodb from "mongodb";
 
-export interface Team {
-    _id?: mongodb.ObjectId;
+export interface Team extends Model {
     name: string;
 }

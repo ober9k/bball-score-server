@@ -1,4 +1,4 @@
-import * as mongodb from "mongodb";
+import { Model } from "@/interfaces/model.interface";
 
 export enum Position {
     PointGuard = "pointGuard",
@@ -8,8 +8,7 @@ export enum Position {
     Center = "center",
 }
 
-export interface Player {
-    _id?: mongodb.ObjectId;
+export interface Player extends Model {
     name: string;
     number: number;
     position: Position.PointGuard | Position.ShootingGuard | Position.SmallForward | Position.PowerForward | Position.Center;
