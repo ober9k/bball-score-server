@@ -1,5 +1,5 @@
 import { Model } from "@/interfaces/model.interface";
-import { Collection, Db, Filter, ObjectId, WithId } from "mongodb";
+import { Collection, Db, Filter, InsertOneResult, ObjectId, UpdateResult, WithId } from "mongodb";
 
 export abstract class BaseService<T extends Model> {
 
@@ -14,8 +14,20 @@ export abstract class BaseService<T extends Model> {
     }
 
     public async findById(id: string): Promise<WithId<T> | null> {
+        return this.getCollection().findOne(this.byId(id));
+    }
+
+    public async create(model: any): Promise<InsertOneResult<T> | null> {
+        return this.getCollection().insertOne(model);
+    }
+
+    public async update(id: string, model: any): Promise<UpdateResult<T> | null> {
+        return this.getCollection().updateOne(this.byId(id), { $set: model });
+    }
+
+    private byId(id: string): Filter<T> {
         /* workaround for type using Filter<T> */
-        return this.getCollection().findOne({ _id: new ObjectId(id) } as Filter<T>);
+        return { _id: new ObjectId(id) } as Filter<T>;
     }
 
     protected abstract getCollection(): Collection<T>;

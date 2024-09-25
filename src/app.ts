@@ -41,6 +41,8 @@ export class App {
 
     private initMiddlewares(): void {
         this.app.use(cors());
+        this.app.use(express.json());
+        this.app.use(express.urlencoded());
     }
 
     private initRoutes(routes: Array<Route>): void {

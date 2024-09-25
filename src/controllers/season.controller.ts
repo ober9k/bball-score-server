@@ -27,6 +27,31 @@ export class SeasonController extends BaseController {
         }
     }
 
+    public create = async (request: Request, response: Response) => {
+        const service = this.getSeasonService(response);
+        const season  = { ... request.body };
+        const result  = await service.create(season);
+
+        if (result?.acknowledged) {
+            this.success(response, `Created new season: ID ${result.insertedId}.`);
+        } else {
+            this.error(response, "Failed to create new season.");
+        }
+    }
+
+    public update = async (request: Request, response: Response) => {
+        const service  = this.getSeasonService(response);
+        const seasonId = request.params.id;
+        const season   = { ... request.body };
+        const result   = await service.update(seasonId, season);
+
+        if (result?.acknowledged) {
+            this.success(response, `Updated season: ID ${seasonId}.`);
+        } else {
+            this.error(response, "Failed to update season.");
+        }
+    }
+
     public getSeasonService({ app }: Response): SeasonService {
         return new SeasonService(app.locals.db);
     }
