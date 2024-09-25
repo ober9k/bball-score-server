@@ -1,17 +1,34 @@
+import { BaseController } from "@/controllers/base.controller";
 import { PlayerService } from "@/services/player.service";
-import { NextFunction, Request, Response } from "express"
-import { StatusCodes } from "http-status-codes"
+import { Request, Response } from "express"
 
-export class PlayerController {
+export class PlayerController extends BaseController {
 
-    private readonly playerService: PlayerService;
+    public find = async (request: Request, response: Response) => {
+        const service = this.getPlayerService(response);
 
-    constructor () {
-        this.playerService = new PlayerService();
+        try {
+            this.success(response, await service.find());
+        }
+        catch (error: any) {
+            this.error(response, error);
+        }
     }
 
-    public find = (request: Request, response: Response, next: NextFunction) => {
-        response.status(StatusCodes.OK).send(this.playerService.find());
+    public findOne = async (request: Request, response: Response) => {
+        const service  = this.getPlayerService(response);
+        const playerId = request.params.id;
+
+        try {
+            this.success(response, await service.findById(playerId));
+        }
+        catch (error: any) {
+            this.error(response, error);
+        }
+    }
+
+    public getPlayerService({ app }: Response): PlayerService {
+        return new PlayerService(app.locals.db);
     }
 
 }

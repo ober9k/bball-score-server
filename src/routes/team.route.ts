@@ -14,5 +14,6 @@ export class TeamRoute implements Route {
 
     private initializeRoutes(){
         this.router.get(this.path, this.controller.find);
+        this.router.get(this.path + "/:id", this.controller.findOne);
     }
 }

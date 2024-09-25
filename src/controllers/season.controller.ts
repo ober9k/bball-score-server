@@ -1,17 +1,34 @@
+import { BaseController } from "@/controllers/base.controller";
 import { SeasonService } from "@/services/season.service";
-import { NextFunction, Request, Response } from "express"
-import { StatusCodes } from "http-status-codes"
+import { Request, Response } from "express"
 
-export class SeasonController {
+export class SeasonController extends BaseController {
 
-    private readonly seasonService: SeasonService;
+    public find = async (request: Request, response: Response) => {
+        const service = this.getSeasonService(response);
 
-    constructor () {
-        this.seasonService = new SeasonService();
+        try {
+            this.success(response, await service.find());
+        }
+        catch (error: any) {
+            this.error(response, error);
+        }
     }
 
-    public find = (request: Request, response: Response, next: NextFunction) => {
-        response.status(StatusCodes.OK).send(this.seasonService.find());
+    public findOne = async (request: Request, response: Response) => {
+        const service  = this.getSeasonService(response);
+        const seasonId = request.params.id;
+
+        try {
+            this.success(response, await service.findById(seasonId));
+        }
+        catch (error: any) {
+            this.error(response, error);
+        }
+    }
+
+    public getSeasonService({ app }: Response): SeasonService {
+        return new SeasonService(app.locals.db);
     }
 
 }
