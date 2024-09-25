@@ -1,16 +1,17 @@
 import { Team } from "@/interfaces/team.interface";
-import { ObjectId } from "mongodb";
+import { BaseService } from "@/services/base.service";
+import { Collection } from "mongodb";
 
-export class TeamService {
+export class TeamService extends BaseService<Team> {
 
     /* temporary values */
-    private readonly teams: Array<Team> = [
-        { _id: new ObjectId(1), name: "Ballers" },
-        { _id: new ObjectId(2), name: "56ers" },
+    public static mockTeams: Array<Team> = [
+        { name: "Ballers" },
+        { name: "56ers" },
     ];
 
-    public find(): Array<Team> {
-        return this.teams;
+    protected getCollection(): Collection<Team> {
+        return this.db.collection<Team>("teams");
     }
 
 }

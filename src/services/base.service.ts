@@ -13,6 +13,11 @@ export abstract class BaseService<T extends Model> {
         return this.getCollection().find().toArray();
     }
 
+    public async findById(id: string): Promise<WithId<T> | null> {
+        /* workaround for type using Filter<T> */
+        return this.getCollection().findOne({ _id: new ObjectId(id) } as Filter<T>);
+    }
+
     protected abstract getCollection(): Collection<T>;
 
 }
