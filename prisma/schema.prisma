@@ -1,0 +1,72 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../prisma/generated/"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model League {
+  id        Int      @id @default(autoincrement())
+  name      String
+  slug      String   @unique
+  seasons   Season[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
+
+model Season {
+  id        Int        @id @default(autoincrement())
+  name      String
+  leagueId  Int
+  league    League     @relation(fields: [leagueId], references: [id])
+  divisions Division[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @default(now())
+}
+
+model Division {
+  id        Int      @id @default(autoincrement())
+  name      String
+  seasonId  Int
+  season    Season   @relation(fields: [seasonId], references: [id])
+  teams     Team[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
+
+model Team {
+  id         Int      @id @default(autoincrement())
+  name       String
+  shortName  String
+  divisionId Int
+  division   Division @relation(fields: [divisionId], references: [id])
+  players    Player[]
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now())
+}
+
+enum Position {
+  POINT_GUARD
+  SHOOTING_GUARD
+  SMALL_FORWARD
+  POWER_FORWARD
+  CENTER
+}
+
+model Player {
+  id       Int      @id @default(autoincrement())
+  name     String
+  position Position
+  number   String
+  height   String
+  teamId   Int
+  Team     Team     @relation(fields: [teamId], references: [id])
+}
