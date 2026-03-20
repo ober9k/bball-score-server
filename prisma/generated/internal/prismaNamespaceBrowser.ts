@@ -55,7 +55,8 @@ export const ModelName = {
   Season: 'Season',
   Division: 'Division',
   Team: 'Team',
-  Player: 'Player'
+  Player: 'Player',
+  PlayersOnTeams: 'PlayersOnTeams'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -100,6 +101,7 @@ export const DivisionScalarFieldEnum = {
   id: 'id',
   name: 'name',
   seasonId: 'seasonId',
+  leagueId: 'leagueId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -112,6 +114,7 @@ export const TeamScalarFieldEnum = {
   name: 'name',
   shortName: 'shortName',
   divisionId: 'divisionId',
+  leagueId: 'leagueId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -125,10 +128,21 @@ export const PlayerScalarFieldEnum = {
   position: 'position',
   number: 'number',
   height: 'height',
-  teamId: 'teamId'
+  leagueId: 'leagueId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type PlayerScalarFieldEnum = (typeof PlayerScalarFieldEnum)[keyof typeof PlayerScalarFieldEnum]
+
+
+export const PlayersOnTeamsScalarFieldEnum = {
+  playerId: 'playerId',
+  teamId: 'teamId',
+  assignedAt: 'assignedAt'
+} as const
+
+export type PlayersOnTeamsScalarFieldEnum = (typeof PlayersOnTeamsScalarFieldEnum)[keyof typeof PlayersOnTeamsScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -220,8 +220,8 @@ export type SeasonWhereInput = {
   leagueId?: Prisma.IntFilter<"Season"> | number
   createdAt?: Prisma.DateTimeFilter<"Season"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Season"> | Date | string
-  league?: Prisma.XOR<Prisma.LeagueScalarRelationFilter, Prisma.LeagueWhereInput>
   divisions?: Prisma.DivisionListRelationFilter
+  league?: Prisma.XOR<Prisma.LeagueScalarRelationFilter, Prisma.LeagueWhereInput>
 }
 
 export type SeasonOrderByWithRelationInput = {
@@ -230,8 +230,8 @@ export type SeasonOrderByWithRelationInput = {
   leagueId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  league?: Prisma.LeagueOrderByWithRelationInput
   divisions?: Prisma.DivisionOrderByRelationAggregateInput
+  league?: Prisma.LeagueOrderByWithRelationInput
 }
 
 export type SeasonWhereUniqueInput = Prisma.AtLeast<{
@@ -243,8 +243,8 @@ export type SeasonWhereUniqueInput = Prisma.AtLeast<{
   leagueId?: Prisma.IntFilter<"Season"> | number
   createdAt?: Prisma.DateTimeFilter<"Season"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Season"> | Date | string
-  league?: Prisma.XOR<Prisma.LeagueScalarRelationFilter, Prisma.LeagueWhereInput>
   divisions?: Prisma.DivisionListRelationFilter
+  league?: Prisma.XOR<Prisma.LeagueScalarRelationFilter, Prisma.LeagueWhereInput>
 }, "id">
 
 export type SeasonOrderByWithAggregationInput = {
@@ -275,8 +275,8 @@ export type SeasonCreateInput = {
   name: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  league: Prisma.LeagueCreateNestedOneWithoutSeasonsInput
   divisions?: Prisma.DivisionCreateNestedManyWithoutSeasonInput
+  league: Prisma.LeagueCreateNestedOneWithoutSeasonsInput
 }
 
 export type SeasonUncheckedCreateInput = {
@@ -292,8 +292,8 @@ export type SeasonUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  league?: Prisma.LeagueUpdateOneRequiredWithoutSeasonsNestedInput
   divisions?: Prisma.DivisionUpdateManyWithoutSeasonNestedInput
+  league?: Prisma.LeagueUpdateOneRequiredWithoutSeasonsNestedInput
 }
 
 export type SeasonUncheckedUpdateInput = {
@@ -596,8 +596,8 @@ export type SeasonSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   leagueId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  league?: boolean | Prisma.LeagueDefaultArgs<ExtArgs>
   divisions?: boolean | Prisma.Season$divisionsArgs<ExtArgs>
+  league?: boolean | Prisma.LeagueDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.SeasonCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["season"]>
 
@@ -629,8 +629,8 @@ export type SeasonSelectScalar = {
 
 export type SeasonOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "leagueId" | "createdAt" | "updatedAt", ExtArgs["result"]["season"]>
 export type SeasonInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  league?: boolean | Prisma.LeagueDefaultArgs<ExtArgs>
   divisions?: boolean | Prisma.Season$divisionsArgs<ExtArgs>
+  league?: boolean | Prisma.LeagueDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.SeasonCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type SeasonIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -643,8 +643,8 @@ export type SeasonIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
 export type $SeasonPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Season"
   objects: {
-    league: Prisma.$LeaguePayload<ExtArgs>
     divisions: Prisma.$DivisionPayload<ExtArgs>[]
+    league: Prisma.$LeaguePayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1046,8 +1046,8 @@ readonly fields: SeasonFieldRefs;
  */
 export interface Prisma__SeasonClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  league<T extends Prisma.LeagueDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LeagueDefaultArgs<ExtArgs>>): Prisma.Prisma__LeagueClient<runtime.Types.Result.GetResult<Prisma.$LeaguePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   divisions<T extends Prisma.Season$divisionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Season$divisionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DivisionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  league<T extends Prisma.LeagueDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LeagueDefaultArgs<ExtArgs>>): Prisma.Prisma__LeagueClient<runtime.Types.Result.GetResult<Prisma.$LeaguePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

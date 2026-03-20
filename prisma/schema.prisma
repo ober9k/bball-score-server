@@ -14,20 +14,23 @@ datasource db {
 }
 
 model League {
-  id        Int      @id @default(autoincrement())
+  id        Int        @id @default(autoincrement())
   name      String
-  slug      String   @unique
+  slug      String     @unique
   seasons   Season[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
+  divisions Division[]
+  teams     Team[]
+  Player    Player[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @default(now())
 }
 
 model Season {
   id        Int        @id @default(autoincrement())
   name      String
+  divisions Division[]
   leagueId  Int
   league    League     @relation(fields: [leagueId], references: [id])
-  divisions Division[]
   createdAt DateTime   @default(now())
   updatedAt DateTime   @default(now())
 }
@@ -35,22 +38,26 @@ model Season {
 model Division {
   id        Int      @id @default(autoincrement())
   name      String
-  seasonId  Int
-  season    Season   @relation(fields: [seasonId], references: [id])
   teams     Team[]
+  seasonId  Int
+  leagueId  Int
+  season    Season   @relation(fields: [seasonId], references: [id])
+  league    League   @relation(fields: [leagueId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
 }
 
 model Team {
-  id         Int      @id @default(autoincrement())
+  id         Int              @id @default(autoincrement())
   name       String
   shortName  String
   divisionId Int
-  division   Division @relation(fields: [divisionId], references: [id])
-  players    Player[]
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @default(now())
+  leagueId   Int
+  division   Division         @relation(fields: [divisionId], references: [id])
+  league     League           @relation(fields: [leagueId], references: [id])
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @default(now())
+  players    PlayersOnTeams[]
 }
 
 enum Position {
@@ -62,11 +69,25 @@ enum Position {
 }
 
 model Player {
-  id       Int      @id @default(autoincrement())
-  name     String
-  position Position
-  number   String
-  height   String
-  teamId   Int
-  Team     Team     @relation(fields: [teamId], references: [id])
+  id        Int              @id @default(autoincrement())
+  name      String
+  position  Position
+  number    String
+  height    String
+  leagueId  Int
+  league    League           @relation(fields: [leagueId], references: [id])
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @default(now())
+  teams     PlayersOnTeams[]
+}
+
+// The explicit join table model
+model PlayersOnTeams {
+  playerId   Int
+  teamId     Int
+  player     Player   @relation(fields: [playerId], references: [id])
+  team       Team     @relation(fields: [teamId], references: [id])
+  assignedAt DateTime @default(now())
+
+  @@id([playerId, teamId]) // composite primary key
 }

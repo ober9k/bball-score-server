@@ -66,3 +66,8 @@ export type Team = Prisma.TeamModel
  * 
  */
 export type Player = Prisma.PlayerModel
+/**
+ * Model PlayersOnTeams
+ * 
+ */
+export type PlayersOnTeams = Prisma.PlayersOnTeamsModel

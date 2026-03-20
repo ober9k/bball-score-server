@@ -388,7 +388,8 @@ export const ModelName = {
   Season: 'Season',
   Division: 'Division',
   Team: 'Team',
-  Player: 'Player'
+  Player: 'Player',
+  PlayersOnTeams: 'PlayersOnTeams'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -404,7 +405,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "league" | "season" | "division" | "team" | "player"
+    modelProps: "league" | "season" | "division" | "team" | "player" | "playersOnTeams"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -778,6 +779,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    PlayersOnTeams: {
+      payload: Prisma.$PlayersOnTeamsPayload<ExtArgs>
+      fields: Prisma.PlayersOnTeamsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PlayersOnTeamsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayersOnTeamsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PlayersOnTeamsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayersOnTeamsPayload>
+        }
+        findFirst: {
+          args: Prisma.PlayersOnTeamsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayersOnTeamsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PlayersOnTeamsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayersOnTeamsPayload>
+        }
+        findMany: {
+          args: Prisma.PlayersOnTeamsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayersOnTeamsPayload>[]
+        }
+        create: {
+          args: Prisma.PlayersOnTeamsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayersOnTeamsPayload>
+        }
+        createMany: {
+          args: Prisma.PlayersOnTeamsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PlayersOnTeamsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayersOnTeamsPayload>[]
+        }
+        delete: {
+          args: Prisma.PlayersOnTeamsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayersOnTeamsPayload>
+        }
+        update: {
+          args: Prisma.PlayersOnTeamsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayersOnTeamsPayload>
+        }
+        deleteMany: {
+          args: Prisma.PlayersOnTeamsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PlayersOnTeamsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PlayersOnTeamsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayersOnTeamsPayload>[]
+        }
+        upsert: {
+          args: Prisma.PlayersOnTeamsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayersOnTeamsPayload>
+        }
+        aggregate: {
+          args: Prisma.PlayersOnTeamsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePlayersOnTeams>
+        }
+        groupBy: {
+          args: Prisma.PlayersOnTeamsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PlayersOnTeamsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PlayersOnTeamsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PlayersOnTeamsCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -843,6 +918,7 @@ export const DivisionScalarFieldEnum = {
   id: 'id',
   name: 'name',
   seasonId: 'seasonId',
+  leagueId: 'leagueId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -855,6 +931,7 @@ export const TeamScalarFieldEnum = {
   name: 'name',
   shortName: 'shortName',
   divisionId: 'divisionId',
+  leagueId: 'leagueId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -868,10 +945,21 @@ export const PlayerScalarFieldEnum = {
   position: 'position',
   number: 'number',
   height: 'height',
-  teamId: 'teamId'
+  leagueId: 'leagueId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type PlayerScalarFieldEnum = (typeof PlayerScalarFieldEnum)[keyof typeof PlayerScalarFieldEnum]
+
+
+export const PlayersOnTeamsScalarFieldEnum = {
+  playerId: 'playerId',
+  teamId: 'teamId',
+  assignedAt: 'assignedAt'
+} as const
+
+export type PlayersOnTeamsScalarFieldEnum = (typeof PlayersOnTeamsScalarFieldEnum)[keyof typeof PlayersOnTeamsScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1065,6 +1153,7 @@ export type GlobalOmitConfig = {
   division?: Prisma.DivisionOmit
   team?: Prisma.TeamOmit
   player?: Prisma.PlayerOmit
+  playersOnTeams?: Prisma.PlayersOnTeamsOmit
 }
 
 /* Types for Logging */
