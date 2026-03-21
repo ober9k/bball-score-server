@@ -1,5 +1,6 @@
+import { type NextFunction, type Request, type Response } from "express";
+import { StatusCodes } from "http-status-codes";
 import passport from "passport";
-import { type Request, type Response, type NextFunction } from "express";
 
 /**
  * Initial error messages... (to be re-worked).
@@ -16,19 +17,19 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
   passport.authenticate('jwt', { session: false }, (err, user, info) => {
 
     if (err) {
-      return res.status(500).json({ message: Messages.ServerError });
+      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: Messages.ServerError });
     }
 
     if (!user) {
       if (info?.name === 'TokenExpiredError') {
-        return res.status(401).json({ message: Messages.TokenExpired });
+        return res.status(StatusCodes.UNAUTHORIZED).json({ message: Messages.TokenExpired });
       }
 
       if (info?.message === 'No auth token') {
-        return res.status(401).json({ message: Messages.TokenNotFound });
+        return res.status(StatusCodes.UNAUTHORIZED).json({ message: Messages.TokenNotFound });
       }
 
-      return res.status(401).json({ message: Messages.TokenInvalid });
+      return res.status(StatusCodes.UNAUTHORIZED).json({ message: Messages.TokenInvalid });
     }
 
     req.user = user;
