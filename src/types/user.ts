@@ -1,10 +1,10 @@
-import type { Role } from "./user/role";
+import type { RoleType } from "./user/role";
 
 export type User = {
   id: number,
   email: string,
   password: string,
-  role: Role,
+  role: RoleType,
 };
 
 export type NewUser = Omit<User, "id">;
