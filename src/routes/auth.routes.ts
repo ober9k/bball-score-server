@@ -1,10 +1,11 @@
 import { login, logout } from "@/controllers/auth.controller";
+import { isAuthenticated } from "@/middlewares/auth-token";
 import { Router } from "express";
 
 const router = Router()
   .get("/auth/login", login)
   .post("/auth/login", login)
-  .get("/auth/logout", logout)
-  .post("/auth/logout", logout)
+  .get("/auth/logout", [isAuthenticated], logout)
+  .post("/auth/logout", [isAuthenticated], logout)
 
 export { router as authRoutes };
