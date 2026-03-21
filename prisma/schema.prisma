@@ -91,3 +91,19 @@ model PlayersOnTeams {
 
   @@id([playerId, teamId]) // composite primary key
 }
+
+enum Role {
+  GUEST
+  USER
+  MANAGER
+  ADMINISTRATOR
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  role      Role
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
