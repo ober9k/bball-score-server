@@ -2,6 +2,7 @@ import "dotenv/config";
 import { connectionString, prisma } from "@/lib/prisma";
 import * as bcrypt from "bcryptjs";
 import { Pool } from "pg";
+import { mockLeagues } from "./mock/leagues";
 import { mockUsers } from "./mock/users";
 
 const pool = new Pool({ connectionString });
@@ -19,6 +20,14 @@ async function main() {
 
     console.log('Created user:', user);
   }
+
+  const leagues = await prisma.league.createMany({
+    data: [
+      ...mockLeagues
+    ],
+  });
+
+  console.log('Created leagues:', leagues);
 
 }
 
