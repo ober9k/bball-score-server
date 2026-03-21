@@ -1,5 +1,5 @@
-import { TestEmail, TestId } from "@/controllers/auth.controller";
 import { authTokenExtractor } from "@/lib/auth-token-extractor";
+import { prisma } from "@/lib/prisma";
 import { authRoutes } from "@/routes/auth.routes";
 import { divisionsRoutes } from "@/routes/divisions.routes";
 import { playersRoutes } from "@/routes/player.routes";
@@ -27,16 +27,15 @@ let options = {
 };
 
 passport.use(new Strategy(options, async (jwt_payload, done) => {
-  console.log("jwt_payload", jwt_payload);
-
   try {
-    if (jwt_payload.id !== TestId) {
-      return done(null, false);
-    }
+    const user = await prisma.user.findUnique({
+      where: { id: jwt_payload.id },
+    }) as any;
 
     return done(null, {
-      id: TestId,
-      email: TestEmail,
+      id:    user.id,
+      email: user.email,
+      role:  user.role,
     });
   }
   catch (error) {

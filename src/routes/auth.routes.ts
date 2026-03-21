@@ -3,9 +3,7 @@ import { isAuthenticated } from "@/middlewares/auth-token";
 import { Router } from "express";
 
 const router = Router()
-  .get("/auth/login", login)
   .post("/auth/login", login)
   .get("/auth/logout", [isAuthenticated], logout)
-  .post("/auth/logout", [isAuthenticated], logout)
 
 export { router as authRoutes };
