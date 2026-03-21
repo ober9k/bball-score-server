@@ -18,3 +18,13 @@ export const Position = {
 } as const
 
 export type Position = (typeof Position)[keyof typeof Position]
+
+
+export const Role = {
+  GUEST: 'GUEST',
+  USER: 'USER',
+  MANAGER: 'MANAGER',
+  ADMINISTRATOR: 'ADMINISTRATOR'
+} as const
+
+export type Role = (typeof Role)[keyof typeof Role]
