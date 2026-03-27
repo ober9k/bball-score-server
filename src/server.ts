@@ -65,4 +65,6 @@ routes.forEach((r) => {
     app.use("/api/v1", r);
 });
 
+app.use(errorHandler);
+
 export default app;
