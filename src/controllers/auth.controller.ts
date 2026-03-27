@@ -5,7 +5,7 @@ import * as bcrypt from "bcryptjs";
 import { type Request, type Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
-export const login = async (req: Request, res: Response) => {
+export async function login(req: Request, res: Response) {
   try {
     const { email, password } = req.body;
 
@@ -52,9 +52,9 @@ export const login = async (req: Request, res: Response) => {
       msg: "Internal server error."
     });
   }
-};
+}
 
-export const logout = async (req: Request, res: Response) => {
+export async function logout(req: Request, res: Response) {
   // ideally, the token should be cleared too?
   if (req.cookies[AuthCookieKey]) {
     res
@@ -68,4 +68,4 @@ export const logout = async (req: Request, res: Response) => {
   res.status(StatusCodes.UNAUTHORIZED).json({
     error: "Invalid token"
   });
-};
+}
