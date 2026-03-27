@@ -9,8 +9,8 @@ const authorizedRoles = [Role.ADMINISTRATOR, Role.MANAGER];
 const router = Router()
   .get("/teams", getTeams)
   .post("/teams", [isAuthenticated, isAuthorizedRole(authorizedRoles)], createTeam)
-  .get("/teams/:id", getTeam)
-  .put("/teams/:id", [isAuthenticated, isAuthorizedRole(authorizedRoles)], updateTeam)
-  .get("/teams/:id/players", getTeamPlayers);
+  .get("/teams/:teamId", getTeam)
+  .put("/teams/:teamId", [isAuthenticated, isAuthorizedRole(authorizedRoles)], updateTeam)
+  .get("/teams/:teamId/players", getTeamPlayers);
 
 export { router as teamsRoutes };
