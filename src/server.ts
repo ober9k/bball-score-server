@@ -1,20 +1,12 @@
-import { authTokenExtractor } from "@/lib/auth-token-extractor";
-import { prisma } from "@/lib/prisma";
-import { authRoutes } from "@/routes/auth.routes";
-import { divisionsRoutes } from "@/routes/divisions.routes";
-import { playersRoutes } from "@/routes/player.routes";
-import { seasonsRoutes } from "@/routes/seasons.routes";
-import { standingsRoutes } from "@/routes/standings.routes";
-import { statisticsRoutes } from "@/routes/statistics.routes";
-import { teamsRoutes } from "@/routes/teams.routes";
+import { getBaseLeagueUrl, getBaseUrl } from "@/lib/urls";
+import { errorHandler } from "@/middlewares/error-handler";
+import { leagueHandler } from "@/middlewares/league-handler";
 import { passportHandler } from "@/middlewares/passport-handler";
+import { leagueRoutes, routes } from "@/routes";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import type { Request, Response } from "express";
 import express from "express";
-import { StatusCodes } from "http-status-codes";
 import passport from "passport";
-import { Strategy } from "passport-jwt";
 
 const app = express();
 
@@ -26,27 +18,17 @@ app.use(cookieParser());
 passport.use(passportHandler);
 
 app.use(passport.initialize());
-
-app.get("/hello-world", async (req: Request, res: Response) => {
-  res.status(StatusCodes.OK).json({
-    data: "Hello World!",
-  });
-});
-
-const routes = [
-  authRoutes,
-  divisionsRoutes,
-  playersRoutes,
-  seasonsRoutes,
-  standingsRoutes,
-  statisticsRoutes,
-  teamsRoutes,
-];
+app.use(errorHandler);
+app.use(getBaseLeagueUrl(), leagueHandler);
 
 routes.forEach((r) => {
-    app.use("/api/v1", r);
+  // handle base URLs
+  app.use(getBaseUrl(), r);
 });
 
-app.use(errorHandler);
+leagueRoutes.forEach((r) => {
+  // handle league specific URLs
+  app.use(getBaseLeagueUrl(), r);
+});
 
 export default app;
