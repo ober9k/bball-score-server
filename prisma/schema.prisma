@@ -48,16 +48,16 @@ model Division {
 }
 
 model Team {
-  id         Int              @id @default(autoincrement())
+  id         Int          @id @default(autoincrement())
   name       String
   shortName  String
   divisionId Int
   leagueId   Int
-  division   Division         @relation(fields: [divisionId], references: [id])
-  league     League           @relation(fields: [leagueId], references: [id])
-  createdAt  DateTime         @default(now())
-  updatedAt  DateTime         @default(now())
-  players    PlayersOnTeams[]
+  division   Division     @relation(fields: [divisionId], references: [id])
+  league     League       @relation(fields: [leagueId], references: [id])
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @default(now())
+  players    TeamPlayer[]
 }
 
 enum Position {
@@ -69,24 +69,24 @@ enum Position {
 }
 
 model Player {
-  id        Int              @id @default(autoincrement())
+  id        Int          @id @default(autoincrement())
   name      String
   position  Position
   number    String
   height    String
   leagueId  Int
-  league    League           @relation(fields: [leagueId], references: [id])
-  createdAt DateTime         @default(now())
-  updatedAt DateTime         @default(now())
-  teams     PlayersOnTeams[]
+  league    League       @relation(fields: [leagueId], references: [id])
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @default(now())
+  teams     TeamPlayer[]
 }
 
 // The explicit join table model
-model PlayersOnTeams {
+model TeamPlayer {
   playerId   Int
   teamId     Int
-  player     Player   @relation(fields: [playerId], references: [id])
   team       Team     @relation(fields: [teamId], references: [id])
+  player     Player   @relation(fields: [playerId], references: [id])
   assignedAt DateTime @default(now())
 
   @@id([playerId, teamId]) // composite primary key
