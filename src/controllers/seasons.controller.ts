@@ -1,4 +1,4 @@
-import { findSeasonById, findSeasons } from "@/services/season.service";
+import { findSeasonById, findSeasonDivisions, findSeasons } from "@/services/season.service";
 import type { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
@@ -41,7 +41,7 @@ export async function updateSeason(req: Request, res: Response) {
 export async function getSeasonDivisions(req: Request, res: Response) {
   return res
     .status(StatusCodes.OK)
-    .json({
-      request: "getSeasonDivisions",
-    });
+    .json(
+      await findSeasonDivisions(getSeasonId(req))
+    );
 }

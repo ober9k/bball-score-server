@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import HttpException from "@/models/http-exception.model";
+import type { Division } from "@/types/division";
 import type { Season } from "@/types/season";
 import { StatusCodes } from "http-status-codes";
 
@@ -19,4 +20,12 @@ export async function findSeasonById(id: number): Promise<Season | null> {
   }
 
   return season;
+}
+
+export async function findSeasonDivisions(id: number): Promise<Division[]> {
+  return prisma.division.findMany({
+    where: {
+      seasonId: id,
+    },
+  });
 }

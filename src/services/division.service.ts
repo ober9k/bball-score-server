@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import HttpException from "@/models/http-exception.model";
 import type { Division } from "@/types/division";
+import type { Team } from "@/types/team";
 import { StatusCodes } from "http-status-codes";
 
 export async function findDivisions(): Promise<Division[]> {
@@ -19,4 +20,12 @@ export async function findDivisionById(id: number): Promise<Division | null> {
   }
 
   return division;
+}
+
+export async function findDivisionTeams(id: number): Promise<Team[]> {
+  return prisma.team.findMany({
+    where: {
+      divisionId: id,
+    },
+  });
 }

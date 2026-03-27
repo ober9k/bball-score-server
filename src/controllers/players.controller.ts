@@ -1,4 +1,4 @@
-import { findPlayerById, findPlayers } from "@/services/player.service";
+import { findPlayerById, findPlayers, findPlayerTeams } from "@/services/player.service";
 import type { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
@@ -41,7 +41,7 @@ export async function updatePlayer(req: Request, res: Response) {
 export async function getPlayerTeams(req: Request, res: Response) {
   return res
     .status(StatusCodes.OK)
-    .json({
-      request: "getPlayerTeams",
-    });
+    .json(
+      await findPlayerTeams(getPlayerId(req))
+    );
 }

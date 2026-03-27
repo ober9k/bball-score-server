@@ -1,4 +1,4 @@
-import { findDivisionById, findDivisions } from "@/services/division.service";
+import { findDivisionById, findDivisions, findDivisionTeams } from "@/services/division.service";
 import type { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
@@ -41,7 +41,7 @@ export async function updateDivision(req: Request, res: Response) {
 export async function getDivisionTeams(req: Request, res: Response) {
   return res
     .status(StatusCodes.OK)
-    .json({
-      request: "getDivisionTeams",
-    });
+    .json(
+      await findDivisionTeams(getDivisionId(req))
+    );
 }
