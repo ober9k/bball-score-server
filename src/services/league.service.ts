@@ -22,7 +22,7 @@ export async function findLeagues(): Promise<League[]> {
   return prisma.league.findMany();
 }
 
-export async function findLeague(id: number): Promise<League | null> {
+export async function findLeagueById(id: number): Promise<League | null> {
   const league = await prisma.league.findUnique({
     where: {
       id,

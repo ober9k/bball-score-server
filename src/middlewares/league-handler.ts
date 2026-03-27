@@ -1,4 +1,4 @@
-import { findLeague, setLocalLeague } from "@/services/league.service";
+import { findLeagueById, setLocalLeague } from "@/services/league.service";
 import type { NextFunction, Request, Response } from "express";
 
 /**
@@ -13,7 +13,7 @@ export async function leagueHandler(
   const leagueId = +req.params.leagueId;
 
   // store locally for subsequent requests
-  const league = await findLeague(leagueId);
+  const league = await findLeagueById(leagueId);
 
   if (league) {
     setLocalLeague(res, league); // otherwise exception
