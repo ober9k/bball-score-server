@@ -5,4 +5,4 @@ export type Division = {
   seasonId: number,
 };
 
-export type NewDivision = Omit<Division, "id">;
+export type DivisionData = Omit<Division, "id">;

@@ -17,6 +17,7 @@ const zTeam = z.object({
   shortName: z.string()
     .min(ShortNameMinLength, minLengthMessage(ShortNameLabel, ShortNameMinLength))
     .max(ShortNameMaxLength, maxLengthMessage(ShortNameLabel, ShortNameMaxLength)),
+  divisionId: z.number(),
 });
 
 export function teamValidationHandler() {

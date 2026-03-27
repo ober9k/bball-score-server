@@ -4,4 +4,4 @@ export type Season = {
   leagueId: number,
 };
 
-export type NewSeason = Omit<Season, "id">;
+export type SeasonData = Omit<Season, "id">;

@@ -9,4 +9,4 @@ export type Player = {
   leagueId: number,
 };
 
-export type NewPlayer = Omit<Player, "id">;
+export type PlayerData = Omit<Player, "id">;

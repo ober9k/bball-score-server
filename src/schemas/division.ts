@@ -10,6 +10,7 @@ const zDivision = z.object({
   name: z.string()
     .min(NameMinLength, minLengthMessage(NameLabel, NameMinLength))
     .max(NameMaxLength, maxLengthMessage(NameLabel, NameMaxLength)),
+  seasonId: z.number(),
 });
 
 export function divisionValidationHandler() {

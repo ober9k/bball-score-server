@@ -6,4 +6,4 @@ export type Team = {
   divisionId: number,
 };
 
-export type NewTeam = Omit<Team, "id">;
+export type TeamData = Omit<Team, "id">;
