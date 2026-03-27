@@ -1,6 +1,6 @@
 import { maxLengthMessage, minLengthMessage } from "@/lib/messages";
 import { validationHandler } from "@/middlewares/validation-handler";
-import { Position, PositionType } from "@/types/player/position";
+import { Position, type PositionType } from "@/types/player/position";
 import { z } from "zod";
 
 function heightFormatMessage(label: string): string {

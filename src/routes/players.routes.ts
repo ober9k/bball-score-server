@@ -1,6 +1,7 @@
 import { createPlayer, getPlayer, getPlayers, getPlayerTeams, updatePlayer } from "@/controllers/players.controller";
 import { isAuthorizedRole } from "@/middlewares/auth-role";
 import { isAuthenticated } from "@/middlewares/auth-token";
+import { playerValidationHandler } from "@/schemas/player";
 import { Role } from "@/types/user/role";
 import { Router } from "express";
 
@@ -8,9 +9,9 @@ const authorizedRoles = [Role.ADMINISTRATOR, Role.MANAGER];
 
 const router = Router()
   .get("/players", getPlayers)
-  .post("/players", [isAuthenticated, isAuthorizedRole(authorizedRoles)], createPlayer)
+  .post("/players", [isAuthenticated, isAuthorizedRole(authorizedRoles), playerValidationHandler()], createPlayer)
   .get("/players/:playerId", getPlayer)
-  .put("/players/:playerId", [isAuthenticated, isAuthorizedRole(authorizedRoles)], updatePlayer)
+  .put("/players/:playerId", [isAuthenticated, isAuthorizedRole(authorizedRoles), playerValidationHandler()], updatePlayer)
   .get("/players/:playerId/teams", getPlayerTeams);
 
 export { router as playersRoutes };
