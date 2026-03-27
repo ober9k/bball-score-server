@@ -1,6 +1,13 @@
-import type { NewLeague } from "@/types/league";
+import type { MockSeason } from "./seasons";
+import { mockSeasons } from "./seasons";
 
-export const mockLeagues: Array<NewLeague> = [
-  { name: "Outer Sydney Basketball League", slug: "outer-sbl" },
-  { name: "Trash Ass Basketball League", slug: "trash-bl" },
+export type MockLeague = {
+  name: string,
+  slug: string,
+  seasons: MockSeason[],
+};
+
+export const mockLeagues: MockLeague[] = [
+  { name: "Outer Sydney Basketball League", slug: "outer-sbl", seasons: [ ...mockSeasons ] },
+  { name: "Trash Ass Basketball League",    slug: "trash-bl",  seasons: [] }, /* empty for now */
 ];
