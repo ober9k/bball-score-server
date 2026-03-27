@@ -1,5 +1,4 @@
-import type { Position } from "./player/position";
-import type { Team } from "./team";
+import type { Position } from "@/types/player/position";
 
 export type Player = {
   id: number,
@@ -7,6 +6,7 @@ export type Player = {
   position: Position,
   number: string,
   height: string,
+  leagueId: number,
 };
 
 export type NewPlayer = Omit<Player, "id">;
