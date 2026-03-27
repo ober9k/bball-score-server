@@ -389,7 +389,7 @@ export const ModelName = {
   Division: 'Division',
   Team: 'Team',
   Player: 'Player',
-  PlayersOnTeams: 'PlayersOnTeams',
+  TeamPlayer: 'TeamPlayer',
   User: 'User'
 } as const
 
@@ -406,7 +406,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "league" | "season" | "division" | "team" | "player" | "playersOnTeams" | "user"
+    modelProps: "league" | "season" | "division" | "team" | "player" | "teamPlayer" | "user"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -780,77 +780,77 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    PlayersOnTeams: {
-      payload: Prisma.$PlayersOnTeamsPayload<ExtArgs>
-      fields: Prisma.PlayersOnTeamsFieldRefs
+    TeamPlayer: {
+      payload: Prisma.$TeamPlayerPayload<ExtArgs>
+      fields: Prisma.TeamPlayerFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.PlayersOnTeamsFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayersOnTeamsPayload> | null
+          args: Prisma.TeamPlayerFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamPlayerPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.PlayersOnTeamsFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayersOnTeamsPayload>
+          args: Prisma.TeamPlayerFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamPlayerPayload>
         }
         findFirst: {
-          args: Prisma.PlayersOnTeamsFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayersOnTeamsPayload> | null
+          args: Prisma.TeamPlayerFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamPlayerPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.PlayersOnTeamsFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayersOnTeamsPayload>
+          args: Prisma.TeamPlayerFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamPlayerPayload>
         }
         findMany: {
-          args: Prisma.PlayersOnTeamsFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayersOnTeamsPayload>[]
+          args: Prisma.TeamPlayerFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamPlayerPayload>[]
         }
         create: {
-          args: Prisma.PlayersOnTeamsCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayersOnTeamsPayload>
+          args: Prisma.TeamPlayerCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamPlayerPayload>
         }
         createMany: {
-          args: Prisma.PlayersOnTeamsCreateManyArgs<ExtArgs>
+          args: Prisma.TeamPlayerCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.PlayersOnTeamsCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayersOnTeamsPayload>[]
+          args: Prisma.TeamPlayerCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamPlayerPayload>[]
         }
         delete: {
-          args: Prisma.PlayersOnTeamsDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayersOnTeamsPayload>
+          args: Prisma.TeamPlayerDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamPlayerPayload>
         }
         update: {
-          args: Prisma.PlayersOnTeamsUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayersOnTeamsPayload>
+          args: Prisma.TeamPlayerUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamPlayerPayload>
         }
         deleteMany: {
-          args: Prisma.PlayersOnTeamsDeleteManyArgs<ExtArgs>
+          args: Prisma.TeamPlayerDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.PlayersOnTeamsUpdateManyArgs<ExtArgs>
+          args: Prisma.TeamPlayerUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.PlayersOnTeamsUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayersOnTeamsPayload>[]
+          args: Prisma.TeamPlayerUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamPlayerPayload>[]
         }
         upsert: {
-          args: Prisma.PlayersOnTeamsUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayersOnTeamsPayload>
+          args: Prisma.TeamPlayerUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamPlayerPayload>
         }
         aggregate: {
-          args: Prisma.PlayersOnTeamsAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregatePlayersOnTeams>
+          args: Prisma.TeamPlayerAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTeamPlayer>
         }
         groupBy: {
-          args: Prisma.PlayersOnTeamsGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.PlayersOnTeamsGroupByOutputType>[]
+          args: Prisma.TeamPlayerGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TeamPlayerGroupByOutputType>[]
         }
         count: {
-          args: Prisma.PlayersOnTeamsCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.PlayersOnTeamsCountAggregateOutputType> | number
+          args: Prisma.TeamPlayerCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TeamPlayerCountAggregateOutputType> | number
         }
       }
     }
@@ -1028,13 +1028,13 @@ export const PlayerScalarFieldEnum = {
 export type PlayerScalarFieldEnum = (typeof PlayerScalarFieldEnum)[keyof typeof PlayerScalarFieldEnum]
 
 
-export const PlayersOnTeamsScalarFieldEnum = {
+export const TeamPlayerScalarFieldEnum = {
   playerId: 'playerId',
   teamId: 'teamId',
   assignedAt: 'assignedAt'
 } as const
 
-export type PlayersOnTeamsScalarFieldEnum = (typeof PlayersOnTeamsScalarFieldEnum)[keyof typeof PlayersOnTeamsScalarFieldEnum]
+export type TeamPlayerScalarFieldEnum = (typeof TeamPlayerScalarFieldEnum)[keyof typeof TeamPlayerScalarFieldEnum]
 
 
 export const UserScalarFieldEnum = {
@@ -1254,7 +1254,7 @@ export type GlobalOmitConfig = {
   division?: Prisma.DivisionOmit
   team?: Prisma.TeamOmit
   player?: Prisma.PlayerOmit
-  playersOnTeams?: Prisma.PlayersOnTeamsOmit
+  teamPlayer?: Prisma.TeamPlayerOmit
   user?: Prisma.UserOmit
 }
 
