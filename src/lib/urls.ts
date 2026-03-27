@@ -3,15 +3,14 @@
  * @param parts
  */
 function buildApiUrl(parts: string[]): string {
-  // prepend the slash too
-  return ["/", ...parts].join("/");
+  return parts.join("/");
 }
 
 /**
  * Base URL for all API URLs.
  */
 export function getBaseUrl(): string {
-  return buildApiUrl(["api", "v1"]);
+  return buildApiUrl(["", "api", "v1"]);
 }
 
 /**
