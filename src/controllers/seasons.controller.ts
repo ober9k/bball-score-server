@@ -1,4 +1,6 @@
-import { findSeasonById, findSeasonDivisions, findSeasons } from "@/services/season.service";
+import { getLocalLeague } from "@/services/league.service";
+import { findSeasonById, findSeasonDivisions, findSeasons, saveSeason, saveSeasonById } from "@/services/season.service";
+import type { SeasonData } from "@/types/season";
 import type { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
@@ -23,19 +25,29 @@ export async function getSeason(req: Request, res: Response) {
 }
 
 export async function createSeason(req: Request, res: Response) {
+  const seasonData: SeasonData = {
+    name: req.body.name,
+    leagueId: getLocalLeague(res).id,
+  };
+
   return res
     .status(StatusCodes.OK)
-    .json({
-      request: "createSeason",
-    });
+    .json(
+      await saveSeason(seasonData)
+    );
 }
 
 export async function updateSeason(req: Request, res: Response) {
+  const seasonData: SeasonData = {
+    name: req.body.name,
+    leagueId: getLocalLeague(res).id,
+  };
+
   return res
     .status(StatusCodes.OK)
-    .json({
-      request: "updateSeason",
-    });
+    .json(
+      await saveSeasonById(getSeasonId(req), seasonData)
+    );
 }
 
 export async function getSeasonDivisions(req: Request, res: Response) {

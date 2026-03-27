@@ -1,9 +1,9 @@
-import type { Position } from "@/types/player/position";
+import type { PositionType } from "@/types/player/position";
 
 export type Player = {
   id: number,
   name: string,
-  position: Position,
+  position: PositionType,
   number: string,
   height: string,
   leagueId: number,

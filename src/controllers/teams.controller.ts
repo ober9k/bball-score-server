@@ -1,4 +1,6 @@
-import { findTeamById, findTeamPlayers, findTeams } from "@/services/team.service";
+import { getLocalLeague } from "@/services/league.service";
+import { findTeamById, findTeamPlayers, findTeams, saveTeam, saveTeamById } from "@/services/team.service";
+import type { TeamData } from "@/types/team";
 import type { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
@@ -23,19 +25,33 @@ export async function getTeam(req: Request, res: Response) {
 }
 
 export async function createTeam(req: Request, res: Response) {
+  const teamData: TeamData = {
+    name: req.body.name,
+    shortName: req.body.shortName,
+    divisionId: req.body.divisionId,
+    leagueId: getLocalLeague(res).id,
+  };
+
   return res
     .status(StatusCodes.OK)
-    .json({
-      request: "createTeam",
-    });
+    .json(
+      await saveTeam(teamData)
+    );
 }
 
 export async function updateTeam(req: Request, res: Response) {
+  const teamData: TeamData = {
+    name: req.body.name,
+    shortName: req.body.shortName,
+    divisionId: req.body.divisionId,
+    leagueId: getLocalLeague(res).id,
+  };
+
   return res
     .status(StatusCodes.OK)
-    .json({
-      request: "updateTeam",
-    });
+    .json(
+      await saveTeamById(getTeamId(req), teamData)
+    );
 }
 
 export async function getTeamPlayers(req: Request, res: Response) {
