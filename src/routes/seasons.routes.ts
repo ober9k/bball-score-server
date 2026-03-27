@@ -11,6 +11,6 @@ const router = Router()
   .post("/seasons", [isAuthenticated, isAuthorizedRole(authorizedRoles)], createSeason)
   .get("/seasons/:seasonId", getSeason)
   .put("/seasons/:seasonId", [isAuthenticated, isAuthorizedRole(authorizedRoles)], updateSeason)
-  .get("/seasons/:seasonId/players", getSeasonDivisions);
+  .get("/seasons/:seasonId/divisions", getSeasonDivisions);
 
 export { router as seasonsRoutes };

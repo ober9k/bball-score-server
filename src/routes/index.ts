@@ -1,6 +1,6 @@
 import { authRoutes } from "@/routes/auth.routes";
 import { divisionsRoutes } from "@/routes/divisions.routes";
-import { playersRoutes } from "@/routes/player.routes";
+import { playersRoutes } from "@/routes/players.routes";
 import { seasonsRoutes } from "@/routes/seasons.routes";
 import { standingsRoutes } from "@/routes/standings.routes";
 import { statisticsRoutes } from "@/routes/statistics.routes";

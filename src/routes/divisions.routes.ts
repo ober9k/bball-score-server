@@ -11,6 +11,6 @@ const router = Router()
   .post("/divisions", [isAuthenticated, isAuthorizedRole(authorizedRoles)], createDivision)
   .get("/divisions/:divisionId", getDivision)
   .put("/divisions/:divisionId", [isAuthenticated, isAuthorizedRole(authorizedRoles)], updateDivision)
-  .get("/divisions/:divisionId/players", getDivisionTeams);
+  .get("/divisions/:divisionId/teams", getDivisionTeams);
 
 export { router as divisionsRoutes };
