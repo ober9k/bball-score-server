@@ -1,5 +1,10 @@
 import "dotenv/config";
 import { connectionString, prisma } from "@/lib/prisma";
+import type { Division } from "@/types/division";
+import type { League } from "@/types/league";
+import type { Player } from "@/types/player";
+import type { Season } from "@/types/season";
+import type { Team } from "@/types/team";
 import * as bcrypt from "bcryptjs";
 import { Pool } from "pg";
 import { mockLeagues } from "./mock/leagues";
@@ -21,13 +26,80 @@ async function main() {
     console.log('Created user:', user);
   }
 
-  const leagues = await prisma.league.createMany({
-    data: [
-      ...mockLeagues
-    ],
-  });
+  /**
+   * TODO:
+   * This needs a re-work, but due to some issues using the nested create within season (and below), a bunch of loops has instead been used for now.
+   */
+  for (const l of mockLeagues) {
+    const league = await prisma.league.create({
+      data: {
+        name: l.name,
+        slug: l.slug,
+      }
+    }) as League;
 
-  console.log('Created leagues:', leagues);
+    console.log('Created league:', league);
+
+    for (const s of l.seasons) {
+      const season = await prisma.season.create({
+        data: {
+          name: s.name,
+          leagueId: league.id,
+        }
+      }) as Season;
+
+      console.log('Created season:', season);
+
+      for (const d of s.divisions) {
+        const division = await prisma.division.create({
+          data: {
+            name: d.name,
+            leagueId: league.id,
+            seasonId: season.id,
+          }
+        }) as Division;
+
+        console.log('Created division:', division);
+
+        for (const t of d.teams) {
+          const team = await prisma.team.create({
+            data: {
+              name: t.name,
+              shortName: t.shortName,
+              leagueId: league.id,
+              divisionId: division.id,
+            }
+          }) as Team;
+
+          console.log('Created team:', team);
+
+          for (const p of t.players) {
+            const player = await prisma.player.create({
+              data: {
+                name: p.name,
+                position: p.position,
+                number: p.number,
+                height: p.height,
+                leagueId: league.id,
+              }
+            }) as Player;
+
+            console.log('Created player:', player);
+
+            /* players exist on a per season/division/team basis */
+            const teamPlayer = await prisma.teamPlayer.create({
+              data: {
+                teamId: team.id,
+                playerId: player.id,
+              }
+            });
+
+            console.log('Created teamPlayer:', teamPlayer);
+          }
+        }
+      }
+    }
+  }
 
 }
 
