@@ -7,7 +7,6 @@ export type Player = {
   position: Position,
   number: string,
   height: string,
-  team: Team | undefined, /* expectation, always set */
 };
 
 export type NewPlayer = Omit<Player, "id">;
