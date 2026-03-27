@@ -1,32 +1,47 @@
+import { findDivisionById, findDivisions } from "@/services/division.service";
 import type { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
-export const getDivisions = async (req: Request, res: Response) => {
-  res.status(StatusCodes.OK).json({
-   request: "getDivisions", data: "division",
-  });
+function getDivisionId(req: Request): number {
+  return +req.params.divisionId;
 }
 
-export const getDivision = async (req: Request, res: Response) => {
-  res.status(StatusCodes.OK).json({
-   request: "getDivision", data: "division",
-  });
+export async function getDivisions(req: Request, res: Response) {
+  return res
+    .status(StatusCodes.OK)
+    .json(
+      await findDivisions()
+    );
 }
 
-export const createDivision = async (req: Request, res: Response) => {
-  res.status(StatusCodes.OK).json({
-   request: "createDivision", data: "division",
-  });
+export async function getDivision(req: Request, res: Response) {
+  return res
+    .status(StatusCodes.OK)
+    .json(
+      await findDivisionById(getDivisionId(req))
+    );
 }
 
-export const updateDivision = async (req: Request, res: Response) => {
-  res.status(StatusCodes.OK).json({
-   request: "updateDivision", data: "division",
-  });
+export async function createDivision(req: Request, res: Response) {
+  return res
+    .status(StatusCodes.OK)
+    .json({
+      request: "createDivision",
+    });
 }
 
-export const getDivisionTeams = async (req: Request, res: Response) => {
-  res.status(StatusCodes.OK).json({
-   request: "getDivisionDivisions", data: "team[]",
-  });
+export async function updateDivision(req: Request, res: Response) {
+  return res
+    .status(StatusCodes.OK)
+    .json({
+      request: "updateDivision",
+    });
+}
+
+export async function getDivisionTeams(req: Request, res: Response) {
+  return res
+    .status(StatusCodes.OK)
+    .json({
+      request: "getDivisionTeams",
+    });
 }

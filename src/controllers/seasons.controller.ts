@@ -1,32 +1,47 @@
+import { findSeasonById, findSeasons } from "@/services/season.service";
 import type { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
-export const getSeasons = async (req: Request, res: Response) => {
-  res.status(StatusCodes.OK).json({
-   request: "getSeasons", data: "season",
-  });
+function getSeasonId(req: Request): number {
+  return +req.params.seasonId;
 }
 
-export const getSeason = async (req: Request, res: Response) => {
-  res.status(StatusCodes.OK).json({
-   request: "getSeason", data: "season",
-  });
+export async function getSeasons(req: Request, res: Response) {
+  return res
+    .status(StatusCodes.OK)
+    .json(
+      await findSeasons()
+    );
 }
 
-export const createSeason = async (req: Request, res: Response) => {
-  res.status(StatusCodes.OK).json({
-   request: "createSeason", data: "season",
-  });
+export async function getSeason(req: Request, res: Response) {
+  return res
+    .status(StatusCodes.OK)
+    .json(
+      await findSeasonById(getSeasonId(req))
+    );
 }
 
-export const updateSeason = async (req: Request, res: Response) => {
-  res.status(StatusCodes.OK).json({
-   request: "updateSeason", data: "season",
-  });
+export async function createSeason(req: Request, res: Response) {
+  return res
+    .status(StatusCodes.OK)
+    .json({
+      request: "createSeason",
+    });
 }
 
-export const getSeasonDivisions = async (req: Request, res: Response) => {
-  res.status(StatusCodes.OK).json({
-   request: "getSeasonDivisions", data: "division[]",
-  });
+export async function updateSeason(req: Request, res: Response) {
+  return res
+    .status(StatusCodes.OK)
+    .json({
+      request: "updateSeason",
+    });
+}
+
+export async function getSeasonDivisions(req: Request, res: Response) {
+  return res
+    .status(StatusCodes.OK)
+    .json({
+      request: "getSeasonDivisions",
+    });
 }

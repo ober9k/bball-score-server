@@ -1,32 +1,47 @@
+import { findTeamById, findTeams } from "@/services/team.service";
 import type { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
-export const getTeams = async (req: Request, res: Response) => {
-  res.status(StatusCodes.OK).json({
-   request: "getTeams", data: "team",
-  });
+function getTeamId(req: Request): number {
+  return +req.params.teamId;
 }
 
-export const getTeam = async (req: Request, res: Response) => {
-  res.status(StatusCodes.OK).json({
-   request: "getTeam", data: "team",
-  });
+export async function getTeams(req: Request, res: Response) {
+  return res
+    .status(StatusCodes.OK)
+    .json(
+      await findTeams()
+    );
 }
 
-export const createTeam = async (req: Request, res: Response) => {
-  res.status(StatusCodes.OK).json({
-   request: "createTeam", data: "team",
-  });
+export async function getTeam(req: Request, res: Response) {
+  return res
+    .status(StatusCodes.OK)
+    .json(
+      await findTeamById(getTeamId(req))
+    );
 }
 
-export const updateTeam = async (req: Request, res: Response) => {
-  res.status(StatusCodes.OK).json({
-   request: "updateTeam", data: "team",
-  });
+export async function createTeam(req: Request, res: Response) {
+  return res
+    .status(StatusCodes.OK)
+    .json({
+      request: "createTeam",
+    });
 }
 
-export const getTeamPlayers = async (req: Request, res: Response) => {
-  res.status(StatusCodes.OK).json({
-   request: "getTeamPlayers", data: "player[]",
-  });
+export async function updateTeam(req: Request, res: Response) {
+  return res
+    .status(StatusCodes.OK)
+    .json({
+      request: "updateTeam",
+    });
+}
+
+export async function getTeamPlayers(req: Request, res: Response) {
+  return res
+    .status(StatusCodes.OK)
+    .json({
+      request: "getTeamPlayers",
+    });
 }
