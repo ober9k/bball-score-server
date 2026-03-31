@@ -23,6 +23,7 @@ model League {
   Player    Player[]
   createdAt DateTime   @default(now())
   updatedAt DateTime   @default(now())
+  Game      Game[]
 }
 
 model Season {
@@ -33,6 +34,7 @@ model Season {
   league    League     @relation(fields: [leagueId], references: [id])
   createdAt DateTime   @default(now())
   updatedAt DateTime   @default(now())
+  Game      Game[]
 }
 
 model Division {
@@ -45,19 +47,22 @@ model Division {
   league    League   @relation(fields: [leagueId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
+  Game      Game[]
 }
 
 model Team {
-  id         Int          @id @default(autoincrement())
-  name       String
-  shortName  String
-  divisionId Int
-  leagueId   Int
-  division   Division     @relation(fields: [divisionId], references: [id])
-  league     League       @relation(fields: [leagueId], references: [id])
-  createdAt  DateTime     @default(now())
-  updatedAt  DateTime     @default(now())
-  players    TeamPlayer[]
+  id             Int              @id @default(autoincrement())
+  name           String
+  shortName      String
+  divisionId     Int
+  leagueId       Int
+  division       Division         @relation(fields: [divisionId], references: [id])
+  league         League           @relation(fields: [leagueId], references: [id])
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @default(now())
+  players        TeamPlayer[]
+  gameTeam       GameTeam[]
+  GameTeamPlayer GameTeamPlayer[]
 }
 
 enum Position {
@@ -69,16 +74,17 @@ enum Position {
 }
 
 model Player {
-  id        Int          @id @default(autoincrement())
-  name      String
-  position  Position
-  number    String
-  height    String
-  leagueId  Int
-  league    League       @relation(fields: [leagueId], references: [id])
-  createdAt DateTime     @default(now())
-  updatedAt DateTime     @default(now())
-  teams     TeamPlayer[]
+  id             Int              @id @default(autoincrement())
+  name           String
+  position       Position
+  number         String
+  height         String
+  leagueId       Int
+  league         League           @relation(fields: [leagueId], references: [id])
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @default(now())
+  teams          TeamPlayer[]
+  GameTeamPlayer GameTeamPlayer[]
 }
 
 // The explicit join table model
@@ -92,7 +98,79 @@ model TeamPlayer {
   @@id([playerId, teamId]) // composite primary key
 }
 
-enum Role {
+enum GamePhase {
+  PRE_SEASON
+  REGULAR_SEASON
+  POST_SEASON
+}
+
+model Game {
+  id         Int        @id @default(autoincrement())
+  date       DateTime
+  phase      GamePhase
+  round      Int
+  leagueId   Int
+  seasonId   Int
+  divisionId Int
+  league     League     @relation(fields: [leagueId], references: [id])
+  season     Season     @relation(fields: [seasonId], references: [id])
+  division   Division   @relation(fields: [divisionId], references: [id])
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @default(now())
+  gameTeams  GameTeam[]
+}
+
+enum TeamSide {
+  AWAY_TEAM
+  HOME_TEAM
+}
+
+model GameTeam {
+  id              Int              @id @default(autoincrement())
+  side            TeamSide
+  score           Int
+  scoreByPeriod   Int[]
+  gameId          Int
+  teamId          Int
+  game            Game             @relation(fields: [gameId], references: [id])
+  team            Team             @relation(fields: [teamId], references: [id])
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @default(now())
+  gameTeamPlayers GameTeamPlayer[]
+}
+
+model GameTeamPlayer {
+  started        Boolean
+  seconds        Int
+  fgMade         Int
+  fgAttempted    Int
+  fg3Made        Int
+  fg3Attempted   Int
+  ftMade         Int
+  ftAttempted    Int
+  points         Int
+  offRebounds    Int
+  defRebounds    Int
+  rebounds       Int
+  assists        Int
+  steals         Int
+  blocks         Int
+  turnovers      Int
+  personalFouls  Int
+  technicalFouls Int
+  gameTeamId     Int
+  playerId       Int
+  teamId         Int
+  gameTeam       GameTeam @relation(fields: [gameTeamId], references: [id])
+  team           Team     @relation(fields: [teamId], references: [id])
+  player         Player   @relation(fields: [playerId], references: [id])
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @default(now())
+
+  @@id([gameTeamId, playerId, teamId]) // composite primary key
+}
+
+enum UserRole {
   GUEST
   USER
   MANAGER
@@ -103,7 +181,7 @@ model User {
   id        Int      @id @default(autoincrement())
   email     String   @unique
   password  String
-  role      Role
+  role      UserRole
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
 }
