@@ -106,6 +106,10 @@ async function main() {
     const { id: seasonId } = await prisma.season.findFirst();
     const { id: divisionId } = await prisma.division.findFirst();
 
+    if (leagueId > 1) {
+      continue; // just for it for first league
+    }
+
     for (const g of mockGames) {
       const game = await prisma.game.create({
         data: {
