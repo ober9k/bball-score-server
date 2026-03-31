@@ -1,12 +1,14 @@
 import "dotenv/config";
 import { connectionString, prisma } from "@/lib/prisma";
 import type { Division } from "@/types/division";
+import type { Game } from "@/types/game";
 import type { League } from "@/types/league";
 import type { Player } from "@/types/player";
 import type { Season } from "@/types/season";
 import type { Team } from "@/types/team";
 import * as bcrypt from "bcryptjs";
 import { Pool } from "pg";
+import { mockGames } from "./mock/games";
 import { mockLeagues } from "./mock/leagues";
 import { mockUsers } from "./mock/users";
 
@@ -99,6 +101,53 @@ async function main() {
         }
       }
     }
+
+    const { id: leagueId } = league;
+    const { id: seasonId } = await prisma.season.findFirst();
+    const { id: divisionId } = await prisma.division.findFirst();
+
+    for (const g of mockGames) {
+      const game = await prisma.game.create({
+        data: {
+          date:       g.date,
+          phase:      g.phase,
+          round:      g.round,
+          leagueId:   leagueId,
+          seasonId:   seasonId,
+          divisionId: divisionId,
+        },
+      }) as Game;
+
+      const { id: gameId } = game;
+
+      for (const gt of g.gameTeams) {
+        const teamId = gt.teamId;
+        const teamPlayers = gt.teamPlayers
+          .map((gtp) => ({
+            ...gtp, teamId,
+          }));
+
+        const gameTeam = await prisma.gameTeam.create({
+          data: {
+            side: gt.side,
+            score: gt.score,
+            scoreByPeriod: gt.scoreByPeriod,
+            gameId,
+            teamId,
+            gameTeamPlayers: {
+              create: [
+                ...teamPlayers
+              ],
+            }
+          }
+        }) as any;
+
+        console.log('Created gameTeam:', gameTeam);
+      }
+
+      console.log('Created game:', game);
+    }
+
   }
 
 }
