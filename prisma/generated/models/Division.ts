@@ -235,6 +235,7 @@ export type DivisionWhereInput = {
   teams?: Prisma.TeamListRelationFilter
   season?: Prisma.XOR<Prisma.SeasonScalarRelationFilter, Prisma.SeasonWhereInput>
   league?: Prisma.XOR<Prisma.LeagueScalarRelationFilter, Prisma.LeagueWhereInput>
+  Game?: Prisma.GameListRelationFilter
 }
 
 export type DivisionOrderByWithRelationInput = {
@@ -247,6 +248,7 @@ export type DivisionOrderByWithRelationInput = {
   teams?: Prisma.TeamOrderByRelationAggregateInput
   season?: Prisma.SeasonOrderByWithRelationInput
   league?: Prisma.LeagueOrderByWithRelationInput
+  Game?: Prisma.GameOrderByRelationAggregateInput
 }
 
 export type DivisionWhereUniqueInput = Prisma.AtLeast<{
@@ -262,6 +264,7 @@ export type DivisionWhereUniqueInput = Prisma.AtLeast<{
   teams?: Prisma.TeamListRelationFilter
   season?: Prisma.XOR<Prisma.SeasonScalarRelationFilter, Prisma.SeasonWhereInput>
   league?: Prisma.XOR<Prisma.LeagueScalarRelationFilter, Prisma.LeagueWhereInput>
+  Game?: Prisma.GameListRelationFilter
 }, "id">
 
 export type DivisionOrderByWithAggregationInput = {
@@ -297,6 +300,7 @@ export type DivisionCreateInput = {
   teams?: Prisma.TeamCreateNestedManyWithoutDivisionInput
   season: Prisma.SeasonCreateNestedOneWithoutDivisionsInput
   league: Prisma.LeagueCreateNestedOneWithoutDivisionsInput
+  Game?: Prisma.GameCreateNestedManyWithoutDivisionInput
 }
 
 export type DivisionUncheckedCreateInput = {
@@ -307,6 +311,7 @@ export type DivisionUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   teams?: Prisma.TeamUncheckedCreateNestedManyWithoutDivisionInput
+  Game?: Prisma.GameUncheckedCreateNestedManyWithoutDivisionInput
 }
 
 export type DivisionUpdateInput = {
@@ -316,6 +321,7 @@ export type DivisionUpdateInput = {
   teams?: Prisma.TeamUpdateManyWithoutDivisionNestedInput
   season?: Prisma.SeasonUpdateOneRequiredWithoutDivisionsNestedInput
   league?: Prisma.LeagueUpdateOneRequiredWithoutDivisionsNestedInput
+  Game?: Prisma.GameUpdateManyWithoutDivisionNestedInput
 }
 
 export type DivisionUncheckedUpdateInput = {
@@ -326,6 +332,7 @@ export type DivisionUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   teams?: Prisma.TeamUncheckedUpdateManyWithoutDivisionNestedInput
+  Game?: Prisma.GameUncheckedUpdateManyWithoutDivisionNestedInput
 }
 
 export type DivisionCreateManyInput = {
@@ -504,12 +511,27 @@ export type DivisionUpdateOneRequiredWithoutTeamsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.DivisionUpdateToOneWithWhereWithoutTeamsInput, Prisma.DivisionUpdateWithoutTeamsInput>, Prisma.DivisionUncheckedUpdateWithoutTeamsInput>
 }
 
+export type DivisionCreateNestedOneWithoutGameInput = {
+  create?: Prisma.XOR<Prisma.DivisionCreateWithoutGameInput, Prisma.DivisionUncheckedCreateWithoutGameInput>
+  connectOrCreate?: Prisma.DivisionCreateOrConnectWithoutGameInput
+  connect?: Prisma.DivisionWhereUniqueInput
+}
+
+export type DivisionUpdateOneRequiredWithoutGameNestedInput = {
+  create?: Prisma.XOR<Prisma.DivisionCreateWithoutGameInput, Prisma.DivisionUncheckedCreateWithoutGameInput>
+  connectOrCreate?: Prisma.DivisionCreateOrConnectWithoutGameInput
+  upsert?: Prisma.DivisionUpsertWithoutGameInput
+  connect?: Prisma.DivisionWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.DivisionUpdateToOneWithWhereWithoutGameInput, Prisma.DivisionUpdateWithoutGameInput>, Prisma.DivisionUncheckedUpdateWithoutGameInput>
+}
+
 export type DivisionCreateWithoutLeagueInput = {
   name: string
   createdAt?: Date | string
   updatedAt?: Date | string
   teams?: Prisma.TeamCreateNestedManyWithoutDivisionInput
   season: Prisma.SeasonCreateNestedOneWithoutDivisionsInput
+  Game?: Prisma.GameCreateNestedManyWithoutDivisionInput
 }
 
 export type DivisionUncheckedCreateWithoutLeagueInput = {
@@ -519,6 +541,7 @@ export type DivisionUncheckedCreateWithoutLeagueInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   teams?: Prisma.TeamUncheckedCreateNestedManyWithoutDivisionInput
+  Game?: Prisma.GameUncheckedCreateNestedManyWithoutDivisionInput
 }
 
 export type DivisionCreateOrConnectWithoutLeagueInput = {
@@ -565,6 +588,7 @@ export type DivisionCreateWithoutSeasonInput = {
   updatedAt?: Date | string
   teams?: Prisma.TeamCreateNestedManyWithoutDivisionInput
   league: Prisma.LeagueCreateNestedOneWithoutDivisionsInput
+  Game?: Prisma.GameCreateNestedManyWithoutDivisionInput
 }
 
 export type DivisionUncheckedCreateWithoutSeasonInput = {
@@ -574,6 +598,7 @@ export type DivisionUncheckedCreateWithoutSeasonInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   teams?: Prisma.TeamUncheckedCreateNestedManyWithoutDivisionInput
+  Game?: Prisma.GameUncheckedCreateNestedManyWithoutDivisionInput
 }
 
 export type DivisionCreateOrConnectWithoutSeasonInput = {
@@ -608,6 +633,7 @@ export type DivisionCreateWithoutTeamsInput = {
   updatedAt?: Date | string
   season: Prisma.SeasonCreateNestedOneWithoutDivisionsInput
   league: Prisma.LeagueCreateNestedOneWithoutDivisionsInput
+  Game?: Prisma.GameCreateNestedManyWithoutDivisionInput
 }
 
 export type DivisionUncheckedCreateWithoutTeamsInput = {
@@ -617,6 +643,7 @@ export type DivisionUncheckedCreateWithoutTeamsInput = {
   leagueId: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  Game?: Prisma.GameUncheckedCreateNestedManyWithoutDivisionInput
 }
 
 export type DivisionCreateOrConnectWithoutTeamsInput = {
@@ -641,6 +668,7 @@ export type DivisionUpdateWithoutTeamsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   season?: Prisma.SeasonUpdateOneRequiredWithoutDivisionsNestedInput
   league?: Prisma.LeagueUpdateOneRequiredWithoutDivisionsNestedInput
+  Game?: Prisma.GameUpdateManyWithoutDivisionNestedInput
 }
 
 export type DivisionUncheckedUpdateWithoutTeamsInput = {
@@ -650,6 +678,61 @@ export type DivisionUncheckedUpdateWithoutTeamsInput = {
   leagueId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  Game?: Prisma.GameUncheckedUpdateManyWithoutDivisionNestedInput
+}
+
+export type DivisionCreateWithoutGameInput = {
+  name: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  teams?: Prisma.TeamCreateNestedManyWithoutDivisionInput
+  season: Prisma.SeasonCreateNestedOneWithoutDivisionsInput
+  league: Prisma.LeagueCreateNestedOneWithoutDivisionsInput
+}
+
+export type DivisionUncheckedCreateWithoutGameInput = {
+  id?: number
+  name: string
+  seasonId: number
+  leagueId: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  teams?: Prisma.TeamUncheckedCreateNestedManyWithoutDivisionInput
+}
+
+export type DivisionCreateOrConnectWithoutGameInput = {
+  where: Prisma.DivisionWhereUniqueInput
+  create: Prisma.XOR<Prisma.DivisionCreateWithoutGameInput, Prisma.DivisionUncheckedCreateWithoutGameInput>
+}
+
+export type DivisionUpsertWithoutGameInput = {
+  update: Prisma.XOR<Prisma.DivisionUpdateWithoutGameInput, Prisma.DivisionUncheckedUpdateWithoutGameInput>
+  create: Prisma.XOR<Prisma.DivisionCreateWithoutGameInput, Prisma.DivisionUncheckedCreateWithoutGameInput>
+  where?: Prisma.DivisionWhereInput
+}
+
+export type DivisionUpdateToOneWithWhereWithoutGameInput = {
+  where?: Prisma.DivisionWhereInput
+  data: Prisma.XOR<Prisma.DivisionUpdateWithoutGameInput, Prisma.DivisionUncheckedUpdateWithoutGameInput>
+}
+
+export type DivisionUpdateWithoutGameInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  teams?: Prisma.TeamUpdateManyWithoutDivisionNestedInput
+  season?: Prisma.SeasonUpdateOneRequiredWithoutDivisionsNestedInput
+  league?: Prisma.LeagueUpdateOneRequiredWithoutDivisionsNestedInput
+}
+
+export type DivisionUncheckedUpdateWithoutGameInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  seasonId?: Prisma.IntFieldUpdateOperationsInput | number
+  leagueId?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  teams?: Prisma.TeamUncheckedUpdateManyWithoutDivisionNestedInput
 }
 
 export type DivisionCreateManyLeagueInput = {
@@ -666,6 +749,7 @@ export type DivisionUpdateWithoutLeagueInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   teams?: Prisma.TeamUpdateManyWithoutDivisionNestedInput
   season?: Prisma.SeasonUpdateOneRequiredWithoutDivisionsNestedInput
+  Game?: Prisma.GameUpdateManyWithoutDivisionNestedInput
 }
 
 export type DivisionUncheckedUpdateWithoutLeagueInput = {
@@ -675,6 +759,7 @@ export type DivisionUncheckedUpdateWithoutLeagueInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   teams?: Prisma.TeamUncheckedUpdateManyWithoutDivisionNestedInput
+  Game?: Prisma.GameUncheckedUpdateManyWithoutDivisionNestedInput
 }
 
 export type DivisionUncheckedUpdateManyWithoutLeagueInput = {
@@ -699,6 +784,7 @@ export type DivisionUpdateWithoutSeasonInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   teams?: Prisma.TeamUpdateManyWithoutDivisionNestedInput
   league?: Prisma.LeagueUpdateOneRequiredWithoutDivisionsNestedInput
+  Game?: Prisma.GameUpdateManyWithoutDivisionNestedInput
 }
 
 export type DivisionUncheckedUpdateWithoutSeasonInput = {
@@ -708,6 +794,7 @@ export type DivisionUncheckedUpdateWithoutSeasonInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   teams?: Prisma.TeamUncheckedUpdateManyWithoutDivisionNestedInput
+  Game?: Prisma.GameUncheckedUpdateManyWithoutDivisionNestedInput
 }
 
 export type DivisionUncheckedUpdateManyWithoutSeasonInput = {
@@ -725,10 +812,12 @@ export type DivisionUncheckedUpdateManyWithoutSeasonInput = {
 
 export type DivisionCountOutputType = {
   teams: number
+  Game: number
 }
 
 export type DivisionCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   teams?: boolean | DivisionCountOutputTypeCountTeamsArgs
+  Game?: boolean | DivisionCountOutputTypeCountGameArgs
 }
 
 /**
@@ -748,6 +837,13 @@ export type DivisionCountOutputTypeCountTeamsArgs<ExtArgs extends runtime.Types.
   where?: Prisma.TeamWhereInput
 }
 
+/**
+ * DivisionCountOutputType without action
+ */
+export type DivisionCountOutputTypeCountGameArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.GameWhereInput
+}
+
 
 export type DivisionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -759,6 +855,7 @@ export type DivisionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   teams?: boolean | Prisma.Division$teamsArgs<ExtArgs>
   season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
   league?: boolean | Prisma.LeagueDefaultArgs<ExtArgs>
+  Game?: boolean | Prisma.Division$GameArgs<ExtArgs>
   _count?: boolean | Prisma.DivisionCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["division"]>
 
@@ -798,6 +895,7 @@ export type DivisionInclude<ExtArgs extends runtime.Types.Extensions.InternalArg
   teams?: boolean | Prisma.Division$teamsArgs<ExtArgs>
   season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
   league?: boolean | Prisma.LeagueDefaultArgs<ExtArgs>
+  Game?: boolean | Prisma.Division$GameArgs<ExtArgs>
   _count?: boolean | Prisma.DivisionCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type DivisionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -815,6 +913,7 @@ export type $DivisionPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     teams: Prisma.$TeamPayload<ExtArgs>[]
     season: Prisma.$SeasonPayload<ExtArgs>
     league: Prisma.$LeaguePayload<ExtArgs>
+    Game: Prisma.$GamePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1220,6 +1319,7 @@ export interface Prisma__DivisionClient<T, Null = never, ExtArgs extends runtime
   teams<T extends Prisma.Division$teamsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Division$teamsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   season<T extends Prisma.SeasonDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SeasonDefaultArgs<ExtArgs>>): Prisma.Prisma__SeasonClient<runtime.Types.Result.GetResult<Prisma.$SeasonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   league<T extends Prisma.LeagueDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LeagueDefaultArgs<ExtArgs>>): Prisma.Prisma__LeagueClient<runtime.Types.Result.GetResult<Prisma.$LeaguePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  Game<T extends Prisma.Division$GameArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Division$GameArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GamePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1677,6 +1777,30 @@ export type Division$teamsArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   distinct?: Prisma.TeamScalarFieldEnum | Prisma.TeamScalarFieldEnum[]
+}
+
+/**
+ * Division.Game
+ */
+export type Division$GameArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Game
+   */
+  select?: Prisma.GameSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Game
+   */
+  omit?: Prisma.GameOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.GameInclude<ExtArgs> | null
+  where?: Prisma.GameWhereInput
+  orderBy?: Prisma.GameOrderByWithRelationInput | Prisma.GameOrderByWithRelationInput[]
+  cursor?: Prisma.GameWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.GameScalarFieldEnum | Prisma.GameScalarFieldEnum[]
 }
 
 /**

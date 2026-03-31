@@ -20,11 +20,28 @@ export const Position = {
 export type Position = (typeof Position)[keyof typeof Position]
 
 
-export const Role = {
+export const GamePhase = {
+  PRE_SEASON: 'PRE_SEASON',
+  REGULAR_SEASON: 'REGULAR_SEASON',
+  POST_SEASON: 'POST_SEASON'
+} as const
+
+export type GamePhase = (typeof GamePhase)[keyof typeof GamePhase]
+
+
+export const TeamSide = {
+  AWAY_TEAM: 'AWAY_TEAM',
+  HOME_TEAM: 'HOME_TEAM'
+} as const
+
+export type TeamSide = (typeof TeamSide)[keyof typeof TeamSide]
+
+
+export const UserRole = {
   GUEST: 'GUEST',
   USER: 'USER',
   MANAGER: 'MANAGER',
   ADMINISTRATOR: 'ADMINISTRATOR'
 } as const
 
-export type Role = (typeof Role)[keyof typeof Role]
+export type UserRole = (typeof UserRole)[keyof typeof UserRole]

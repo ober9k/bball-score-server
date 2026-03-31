@@ -57,6 +57,9 @@ export const ModelName = {
   Team: 'Team',
   Player: 'Player',
   TeamPlayer: 'TeamPlayer',
+  Game: 'Game',
+  GameTeam: 'GameTeam',
+  GameTeamPlayer: 'GameTeamPlayer',
   User: 'User'
 } as const
 
@@ -144,6 +147,64 @@ export const TeamPlayerScalarFieldEnum = {
 } as const
 
 export type TeamPlayerScalarFieldEnum = (typeof TeamPlayerScalarFieldEnum)[keyof typeof TeamPlayerScalarFieldEnum]
+
+
+export const GameScalarFieldEnum = {
+  id: 'id',
+  date: 'date',
+  phase: 'phase',
+  round: 'round',
+  leagueId: 'leagueId',
+  seasonId: 'seasonId',
+  divisionId: 'divisionId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type GameScalarFieldEnum = (typeof GameScalarFieldEnum)[keyof typeof GameScalarFieldEnum]
+
+
+export const GameTeamScalarFieldEnum = {
+  id: 'id',
+  side: 'side',
+  score: 'score',
+  scoreByPeriod: 'scoreByPeriod',
+  gameId: 'gameId',
+  teamId: 'teamId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type GameTeamScalarFieldEnum = (typeof GameTeamScalarFieldEnum)[keyof typeof GameTeamScalarFieldEnum]
+
+
+export const GameTeamPlayerScalarFieldEnum = {
+  started: 'started',
+  seconds: 'seconds',
+  fgMade: 'fgMade',
+  fgAttempted: 'fgAttempted',
+  fg3Made: 'fg3Made',
+  fg3Attempted: 'fg3Attempted',
+  ftMade: 'ftMade',
+  ftAttempted: 'ftAttempted',
+  points: 'points',
+  offRebounds: 'offRebounds',
+  defRebounds: 'defRebounds',
+  rebounds: 'rebounds',
+  assists: 'assists',
+  steals: 'steals',
+  blocks: 'blocks',
+  turnovers: 'turnovers',
+  personalFouls: 'personalFouls',
+  technicalFouls: 'technicalFouls',
+  gameTeamId: 'gameTeamId',
+  playerId: 'playerId',
+  teamId: 'teamId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type GameTeamPlayerScalarFieldEnum = (typeof GameTeamPlayerScalarFieldEnum)[keyof typeof GameTeamPlayerScalarFieldEnum]
 
 
 export const UserScalarFieldEnum = {
