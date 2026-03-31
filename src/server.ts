@@ -18,7 +18,6 @@ app.use(cookieParser());
 passport.use(passportHandler);
 
 app.use(passport.initialize());
-app.use(errorHandler);
 app.use(getBaseLeagueUrl(), leagueHandler);
 
 routes.forEach((r) => {
@@ -30,5 +29,8 @@ leagueRoutes.forEach((r) => {
   // handle league specific URLs
   app.use(getBaseLeagueUrl(), r);
 });
+
+/* init error handler (last) */
+app.use(errorHandler);
 
 export default app;
