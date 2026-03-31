@@ -6,7 +6,11 @@ import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
 import { StatusCodes } from "http-status-codes";
 
 export async function findSeasons(): Promise<Season[]> {
-  return prisma.season.findMany();
+  return prisma.season.findMany({
+    orderBy: {
+      name: "asc",
+    },
+  });
 }
 
 export async function findSeasonById(id: number): Promise<Season | null> {

@@ -7,7 +7,11 @@ import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
 import { StatusCodes } from "http-status-codes";
 
 export async function findPlayers(): Promise<Player[]> {
-  return prisma.player.findMany();
+  return prisma.player.findMany({
+    orderBy: {
+      name: "asc",
+    },
+  });
 }
 
 export async function findPlayerById(id: number): Promise<Player | null> {

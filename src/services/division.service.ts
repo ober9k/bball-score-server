@@ -6,7 +6,11 @@ import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
 import { StatusCodes } from "http-status-codes";
 
 export async function findDivisions(): Promise<Division[]> {
-  return prisma.division.findMany();
+  return prisma.division.findMany({
+    orderBy: {
+      name: "asc",
+    },
+  });
 }
 
 export async function findDivisionById(id: number): Promise<Division | null> {
