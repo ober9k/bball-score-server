@@ -1,5 +1,6 @@
 import { authRoutes } from "@/routes/auth.routes";
 import { divisionsRoutes } from "@/routes/divisions.routes";
+import { gamesRoutes } from "@/routes/games.routes";
 import { playersRoutes } from "@/routes/players.routes";
 import { seasonsRoutes } from "@/routes/seasons.routes";
 import { standingsRoutes } from "@/routes/standings.routes";
@@ -12,6 +13,7 @@ export const routes = [
 
 export const leagueRoutes = [
   divisionsRoutes,
+  gamesRoutes,
   playersRoutes,
   seasonsRoutes,
   standingsRoutes,
