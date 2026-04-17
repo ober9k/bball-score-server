@@ -51,7 +51,7 @@ export async function findStatisticsLogs(): Promise<StatisticsLog[]> {
       const log   = playerStatisticsLogs.get(id)!;
       const stats = extractStats(pl);
 
-      log.played  += getPlayed(pl.played);
+      log.played  += getPlayed(pl.seconds);
       log.started += getStarted(pl.started);
 
       statsKeys.forEach((key) => {
