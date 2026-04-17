@@ -69,7 +69,6 @@ export async function findStatisticsLogs(): Promise<StatisticsLog[]> {
         log.played               += getPlayed(pl);
         log.started              += getStarted(pl);
         log.stats.seconds        += getValue(pl, "seconds");
-        log.stats.seconds        += getValue(pl, "seconds");
         log.stats.fgMade         += getValue(pl, "fgMade");
         log.stats.fgAttempted    += getValue(pl, "fgAttempted");
         log.stats.fg3Made        += getValue(pl, "fg3Made");
@@ -117,6 +116,30 @@ export async function findStatisticsLogs(): Promise<StatisticsLog[]> {
         }
       } as StatisticsLog)
     });
+
+  const averages = true; /* default for now */
+
+  if (averages) {
+    playerStatisticsLogs.forEach((log) => {
+      log.stats.seconds        = log.stats.seconds        / log.played;
+      log.stats.fgMade         = log.stats.fgMade         / log.played;
+      log.stats.fgAttempted    = log.stats.fgAttempted    / log.played;
+      log.stats.fg3Made        = log.stats.fg3Made        / log.played;
+      log.stats.fg3Attempted   = log.stats.fg3Attempted   / log.played;
+      log.stats.ftMade         = log.stats.ftMade         / log.played;
+      log.stats.ftAttempted    = log.stats.ftAttempted    / log.played;
+      log.stats.points         = log.stats.points         / log.played;
+      log.stats.offRebounds    = log.stats.offRebounds    / log.played;
+      log.stats.defRebounds    = log.stats.defRebounds    / log.played;
+      log.stats.rebounds       = log.stats.rebounds       / log.played;
+      log.stats.assists        = log.stats.assists        / log.played;
+      log.stats.steals         = log.stats.steals         / log.played;
+      log.stats.blocks         = log.stats.blocks         / log.played;
+      log.stats.turnovers      = log.stats.turnovers      / log.played;
+      log.stats.personalFouls  = log.stats.personalFouls  / log.played;
+      log.stats.technicalFouls = log.stats.technicalFouls / log.played;
+    });
+  }
 
   return [...playerStatisticsLogs.values()];
 }
