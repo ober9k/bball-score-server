@@ -25,6 +25,19 @@ export const statsKeys = [
 ];
 
 /**
+ * Extract stats values from player log into separate object.
+ */
+export function extractStats(playerLog: any): Stats {
+  const stats = {};
+
+  statsKeys.forEach((key) => {
+    stats[key] = playerLog[key];
+  });
+
+  return stats as Stats;
+}
+
+/**
  * Count for if player played based off started or seconds.
  */
 export function getPlayed(seconds: number): number {
