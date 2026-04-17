@@ -1,7 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import type { StatisticsLog } from "@/types/statistics-log";
-import type { Stats } from "@/types/stats";
-import { getPlayed, getStarted, extractStats, getStatsValue, statsKeys } from "@/utils/stats-utils";
+import { extractStats, generateEmptyStatisticsLog, getPlayed, getStarted, getStatsValue, statsKeys } from "@/utils/stats-utils";
 
 /**
  * TODO: this is temporary, need to work out a tidier way to handle all of this
@@ -42,30 +41,18 @@ export async function findStatisticsLogs(): Promise<StatisticsLog[]> {
    */
   playerLogs
     .forEach((pl) => {
-      const { id } = pl.player;
-      const stats = extractStats(pl);
+      const { player } = pl;
+      const { id } = player;
 
-      if (playerStatisticsLogs.has(id)) {
-        const log = playerStatisticsLogs.get(id)!;
-
-        log.played  += getPlayed(pl.played);
-        log.started += getStarted(pl.started);
-
-        statsKeys.forEach((key) => {
-          log.stats[key] += getStatsValue(stats, key);
-        });
-
-        return;
+      if (!playerStatisticsLogs.has(id)) {
+        playerStatisticsLogs.set(id, generateEmptyStatisticsLog(pl));
       }
 
-      playerStatisticsLogs.set(pl.player.id, {
-        id:      pl.player.id,
-        team:    pl.team,
-        player:  pl.player,
-        played:  getPlayed(pl.played),
-        started: getStarted(pl.started),
-        stats:   stats,
-      } as StatisticsLog);
+      const log   = playerStatisticsLogs.get(id)!;
+      const stats = extractStats(pl);
+
+      log.played  += getPlayed(pl.played);
+      log.started += getStarted(pl.started);
 
       statsKeys.forEach((key) => {
         log.stats[key] += getStatsValue(stats, key);

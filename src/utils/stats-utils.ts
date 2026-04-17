@@ -1,3 +1,4 @@
+import type { StatisticsLog } from "@/types/statistics-log";
 import type { Stats } from "@/types/stats";
 
 /**
@@ -23,6 +24,26 @@ export const statsKeys = [
   "personalFouls",
   "technicalFouls",
 ];
+
+/**
+ * Generate empty stats object.
+ */
+function generateEmptyStats(): Stats {
+  return statsKeys.reduce((acc, key) => ({
+    ...acc, [key]: 0,
+  }), {}) as Stats;
+}
+
+export function generateEmptyStatisticsLog(playerLog: any): StatisticsLog {
+  const { player, team } = playerLog;
+  const { id } = player;
+
+  const played  = 0;
+  const started = 0;
+  const stats   = generateEmptyStats();
+
+  return { id, player, team, played, started, stats };
+}
 
 /**
  * Extract stats values from player log into separate object.
