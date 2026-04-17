@@ -1,5 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import type { StatisticsLog } from "@/types/statistics-log";
+import type { Stats } from "@/types/stats";
+import { getPlayed, getStarted, getStatsValue, statsKeys } from "@/utils/stats-utils";
 
 /**
  * TODO: this is temporary, need to work out a tidier way to handle all of this
@@ -14,27 +16,6 @@ const getColumns = (columns: string[]) => columns.reduce(reducer, {});
 const gameTeamPlayerCols = getColumns(["started", "seconds", "fgMade", "fgAttempted", "fg3Made", "fg3Attempted", "ftMade", "ftAttempted", "points", "offRebounds", "defRebounds", "rebounds", "assists", "steals", "blocks", "turnovers", "personalFouls", "technicalFouls"]);
 const teamCols = getColumns(["id", "name", "shortName"]);
 const playerCols = getColumns(["id", "name", "position", "number", "height"]);
-
-/**
- * TODO: this is temporary, mostly for experimental result handling
- */
-function getPlayed(pl: any): number {
-  return pl.started || pl.seconds > 0 ? 1 : 0;
-}
-
-/**
- * TODO: this is temporary, mostly for experimental result handling
- */
-function getStarted(pl: any): number {
-  return pl.started ? 1 : 0;
-}
-
-/**
- * TODO: this is temporary, mostly for experimental result handling
- */
-function getValue(pl: any, key: string): number {
-  return pl[key];
-}
 
 export async function findStatisticsLogs(): Promise<StatisticsLog[]> {
   const playerLogs: any[] = await prisma.gameTeamPlayer.findMany({
@@ -66,54 +47,29 @@ export async function findStatisticsLogs(): Promise<StatisticsLog[]> {
       if (playerStatisticsLogs.has(id)) {
         const log = playerStatisticsLogs.get(id)!;
 
-        log.played               += getPlayed(pl);
-        log.started              += getStarted(pl);
-        log.stats.seconds        += getValue(pl, "seconds");
-        log.stats.fgMade         += getValue(pl, "fgMade");
-        log.stats.fgAttempted    += getValue(pl, "fgAttempted");
-        log.stats.fg3Made        += getValue(pl, "fg3Made");
-        log.stats.fg3Attempted   += getValue(pl, "fg3Attempted");
-        log.stats.ftMade         += getValue(pl, "ftMade");
-        log.stats.ftAttempted    += getValue(pl, "ftAttempted");
-        log.stats.points         += getValue(pl, "points");
-        log.stats.offRebounds    += getValue(pl, "offRebounds");
-        log.stats.defRebounds    += getValue(pl, "defRebounds");
-        log.stats.rebounds       += getValue(pl, "rebounds");
-        log.stats.assists        += getValue(pl, "assists");
-        log.stats.steals         += getValue(pl, "steals");
-        log.stats.blocks         += getValue(pl, "blocks");
-        log.stats.turnovers      += getValue(pl, "turnovers");
-        log.stats.personalFouls  += getValue(pl, "personalFouls");
-        log.stats.technicalFouls += getValue(pl, "technicalFouls");
+        log.played  += getPlayed(pl.played);
+        log.started += getStarted(pl.started);
+
+        statsKeys.forEach((key) => {
+          log.stats[key] += getStatsValue(pl.stats, key);
+        });
 
         return;
       }
+
+      const stats = {};
+
+      statsKeys.forEach((key) => {
+        stats[key] = getStatsValue(pl.stats, key);
+      });
 
       playerStatisticsLogs.set(pl.player.id, {
         id:      pl.player.id,
         team:    pl.team,
         player:  pl.player,
-        played:  getPlayed(pl),
-        started: getStarted(pl),
-        stats: {
-          seconds:        getValue(pl, "seconds"),
-          fgMade:         getValue(pl, "fgMade"),
-          fgAttempted:    getValue(pl, "fgAttempted"),
-          fg3Made:        getValue(pl, "fg3Made"),
-          fg3Attempted:   getValue(pl, "fg3Attempted"),
-          ftMade:         getValue(pl, "ftMade"),
-          ftAttempted:    getValue(pl, "ftAttempted"),
-          points:         getValue(pl, "points"),
-          offRebounds:    getValue(pl, "offRebounds"),
-          defRebounds:    getValue(pl, "defRebounds"),
-          rebounds:       getValue(pl, "rebounds"),
-          assists:        getValue(pl, "assists"),
-          steals:         getValue(pl, "steals"),
-          blocks:         getValue(pl, "blocks"),
-          turnovers:      getValue(pl, "turnovers"),
-          personalFouls:  getValue(pl, "personalFouls"),
-          technicalFouls: getValue(pl, "technicalFouls"),
-        }
+        played:  getPlayed(pl.played),
+        started: getStarted(pl.started),
+        stats:   stats as Stats,
       } as StatisticsLog)
     });
 
@@ -121,23 +77,9 @@ export async function findStatisticsLogs(): Promise<StatisticsLog[]> {
 
   if (averages) {
     playerStatisticsLogs.forEach((log) => {
-      log.stats.seconds        = log.stats.seconds        / log.played;
-      log.stats.fgMade         = log.stats.fgMade         / log.played;
-      log.stats.fgAttempted    = log.stats.fgAttempted    / log.played;
-      log.stats.fg3Made        = log.stats.fg3Made        / log.played;
-      log.stats.fg3Attempted   = log.stats.fg3Attempted   / log.played;
-      log.stats.ftMade         = log.stats.ftMade         / log.played;
-      log.stats.ftAttempted    = log.stats.ftAttempted    / log.played;
-      log.stats.points         = log.stats.points         / log.played;
-      log.stats.offRebounds    = log.stats.offRebounds    / log.played;
-      log.stats.defRebounds    = log.stats.defRebounds    / log.played;
-      log.stats.rebounds       = log.stats.rebounds       / log.played;
-      log.stats.assists        = log.stats.assists        / log.played;
-      log.stats.steals         = log.stats.steals         / log.played;
-      log.stats.blocks         = log.stats.blocks         / log.played;
-      log.stats.turnovers      = log.stats.turnovers      / log.played;
-      log.stats.personalFouls  = log.stats.personalFouls  / log.played;
-      log.stats.technicalFouls = log.stats.technicalFouls / log.played;
+      statsKeys.forEach((key) => {
+        log.stats[key] = log.stats[key] / log.played;
+      });
     });
   }
 
