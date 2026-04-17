@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import type { StatisticsLog } from "@/types/statistics-log";
-import { extractStats, generateEmptyStatisticsLog, getPlayed, getStarted, getStatsValue, statsKeys } from "@/utils/stats-utils";
+import { calculateAverages, calculateTotals, extractStats, generateEmptyStatisticsLog, getPlayed, getStarted } from "@/utils/stats-utils";
 
 /**
  * TODO: this is temporary, need to work out a tidier way to handle all of this
@@ -53,21 +53,16 @@ export async function findStatisticsLogs(): Promise<StatisticsLog[]> {
 
       log.played  += getPlayed(pl.seconds);
       log.started += getStarted(pl.started);
-
-      statsKeys.forEach((key) => {
-        log.stats[key] += getStatsValue(stats, key);
-      });
+      log.stats    = calculateTotals(log, stats);
     });
 
   const averages = true; /* default for now */
 
   if (averages) {
     playerStatisticsLogs.forEach((log) => {
-      statsKeys.forEach((key) => {
-        log.stats[key] = log.stats[key] / log.played;
-      });
+      log.stats = calculateAverages(log);
     });
   }
 
-  return [...playerStatisticsLogs.values()];
+  return [ ...playerStatisticsLogs.values() ];
 }

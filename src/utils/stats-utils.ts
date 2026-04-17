@@ -73,8 +73,21 @@ export function getStarted(started: boolean): number {
 }
 
 /**
- * Get particular statsKey value (working with `statsKey`) for calculation.
+ * Add next set of stats to existing stats.
  */
-export function getStatsValue(stats: Stats, statsKey: string): number {
-  return stats[statsKey];
+export function calculateTotals(log: StatisticsLog, stats: Stats): Stats {
+  return statsKeys.reduce((acc, key) => ({
+    ...acc, [key]: acc[key] + stats[key],
+  }), log.stats) as Stats;
+}
+
+/**
+ * Add next set of stats to existing stats.
+ */
+export function calculateAverages(log: StatisticsLog): Stats {
+  const { played } = log;
+
+  return statsKeys.reduce((acc, key) => ({
+    ...acc, [key]: log.stats[key] / played,
+  }), {}) as Stats;
 }
