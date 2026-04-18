@@ -1,7 +1,8 @@
-import { getStatistics } from "@/controllers/statistics.controller";
+import { getStatisticsAverages, getStatisticsTotals } from "@/controllers/statistics.controller";
 import { Router } from "express";
 
 const router = Router()
-  .get("/statistics", getStatistics)
+  .get("/statistics/averages", getStatisticsAverages)
+  .get("/statistics/totals", getStatisticsTotals)
 
 export { router as statisticsRoutes };

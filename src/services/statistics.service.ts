@@ -16,7 +16,9 @@ const gameTeamPlayerCols = getColumns(["started", "seconds", "fgMade", "fgAttemp
 const teamCols = getColumns(["id", "name", "shortName"]);
 const playerCols = getColumns(["id", "name", "position", "number", "height"]);
 
-export async function findStatisticsLogs(): Promise<StatisticsLog[]> {
+export type StatisticsContext = "averages" | "totals";
+
+export async function findStatisticsLogs(context: StatisticsContext): Promise<StatisticsLog[]> {
   const playerLogs: any[] = await prisma.gameTeamPlayer.findMany({
     select: {
       ...gameTeamPlayerCols,
@@ -56,9 +58,7 @@ export async function findStatisticsLogs(): Promise<StatisticsLog[]> {
       log.stats    = calculateTotals(log, stats);
     });
 
-  const averages = true; /* default for now */
-
-  if (averages) {
+  if (context === "averages") {
     playerStatisticsLogs.forEach((log) => {
       log.stats = calculateAverages(log);
     });
