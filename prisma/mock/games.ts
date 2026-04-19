@@ -81,8 +81,8 @@ export type MockGame = {
 };
 
 export const mockGameTeams: MockGameTeam[] = [
-  { teamId: 1, side: "AWAY_TEAM", score: 48, scoreByPeriod: [13,10,11,14], teamPlayers: [
-      { playerId:  1, started: true,  ...mapStats([ 1664, 4, 12, 0, 2, 0, 0, 0, 5, 1, 0, 3, 1, 0, 4, 2, 0]) },
+  { teamId: 1, side: "AWAY_TEAM", score: 50, scoreByPeriod: [13,12,11,14], teamPlayers: [
+      { playerId:  1, started: true,  ...mapStats([ 1664, 5, 12, 0, 2, 0, 0, 0, 5, 1, 0, 3, 1, 0, 4, 2, 0]) },
       { playerId:  2, started: true,  ...mapStats([ 1667, 2, 10, 1, 8, 0, 1, 0, 1, 2, 0, 1, 0, 0, 1, 2, 0]) },
       { playerId:  3, started: true,  ...mapStats([ 1194, 0,  4, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0]) },
       { playerId:  4, started: true,  ...mapStats([ 1257, 4, 11, 0, 3, 0, 0, 0, 1, 4, 0, 3, 4, 0, 3, 1, 0]) },
