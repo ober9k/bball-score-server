@@ -3,7 +3,7 @@ import type { StandingsLog } from "@/types/standings-log";
 /**
  * Generate empty stats object.
  */
-export function generateEmptyStandingsLog(log: any): StandingsLog {
+function generateStandingsLog(log: any): StandingsLog {
   const { team } = log;
   const { id } = team;
 
@@ -27,4 +27,18 @@ export function accumulateForGame(log: StandingsLog, scoreA: number, scoreB): vo
   log.byes          += 0; /* tbd */
   log.pointsFor     += scoreA;
   log.pointsAgainst += scoreB;
+}
+
+export function generateStandingsLogs(games: any[]): Map<number, StandingsLog> {
+  const standingsLogs = new Map<number, StandingsLog>();
+
+  games
+    .map((g) => ([...g.gameTeams]))
+    .flat()
+    .forEach((tl) => {
+      const { team } = tl;
+      standingsLogs.set(team.id, generateStandingsLog(tl));
+    });
+
+  return standingsLogs;
 }

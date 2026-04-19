@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import type { StandingsLog } from "@/types/standings-log";
-import { accumulateForGame, generateEmptyStandingsLog } from "@/utils/standings-utils";
+import { accumulateForGame, generateStandingsLogs } from "@/utils/standings-utils";
 
 /**
  * TODO: this is temporary, need to work out a tidier way to handle all of this
@@ -29,23 +29,13 @@ export async function generateStandings(): Promise<StandingsLog[]> {
     },
   });
 
-  const teamStandingsLog = new Map<number, StandingsLog>();
+  const teamStandingsLog = generateStandingsLogs(games);
 
   games
     .forEach((g) => {
       const [ awayTeamLog, homeTeamLog ] = g.gameTeams as any[];
       const { team: awayTeam } = awayTeamLog;
       const { team: homeTeam } = homeTeamLog;
-
-      console.log(awayTeam, homeTeam);
-
-      if (!teamStandingsLog.has(awayTeam.id)) {
-        teamStandingsLog.set(awayTeam.id, generateEmptyStandingsLog(awayTeamLog));
-      }
-
-      if (!teamStandingsLog.has(homeTeam.id)) {
-        teamStandingsLog.set(homeTeam.id, generateEmptyStandingsLog(homeTeamLog));
-      }
 
       accumulateForGame(teamStandingsLog.get(awayTeam.id)!, awayTeamLog.score, homeTeamLog.score);
       accumulateForGame(teamStandingsLog.get(homeTeam.id)!, homeTeamLog.score, awayTeamLog.score);
