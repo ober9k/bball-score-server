@@ -6,6 +6,8 @@ export type Player = {
   position: PositionType,
   number: string,
   height: string,
+  active: boolean,
+  archived: boolean,
   leagueId: number,
 };
 

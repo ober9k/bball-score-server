@@ -7,6 +7,8 @@ export type Game = {
   date: Date
   phase: GamePhaseType,
   round: number,
+  active: boolean,
+  archived: boolean,
   leagueId: number,
   seasonId: number,
   divisionId: number,
