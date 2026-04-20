@@ -1,11 +1,21 @@
 import { getLocalLeague } from "@/services/league.service";
 import { findPlayerById, findPlayers, findPlayerTeams, savePlayer, savePlayerById } from "@/services/player.service";
 import type { PlayerData } from "@/types/player";
+import type { TeamData } from "@/types/team";
 import type { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
 function getPlayerId(req: Request): number {
   return +req.params.playerId;
+}
+
+function getPlayerData(req: Request, res: Response): PlayerData {
+  const { name, position, number, height, active, archived } = req.body;
+  const { id: leagueId } = getLocalLeague(res);
+
+  return {
+    name, position, number, height, active, archived, leagueId,
+  };
 }
 
 export async function getPlayers(req: Request, res: Response) {
@@ -25,38 +35,18 @@ export async function getPlayer(req: Request, res: Response) {
 }
 
 export async function createPlayer(req: Request, res: Response) {
-  const playerData: PlayerData = {
-    name: req.body.name,
-    position: req.body.position,
-    number: req.body.number,
-    height: req.body.height,
-    active: req.body.active,
-    archived: req.body.archived,
-    leagueId: getLocalLeague(res).id,
-  };
-
   return res
-    .status(StatusCodes.OK)
+    .status(StatusCodes.CREATED)
     .json(
-      await savePlayer(playerData)
+      await savePlayer(getPlayerData(req, res))
     );
 }
 
 export async function updatePlayer(req: Request, res: Response) {
-  const playerData: PlayerData = {
-    name: req.body.name,
-    position: req.body.position,
-    number: req.body.number,
-    height: req.body.height,
-    active: req.body.active,
-    archived: req.body.archived,
-    leagueId: getLocalLeague(res).id,
-  };
-
   return res
     .status(StatusCodes.OK)
     .json(
-      await savePlayerById(getPlayerId(req), playerData)
+      await savePlayerById(getPlayerId(req), getPlayerData(req, res))
     );
 }
 
