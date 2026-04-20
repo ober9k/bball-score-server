@@ -83,6 +83,8 @@ export const LeagueScalarFieldEnum = {
   id: 'id',
   name: 'name',
   slug: 'slug',
+  active: 'active',
+  archived: 'archived',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -93,6 +95,8 @@ export type LeagueScalarFieldEnum = (typeof LeagueScalarFieldEnum)[keyof typeof 
 export const SeasonScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  active: 'active',
+  archived: 'archived',
   leagueId: 'leagueId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -104,6 +108,8 @@ export type SeasonScalarFieldEnum = (typeof SeasonScalarFieldEnum)[keyof typeof 
 export const DivisionScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  active: 'active',
+  archived: 'archived',
   seasonId: 'seasonId',
   leagueId: 'leagueId',
   createdAt: 'createdAt',
@@ -117,6 +123,8 @@ export const TeamScalarFieldEnum = {
   id: 'id',
   name: 'name',
   shortName: 'shortName',
+  active: 'active',
+  archived: 'archived',
   divisionId: 'divisionId',
   leagueId: 'leagueId',
   createdAt: 'createdAt',
@@ -132,6 +140,8 @@ export const PlayerScalarFieldEnum = {
   position: 'position',
   number: 'number',
   height: 'height',
+  active: 'active',
+  archived: 'archived',
   leagueId: 'leagueId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -154,6 +164,8 @@ export const GameScalarFieldEnum = {
   date: 'date',
   phase: 'phase',
   round: 'round',
+  active: 'active',
+  archived: 'archived',
   leagueId: 'leagueId',
   seasonId: 'seasonId',
   divisionId: 'divisionId',

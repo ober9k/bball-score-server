@@ -1008,10 +1008,6 @@ export type GameTeamPlayerUncheckedUpdateManyWithoutGameTeamNestedInput = {
   deleteMany?: Prisma.GameTeamPlayerScalarWhereInput | Prisma.GameTeamPlayerScalarWhereInput[]
 }
 
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
 export type GameTeamPlayerCreateWithoutTeamInput = {
   started: boolean
   seconds: number

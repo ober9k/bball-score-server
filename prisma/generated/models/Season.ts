@@ -39,6 +39,8 @@ export type SeasonSumAggregateOutputType = {
 export type SeasonMinAggregateOutputType = {
   id: number | null
   name: string | null
+  active: boolean | null
+  archived: boolean | null
   leagueId: number | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -47,6 +49,8 @@ export type SeasonMinAggregateOutputType = {
 export type SeasonMaxAggregateOutputType = {
   id: number | null
   name: string | null
+  active: boolean | null
+  archived: boolean | null
   leagueId: number | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -55,6 +59,8 @@ export type SeasonMaxAggregateOutputType = {
 export type SeasonCountAggregateOutputType = {
   id: number
   name: number
+  active: number
+  archived: number
   leagueId: number
   createdAt: number
   updatedAt: number
@@ -75,6 +81,8 @@ export type SeasonSumAggregateInputType = {
 export type SeasonMinAggregateInputType = {
   id?: true
   name?: true
+  active?: true
+  archived?: true
   leagueId?: true
   createdAt?: true
   updatedAt?: true
@@ -83,6 +91,8 @@ export type SeasonMinAggregateInputType = {
 export type SeasonMaxAggregateInputType = {
   id?: true
   name?: true
+  active?: true
+  archived?: true
   leagueId?: true
   createdAt?: true
   updatedAt?: true
@@ -91,6 +101,8 @@ export type SeasonMaxAggregateInputType = {
 export type SeasonCountAggregateInputType = {
   id?: true
   name?: true
+  active?: true
+  archived?: true
   leagueId?: true
   createdAt?: true
   updatedAt?: true
@@ -186,6 +198,8 @@ export type SeasonGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 export type SeasonGroupByOutputType = {
   id: number
   name: string
+  active: boolean
+  archived: boolean
   leagueId: number
   createdAt: Date
   updatedAt: Date
@@ -217,6 +231,8 @@ export type SeasonWhereInput = {
   NOT?: Prisma.SeasonWhereInput | Prisma.SeasonWhereInput[]
   id?: Prisma.IntFilter<"Season"> | number
   name?: Prisma.StringFilter<"Season"> | string
+  active?: Prisma.BoolFilter<"Season"> | boolean
+  archived?: Prisma.BoolFilter<"Season"> | boolean
   leagueId?: Prisma.IntFilter<"Season"> | number
   createdAt?: Prisma.DateTimeFilter<"Season"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Season"> | Date | string
@@ -228,6 +244,8 @@ export type SeasonWhereInput = {
 export type SeasonOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  active?: Prisma.SortOrder
+  archived?: Prisma.SortOrder
   leagueId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -242,6 +260,8 @@ export type SeasonWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.SeasonWhereInput[]
   NOT?: Prisma.SeasonWhereInput | Prisma.SeasonWhereInput[]
   name?: Prisma.StringFilter<"Season"> | string
+  active?: Prisma.BoolFilter<"Season"> | boolean
+  archived?: Prisma.BoolFilter<"Season"> | boolean
   leagueId?: Prisma.IntFilter<"Season"> | number
   createdAt?: Prisma.DateTimeFilter<"Season"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Season"> | Date | string
@@ -253,6 +273,8 @@ export type SeasonWhereUniqueInput = Prisma.AtLeast<{
 export type SeasonOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  active?: Prisma.SortOrder
+  archived?: Prisma.SortOrder
   leagueId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -269,6 +291,8 @@ export type SeasonScalarWhereWithAggregatesInput = {
   NOT?: Prisma.SeasonScalarWhereWithAggregatesInput | Prisma.SeasonScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Season"> | number
   name?: Prisma.StringWithAggregatesFilter<"Season"> | string
+  active?: Prisma.BoolWithAggregatesFilter<"Season"> | boolean
+  archived?: Prisma.BoolWithAggregatesFilter<"Season"> | boolean
   leagueId?: Prisma.IntWithAggregatesFilter<"Season"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Season"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Season"> | Date | string
@@ -276,6 +300,8 @@ export type SeasonScalarWhereWithAggregatesInput = {
 
 export type SeasonCreateInput = {
   name: string
+  active: boolean
+  archived: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   divisions?: Prisma.DivisionCreateNestedManyWithoutSeasonInput
@@ -286,6 +312,8 @@ export type SeasonCreateInput = {
 export type SeasonUncheckedCreateInput = {
   id?: number
   name: string
+  active: boolean
+  archived: boolean
   leagueId: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -295,6 +323,8 @@ export type SeasonUncheckedCreateInput = {
 
 export type SeasonUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   divisions?: Prisma.DivisionUpdateManyWithoutSeasonNestedInput
@@ -305,6 +335,8 @@ export type SeasonUpdateInput = {
 export type SeasonUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   leagueId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -315,6 +347,8 @@ export type SeasonUncheckedUpdateInput = {
 export type SeasonCreateManyInput = {
   id?: number
   name: string
+  active: boolean
+  archived: boolean
   leagueId: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -322,6 +356,8 @@ export type SeasonCreateManyInput = {
 
 export type SeasonUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -329,6 +365,8 @@ export type SeasonUpdateManyMutationInput = {
 export type SeasonUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   leagueId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -347,6 +385,8 @@ export type SeasonOrderByRelationAggregateInput = {
 export type SeasonCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  active?: Prisma.SortOrder
+  archived?: Prisma.SortOrder
   leagueId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -360,6 +400,8 @@ export type SeasonAvgOrderByAggregateInput = {
 export type SeasonMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  active?: Prisma.SortOrder
+  archived?: Prisma.SortOrder
   leagueId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -368,6 +410,8 @@ export type SeasonMaxOrderByAggregateInput = {
 export type SeasonMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  active?: Prisma.SortOrder
+  archived?: Prisma.SortOrder
   leagueId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -455,6 +499,8 @@ export type SeasonUpdateOneRequiredWithoutGameNestedInput = {
 
 export type SeasonCreateWithoutLeagueInput = {
   name: string
+  active: boolean
+  archived: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   divisions?: Prisma.DivisionCreateNestedManyWithoutSeasonInput
@@ -464,6 +510,8 @@ export type SeasonCreateWithoutLeagueInput = {
 export type SeasonUncheckedCreateWithoutLeagueInput = {
   id?: number
   name: string
+  active: boolean
+  archived: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   divisions?: Prisma.DivisionUncheckedCreateNestedManyWithoutSeasonInput
@@ -502,6 +550,8 @@ export type SeasonScalarWhereInput = {
   NOT?: Prisma.SeasonScalarWhereInput | Prisma.SeasonScalarWhereInput[]
   id?: Prisma.IntFilter<"Season"> | number
   name?: Prisma.StringFilter<"Season"> | string
+  active?: Prisma.BoolFilter<"Season"> | boolean
+  archived?: Prisma.BoolFilter<"Season"> | boolean
   leagueId?: Prisma.IntFilter<"Season"> | number
   createdAt?: Prisma.DateTimeFilter<"Season"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Season"> | Date | string
@@ -509,6 +559,8 @@ export type SeasonScalarWhereInput = {
 
 export type SeasonCreateWithoutDivisionsInput = {
   name: string
+  active: boolean
+  archived: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   league: Prisma.LeagueCreateNestedOneWithoutSeasonsInput
@@ -518,6 +570,8 @@ export type SeasonCreateWithoutDivisionsInput = {
 export type SeasonUncheckedCreateWithoutDivisionsInput = {
   id?: number
   name: string
+  active: boolean
+  archived: boolean
   leagueId: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -542,6 +596,8 @@ export type SeasonUpdateToOneWithWhereWithoutDivisionsInput = {
 
 export type SeasonUpdateWithoutDivisionsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   league?: Prisma.LeagueUpdateOneRequiredWithoutSeasonsNestedInput
@@ -551,6 +607,8 @@ export type SeasonUpdateWithoutDivisionsInput = {
 export type SeasonUncheckedUpdateWithoutDivisionsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   leagueId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -559,6 +617,8 @@ export type SeasonUncheckedUpdateWithoutDivisionsInput = {
 
 export type SeasonCreateWithoutGameInput = {
   name: string
+  active: boolean
+  archived: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   divisions?: Prisma.DivisionCreateNestedManyWithoutSeasonInput
@@ -568,6 +628,8 @@ export type SeasonCreateWithoutGameInput = {
 export type SeasonUncheckedCreateWithoutGameInput = {
   id?: number
   name: string
+  active: boolean
+  archived: boolean
   leagueId: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -592,6 +654,8 @@ export type SeasonUpdateToOneWithWhereWithoutGameInput = {
 
 export type SeasonUpdateWithoutGameInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   divisions?: Prisma.DivisionUpdateManyWithoutSeasonNestedInput
@@ -601,6 +665,8 @@ export type SeasonUpdateWithoutGameInput = {
 export type SeasonUncheckedUpdateWithoutGameInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   leagueId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -610,12 +676,16 @@ export type SeasonUncheckedUpdateWithoutGameInput = {
 export type SeasonCreateManyLeagueInput = {
   id?: number
   name: string
+  active: boolean
+  archived: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type SeasonUpdateWithoutLeagueInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   divisions?: Prisma.DivisionUpdateManyWithoutSeasonNestedInput
@@ -625,6 +695,8 @@ export type SeasonUpdateWithoutLeagueInput = {
 export type SeasonUncheckedUpdateWithoutLeagueInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   divisions?: Prisma.DivisionUncheckedUpdateManyWithoutSeasonNestedInput
@@ -634,6 +706,8 @@ export type SeasonUncheckedUpdateWithoutLeagueInput = {
 export type SeasonUncheckedUpdateManyWithoutLeagueInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -681,6 +755,8 @@ export type SeasonCountOutputTypeCountGameArgs<ExtArgs extends runtime.Types.Ext
 export type SeasonSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
+  active?: boolean
+  archived?: boolean
   leagueId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -693,6 +769,8 @@ export type SeasonSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
 export type SeasonSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
+  active?: boolean
+  archived?: boolean
   leagueId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -702,6 +780,8 @@ export type SeasonSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
 export type SeasonSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
+  active?: boolean
+  archived?: boolean
   leagueId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -711,12 +791,14 @@ export type SeasonSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
 export type SeasonSelectScalar = {
   id?: boolean
   name?: boolean
+  active?: boolean
+  archived?: boolean
   leagueId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type SeasonOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "leagueId" | "createdAt" | "updatedAt", ExtArgs["result"]["season"]>
+export type SeasonOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "active" | "archived" | "leagueId" | "createdAt" | "updatedAt", ExtArgs["result"]["season"]>
 export type SeasonInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   divisions?: boolean | Prisma.Season$divisionsArgs<ExtArgs>
   league?: boolean | Prisma.LeagueDefaultArgs<ExtArgs>
@@ -740,6 +822,8 @@ export type $SeasonPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     name: string
+    active: boolean
+    archived: boolean
     leagueId: number
     createdAt: Date
     updatedAt: Date
@@ -1171,6 +1255,8 @@ export interface Prisma__SeasonClient<T, Null = never, ExtArgs extends runtime.T
 export interface SeasonFieldRefs {
   readonly id: Prisma.FieldRef<"Season", 'Int'>
   readonly name: Prisma.FieldRef<"Season", 'String'>
+  readonly active: Prisma.FieldRef<"Season", 'Boolean'>
+  readonly archived: Prisma.FieldRef<"Season", 'Boolean'>
   readonly leagueId: Prisma.FieldRef<"Season", 'Int'>
   readonly createdAt: Prisma.FieldRef<"Season", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Season", 'DateTime'>

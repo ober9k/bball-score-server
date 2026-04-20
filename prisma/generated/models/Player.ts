@@ -42,6 +42,8 @@ export type PlayerMinAggregateOutputType = {
   position: $Enums.Position | null
   number: string | null
   height: string | null
+  active: boolean | null
+  archived: boolean | null
   leagueId: number | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -53,6 +55,8 @@ export type PlayerMaxAggregateOutputType = {
   position: $Enums.Position | null
   number: string | null
   height: string | null
+  active: boolean | null
+  archived: boolean | null
   leagueId: number | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -64,6 +68,8 @@ export type PlayerCountAggregateOutputType = {
   position: number
   number: number
   height: number
+  active: number
+  archived: number
   leagueId: number
   createdAt: number
   updatedAt: number
@@ -87,6 +93,8 @@ export type PlayerMinAggregateInputType = {
   position?: true
   number?: true
   height?: true
+  active?: true
+  archived?: true
   leagueId?: true
   createdAt?: true
   updatedAt?: true
@@ -98,6 +106,8 @@ export type PlayerMaxAggregateInputType = {
   position?: true
   number?: true
   height?: true
+  active?: true
+  archived?: true
   leagueId?: true
   createdAt?: true
   updatedAt?: true
@@ -109,6 +119,8 @@ export type PlayerCountAggregateInputType = {
   position?: true
   number?: true
   height?: true
+  active?: true
+  archived?: true
   leagueId?: true
   createdAt?: true
   updatedAt?: true
@@ -207,6 +219,8 @@ export type PlayerGroupByOutputType = {
   position: $Enums.Position
   number: string
   height: string
+  active: boolean
+  archived: boolean
   leagueId: number
   createdAt: Date
   updatedAt: Date
@@ -241,6 +255,8 @@ export type PlayerWhereInput = {
   position?: Prisma.EnumPositionFilter<"Player"> | $Enums.Position
   number?: Prisma.StringFilter<"Player"> | string
   height?: Prisma.StringFilter<"Player"> | string
+  active?: Prisma.BoolFilter<"Player"> | boolean
+  archived?: Prisma.BoolFilter<"Player"> | boolean
   leagueId?: Prisma.IntFilter<"Player"> | number
   createdAt?: Prisma.DateTimeFilter<"Player"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Player"> | Date | string
@@ -255,6 +271,8 @@ export type PlayerOrderByWithRelationInput = {
   position?: Prisma.SortOrder
   number?: Prisma.SortOrder
   height?: Prisma.SortOrder
+  active?: Prisma.SortOrder
+  archived?: Prisma.SortOrder
   leagueId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -272,6 +290,8 @@ export type PlayerWhereUniqueInput = Prisma.AtLeast<{
   position?: Prisma.EnumPositionFilter<"Player"> | $Enums.Position
   number?: Prisma.StringFilter<"Player"> | string
   height?: Prisma.StringFilter<"Player"> | string
+  active?: Prisma.BoolFilter<"Player"> | boolean
+  archived?: Prisma.BoolFilter<"Player"> | boolean
   leagueId?: Prisma.IntFilter<"Player"> | number
   createdAt?: Prisma.DateTimeFilter<"Player"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Player"> | Date | string
@@ -286,6 +306,8 @@ export type PlayerOrderByWithAggregationInput = {
   position?: Prisma.SortOrder
   number?: Prisma.SortOrder
   height?: Prisma.SortOrder
+  active?: Prisma.SortOrder
+  archived?: Prisma.SortOrder
   leagueId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -305,6 +327,8 @@ export type PlayerScalarWhereWithAggregatesInput = {
   position?: Prisma.EnumPositionWithAggregatesFilter<"Player"> | $Enums.Position
   number?: Prisma.StringWithAggregatesFilter<"Player"> | string
   height?: Prisma.StringWithAggregatesFilter<"Player"> | string
+  active?: Prisma.BoolWithAggregatesFilter<"Player"> | boolean
+  archived?: Prisma.BoolWithAggregatesFilter<"Player"> | boolean
   leagueId?: Prisma.IntWithAggregatesFilter<"Player"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Player"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Player"> | Date | string
@@ -315,6 +339,8 @@ export type PlayerCreateInput = {
   position: $Enums.Position
   number: string
   height: string
+  active: boolean
+  archived: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   league: Prisma.LeagueCreateNestedOneWithoutPlayerInput
@@ -328,6 +354,8 @@ export type PlayerUncheckedCreateInput = {
   position: $Enums.Position
   number: string
   height: string
+  active: boolean
+  archived: boolean
   leagueId: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -340,6 +368,8 @@ export type PlayerUpdateInput = {
   position?: Prisma.EnumPositionFieldUpdateOperationsInput | $Enums.Position
   number?: Prisma.StringFieldUpdateOperationsInput | string
   height?: Prisma.StringFieldUpdateOperationsInput | string
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   league?: Prisma.LeagueUpdateOneRequiredWithoutPlayerNestedInput
@@ -353,6 +383,8 @@ export type PlayerUncheckedUpdateInput = {
   position?: Prisma.EnumPositionFieldUpdateOperationsInput | $Enums.Position
   number?: Prisma.StringFieldUpdateOperationsInput | string
   height?: Prisma.StringFieldUpdateOperationsInput | string
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   leagueId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -366,6 +398,8 @@ export type PlayerCreateManyInput = {
   position: $Enums.Position
   number: string
   height: string
+  active: boolean
+  archived: boolean
   leagueId: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -376,6 +410,8 @@ export type PlayerUpdateManyMutationInput = {
   position?: Prisma.EnumPositionFieldUpdateOperationsInput | $Enums.Position
   number?: Prisma.StringFieldUpdateOperationsInput | string
   height?: Prisma.StringFieldUpdateOperationsInput | string
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -386,6 +422,8 @@ export type PlayerUncheckedUpdateManyInput = {
   position?: Prisma.EnumPositionFieldUpdateOperationsInput | $Enums.Position
   number?: Prisma.StringFieldUpdateOperationsInput | string
   height?: Prisma.StringFieldUpdateOperationsInput | string
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   leagueId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -407,6 +445,8 @@ export type PlayerCountOrderByAggregateInput = {
   position?: Prisma.SortOrder
   number?: Prisma.SortOrder
   height?: Prisma.SortOrder
+  active?: Prisma.SortOrder
+  archived?: Prisma.SortOrder
   leagueId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -423,6 +463,8 @@ export type PlayerMaxOrderByAggregateInput = {
   position?: Prisma.SortOrder
   number?: Prisma.SortOrder
   height?: Prisma.SortOrder
+  active?: Prisma.SortOrder
+  archived?: Prisma.SortOrder
   leagueId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -434,6 +476,8 @@ export type PlayerMinOrderByAggregateInput = {
   position?: Prisma.SortOrder
   number?: Prisma.SortOrder
   height?: Prisma.SortOrder
+  active?: Prisma.SortOrder
+  archived?: Prisma.SortOrder
   leagueId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -528,6 +572,8 @@ export type PlayerCreateWithoutLeagueInput = {
   position: $Enums.Position
   number: string
   height: string
+  active: boolean
+  archived: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   teams?: Prisma.TeamPlayerCreateNestedManyWithoutPlayerInput
@@ -540,6 +586,8 @@ export type PlayerUncheckedCreateWithoutLeagueInput = {
   position: $Enums.Position
   number: string
   height: string
+  active: boolean
+  archived: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   teams?: Prisma.TeamPlayerUncheckedCreateNestedManyWithoutPlayerInput
@@ -581,6 +629,8 @@ export type PlayerScalarWhereInput = {
   position?: Prisma.EnumPositionFilter<"Player"> | $Enums.Position
   number?: Prisma.StringFilter<"Player"> | string
   height?: Prisma.StringFilter<"Player"> | string
+  active?: Prisma.BoolFilter<"Player"> | boolean
+  archived?: Prisma.BoolFilter<"Player"> | boolean
   leagueId?: Prisma.IntFilter<"Player"> | number
   createdAt?: Prisma.DateTimeFilter<"Player"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Player"> | Date | string
@@ -591,6 +641,8 @@ export type PlayerCreateWithoutTeamsInput = {
   position: $Enums.Position
   number: string
   height: string
+  active: boolean
+  archived: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   league: Prisma.LeagueCreateNestedOneWithoutPlayerInput
@@ -603,6 +655,8 @@ export type PlayerUncheckedCreateWithoutTeamsInput = {
   position: $Enums.Position
   number: string
   height: string
+  active: boolean
+  archived: boolean
   leagueId: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -630,6 +684,8 @@ export type PlayerUpdateWithoutTeamsInput = {
   position?: Prisma.EnumPositionFieldUpdateOperationsInput | $Enums.Position
   number?: Prisma.StringFieldUpdateOperationsInput | string
   height?: Prisma.StringFieldUpdateOperationsInput | string
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   league?: Prisma.LeagueUpdateOneRequiredWithoutPlayerNestedInput
@@ -642,6 +698,8 @@ export type PlayerUncheckedUpdateWithoutTeamsInput = {
   position?: Prisma.EnumPositionFieldUpdateOperationsInput | $Enums.Position
   number?: Prisma.StringFieldUpdateOperationsInput | string
   height?: Prisma.StringFieldUpdateOperationsInput | string
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   leagueId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -653,6 +711,8 @@ export type PlayerCreateWithoutGameTeamPlayerInput = {
   position: $Enums.Position
   number: string
   height: string
+  active: boolean
+  archived: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   league: Prisma.LeagueCreateNestedOneWithoutPlayerInput
@@ -665,6 +725,8 @@ export type PlayerUncheckedCreateWithoutGameTeamPlayerInput = {
   position: $Enums.Position
   number: string
   height: string
+  active: boolean
+  archived: boolean
   leagueId: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -692,6 +754,8 @@ export type PlayerUpdateWithoutGameTeamPlayerInput = {
   position?: Prisma.EnumPositionFieldUpdateOperationsInput | $Enums.Position
   number?: Prisma.StringFieldUpdateOperationsInput | string
   height?: Prisma.StringFieldUpdateOperationsInput | string
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   league?: Prisma.LeagueUpdateOneRequiredWithoutPlayerNestedInput
@@ -704,6 +768,8 @@ export type PlayerUncheckedUpdateWithoutGameTeamPlayerInput = {
   position?: Prisma.EnumPositionFieldUpdateOperationsInput | $Enums.Position
   number?: Prisma.StringFieldUpdateOperationsInput | string
   height?: Prisma.StringFieldUpdateOperationsInput | string
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   leagueId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -716,6 +782,8 @@ export type PlayerCreateManyLeagueInput = {
   position: $Enums.Position
   number: string
   height: string
+  active: boolean
+  archived: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -725,6 +793,8 @@ export type PlayerUpdateWithoutLeagueInput = {
   position?: Prisma.EnumPositionFieldUpdateOperationsInput | $Enums.Position
   number?: Prisma.StringFieldUpdateOperationsInput | string
   height?: Prisma.StringFieldUpdateOperationsInput | string
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   teams?: Prisma.TeamPlayerUpdateManyWithoutPlayerNestedInput
@@ -737,6 +807,8 @@ export type PlayerUncheckedUpdateWithoutLeagueInput = {
   position?: Prisma.EnumPositionFieldUpdateOperationsInput | $Enums.Position
   number?: Prisma.StringFieldUpdateOperationsInput | string
   height?: Prisma.StringFieldUpdateOperationsInput | string
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   teams?: Prisma.TeamPlayerUncheckedUpdateManyWithoutPlayerNestedInput
@@ -749,6 +821,8 @@ export type PlayerUncheckedUpdateManyWithoutLeagueInput = {
   position?: Prisma.EnumPositionFieldUpdateOperationsInput | $Enums.Position
   number?: Prisma.StringFieldUpdateOperationsInput | string
   height?: Prisma.StringFieldUpdateOperationsInput | string
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  archived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -799,6 +873,8 @@ export type PlayerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   position?: boolean
   number?: boolean
   height?: boolean
+  active?: boolean
+  archived?: boolean
   leagueId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -814,6 +890,8 @@ export type PlayerSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   position?: boolean
   number?: boolean
   height?: boolean
+  active?: boolean
+  archived?: boolean
   leagueId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -826,6 +904,8 @@ export type PlayerSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   position?: boolean
   number?: boolean
   height?: boolean
+  active?: boolean
+  archived?: boolean
   leagueId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -838,12 +918,14 @@ export type PlayerSelectScalar = {
   position?: boolean
   number?: boolean
   height?: boolean
+  active?: boolean
+  archived?: boolean
   leagueId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type PlayerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "position" | "number" | "height" | "leagueId" | "createdAt" | "updatedAt", ExtArgs["result"]["player"]>
+export type PlayerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "position" | "number" | "height" | "active" | "archived" | "leagueId" | "createdAt" | "updatedAt", ExtArgs["result"]["player"]>
 export type PlayerInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   league?: boolean | Prisma.LeagueDefaultArgs<ExtArgs>
   teams?: boolean | Prisma.Player$teamsArgs<ExtArgs>
@@ -870,6 +952,8 @@ export type $PlayerPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     position: $Enums.Position
     number: string
     height: string
+    active: boolean
+    archived: boolean
     leagueId: number
     createdAt: Date
     updatedAt: Date
@@ -1304,6 +1388,8 @@ export interface PlayerFieldRefs {
   readonly position: Prisma.FieldRef<"Player", 'Position'>
   readonly number: Prisma.FieldRef<"Player", 'String'>
   readonly height: Prisma.FieldRef<"Player", 'String'>
+  readonly active: Prisma.FieldRef<"Player", 'Boolean'>
+  readonly archived: Prisma.FieldRef<"Player", 'Boolean'>
   readonly leagueId: Prisma.FieldRef<"Player", 'Int'>
   readonly createdAt: Prisma.FieldRef<"Player", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Player", 'DateTime'>
