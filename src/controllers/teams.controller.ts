@@ -8,6 +8,15 @@ function getTeamId(req: Request): number {
   return +req.params.teamId;
 }
 
+function getTeamData(req: Request, res: Response): TeamData {
+  const { name, shortName, divisionId, active, archived } = req.body;
+  const { id: leagueId } = getLocalLeague(res);
+
+  return {
+    name, shortName, divisionId, active, archived, leagueId,
+  };
+}
+
 export async function getTeams(req: Request, res: Response) {
   return res
     .status(StatusCodes.OK)
@@ -25,36 +34,19 @@ export async function getTeam(req: Request, res: Response) {
 }
 
 export async function createTeam(req: Request, res: Response) {
-  const teamData: TeamData = {
-    name: req.body.name,
-    shortName: req.body.shortName,
-    active: req.body.active,
-    archived: req.body.archived,
-    divisionId: req.body.divisionId,
-    leagueId: getLocalLeague(res).id,
-  };
-
   return res
-    .status(StatusCodes.OK)
+    .status(StatusCodes.CREATED)
     .json(
-      await saveTeam(teamData)
+      await saveTeam(getTeamData(req, res))
     );
 }
 
-export async function updateTeam(req: Request, res: Response) {
-  const teamData: TeamData = {
-    name: req.body.name,
-    shortName: req.body.shortName,
-    active: req.body.active,
-    archived: req.body.archived,
-    divisionId: req.body.divisionId,
-    leagueId: getLocalLeague(res).id,
-  };
 
+export async function updateTeam(req: Request, res: Response) {
   return res
     .status(StatusCodes.OK)
     .json(
-      await saveTeamById(getTeamId(req), teamData)
+      await saveTeamById(getTeamId(req), getTeamData(req, res))
     );
 }
 
