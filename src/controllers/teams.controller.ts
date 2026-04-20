@@ -28,6 +28,8 @@ export async function createTeam(req: Request, res: Response) {
   const teamData: TeamData = {
     name: req.body.name,
     shortName: req.body.shortName,
+    active: req.body.active,
+    archived: req.body.archived,
     divisionId: req.body.divisionId,
     leagueId: getLocalLeague(res).id,
   };
@@ -43,6 +45,8 @@ export async function updateTeam(req: Request, res: Response) {
   const teamData: TeamData = {
     name: req.body.name,
     shortName: req.body.shortName,
+    active: req.body.active,
+    archived: req.body.archived,
     divisionId: req.body.divisionId,
     leagueId: getLocalLeague(res).id,
   };

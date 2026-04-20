@@ -27,6 +27,8 @@ export async function getSeason(req: Request, res: Response) {
 export async function createSeason(req: Request, res: Response) {
   const seasonData: SeasonData = {
     name: req.body.name,
+    active: req.body.active,
+    archived: req.body.archived,
     leagueId: getLocalLeague(res).id,
   };
 
@@ -40,6 +42,8 @@ export async function createSeason(req: Request, res: Response) {
 export async function updateSeason(req: Request, res: Response) {
   const seasonData: SeasonData = {
     name: req.body.name,
+    active: req.body.active,
+    archived: req.body.archived,
     leagueId: getLocalLeague(res).id,
   };
 

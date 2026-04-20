@@ -27,6 +27,8 @@ export async function getDivision(req: Request, res: Response) {
 export async function createDivision(req: Request, res: Response) {
   const divisionData: DivisionData = {
     name: req.body.name,
+    active: req.body.active,
+    archived: req.body.archived,
     seasonId: req.body.seasonId,
     leagueId: getLocalLeague(res).id,
   };
@@ -41,6 +43,8 @@ export async function createDivision(req: Request, res: Response) {
 export async function updateDivision(req: Request, res: Response) {
   const divisionData: DivisionData = {
     name: req.body.name,
+    active: req.body.active,
+    archived: req.body.archived,
     seasonId: req.body.seasonId,
     leagueId: getLocalLeague(res).id,
   };

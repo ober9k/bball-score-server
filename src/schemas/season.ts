@@ -10,6 +10,8 @@ const zSeason = z.object({
   name: z.string()
     .min(NameMinLength, minLengthMessage(NameLabel, NameMinLength))
     .max(NameMaxLength, maxLengthMessage(NameLabel, NameMaxLength)),
+  active: z.boolean(),
+  archived: z.boolean(),
 });
 
 export function seasonValidationHandler() {

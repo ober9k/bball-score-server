@@ -30,6 +30,8 @@ export async function createPlayer(req: Request, res: Response) {
     position: req.body.position,
     number: req.body.number,
     height: req.body.height,
+    active: req.body.active,
+    archived: req.body.archived,
     leagueId: getLocalLeague(res).id,
   };
 
@@ -46,6 +48,8 @@ export async function updatePlayer(req: Request, res: Response) {
     position: req.body.position,
     number: req.body.number,
     height: req.body.height,
+    active: req.body.active,
+    archived: req.body.archived,
     leagueId: getLocalLeague(res).id,
   };
 

@@ -32,6 +32,8 @@ const zPlayer = z.object({
   height: z.string()
     .min(HeightMinLength, minLengthMessage(HeightLabel, HeightMinLength))
     .regex(HeightRegex, heightFormatMessage(HeightLabel)),
+  active: z.boolean(),
+  archived: z.boolean(),
 });
 
 export function playerValidationHandler() {
