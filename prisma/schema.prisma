@@ -17,6 +17,8 @@ model League {
   id        Int        @id @default(autoincrement())
   name      String
   slug      String     @unique
+  active    Boolean    @default(false)
+  archived  Boolean    @default(false)
   seasons   Season[]
   divisions Division[]
   teams     Team[]
@@ -29,6 +31,8 @@ model League {
 model Season {
   id        Int        @id @default(autoincrement())
   name      String
+  active    Boolean    @default(false)
+  archived  Boolean    @default(false)
   divisions Division[]
   leagueId  Int
   league    League     @relation(fields: [leagueId], references: [id])
@@ -40,6 +44,8 @@ model Season {
 model Division {
   id        Int      @id @default(autoincrement())
   name      String
+  active    Boolean  @default(false)
+  archived  Boolean  @default(false)
   teams     Team[]
   seasonId  Int
   leagueId  Int
@@ -54,6 +60,8 @@ model Team {
   id             Int              @id @default(autoincrement())
   name           String
   shortName      String
+  active         Boolean          @default(false)
+  archived       Boolean          @default(false)
   divisionId     Int
   leagueId       Int
   division       Division         @relation(fields: [divisionId], references: [id])
@@ -79,6 +87,8 @@ model Player {
   position       Position
   number         String
   height         String
+  active         Boolean          @default(false)
+  archived       Boolean          @default(false)
   leagueId       Int
   league         League           @relation(fields: [leagueId], references: [id])
   createdAt      DateTime         @default(now())
@@ -109,6 +119,8 @@ model Game {
   date       DateTime
   phase      GamePhase
   round      Int
+  active     Boolean    @default(false)
+  archived   Boolean    @default(false)
   leagueId   Int
   seasonId   Int
   divisionId Int
