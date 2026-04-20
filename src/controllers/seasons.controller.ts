@@ -8,6 +8,15 @@ function getSeasonId(req: Request): number {
   return +req.params.seasonId;
 }
 
+function getSeasonData(req: Request, res: Response): SeasonData {
+  const { name, active, archived } = req.body;
+  const { id: leagueId } = getLocalLeague(res);
+
+  return {
+    name, active, archived, leagueId,
+  };
+}
+
 export async function getSeasons(req: Request, res: Response) {
   return res
     .status(StatusCodes.OK)
@@ -25,32 +34,18 @@ export async function getSeason(req: Request, res: Response) {
 }
 
 export async function createSeason(req: Request, res: Response) {
-  const seasonData: SeasonData = {
-    name: req.body.name,
-    active: req.body.active,
-    archived: req.body.archived,
-    leagueId: getLocalLeague(res).id,
-  };
-
   return res
-    .status(StatusCodes.OK)
+    .status(StatusCodes.CREATED)
     .json(
-      await saveSeason(seasonData)
+      await saveSeason(getSeasonData(req, res))
     );
 }
 
 export async function updateSeason(req: Request, res: Response) {
-  const seasonData: SeasonData = {
-    name: req.body.name,
-    active: req.body.active,
-    archived: req.body.archived,
-    leagueId: getLocalLeague(res).id,
-  };
-
   return res
     .status(StatusCodes.OK)
     .json(
-      await saveSeasonById(getSeasonId(req), seasonData)
+      await saveSeasonById(getSeasonId(req), getSeasonData(req, res))
     );
 }
 
