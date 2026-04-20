@@ -8,6 +8,15 @@ function getDivisionId(req: Request): number {
   return +req.params.divisionId;
 }
 
+function getDivisionData(req: Request, res: Response): DivisionData {
+  const { name, seasonId, active, archived } = req.body;
+  const { id: leagueId } = getLocalLeague(res);
+
+  return {
+    name, active, seasonId, archived, leagueId,
+  };
+}
+
 export async function getDivisions(req: Request, res: Response) {
   return res
     .status(StatusCodes.OK)
@@ -25,34 +34,18 @@ export async function getDivision(req: Request, res: Response) {
 }
 
 export async function createDivision(req: Request, res: Response) {
-  const divisionData: DivisionData = {
-    name: req.body.name,
-    active: req.body.active,
-    archived: req.body.archived,
-    seasonId: req.body.seasonId,
-    leagueId: getLocalLeague(res).id,
-  };
-
   return res
-    .status(StatusCodes.OK)
+    .status(StatusCodes.CREATED)
     .json(
-      await saveDivision(divisionData)
+      await saveDivision(getDivisionData(req, res))
     );
 }
 
 export async function updateDivision(req: Request, res: Response) {
-  const divisionData: DivisionData = {
-    name: req.body.name,
-    active: req.body.active,
-    archived: req.body.archived,
-    seasonId: req.body.seasonId,
-    leagueId: getLocalLeague(res).id,
-  };
-
   return res
     .status(StatusCodes.OK)
     .json(
-      await saveDivisionById(getDivisionId(req), divisionData)
+      await saveDivisionById(getDivisionId(req), getDivisionData(req, res))
     );
 }
 
