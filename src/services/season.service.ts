@@ -4,6 +4,9 @@ import type { Division } from "@/types/division";
 import type { Season, SeasonData } from "@/types/season";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
 import { StatusCodes } from "http-status-codes";
+import type { Option } from "@/types/option";
+import { findOptions } from "@/services/league.service";
+import type { SeasonDelegate } from "../../prisma/generated/models/Season";
 
 export async function findSeasons(): Promise<Season[]> {
   return prisma.season.findMany({
@@ -11,6 +14,10 @@ export async function findSeasons(): Promise<Season[]> {
       name: "asc",
     },
   });
+}
+
+export async function findSeasonsOptions(): Promise<Option[]> {
+  return findOptions<SeasonDelegate>(prisma.season);
 }
 
 export async function findSeasonById(id: number): Promise<Season | null> {

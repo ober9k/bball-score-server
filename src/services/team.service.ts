@@ -5,6 +5,9 @@ import type { Team, TeamData } from "@/types/team";
 import type { TeamPlayer } from "@/types/team-player";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
 import { StatusCodes } from "http-status-codes";
+import type { Option } from "@/types/option";
+import { findOptions } from "@/services/league.service";
+import type { TeamDelegate } from "../../prisma/generated/models/Team";
 
 export async function findTeams(): Promise<Team[]> {
   return prisma.team.findMany({
@@ -12,6 +15,10 @@ export async function findTeams(): Promise<Team[]> {
       name: "asc",
     },
   });
+}
+
+export async function findTeamsOptions(): Promise<Option[]> {
+  return findOptions<TeamDelegate>(prisma.team);
 }
 
 export async function findTeamById(id: number): Promise<Team | null> {

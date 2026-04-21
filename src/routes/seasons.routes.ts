@@ -1,4 +1,11 @@
-import { createSeason, getSeason, getSeasonDivisions, getSeasons, updateSeason } from "@/controllers/seasons.controller";
+import {
+  createSeason,
+  getSeason,
+  getSeasonDivisions,
+  getSeasons,
+  getSeasonsOptions,
+  updateSeason
+} from "@/controllers/seasons.controller";
 import { isAuthorizedRole } from "@/middlewares/auth-role";
 import { isAuthenticated } from "@/middlewares/auth-token";
 import { seasonValidationHandler } from "@/schemas/season";
@@ -9,6 +16,7 @@ const authorizedRoles = [Role.ADMINISTRATOR, Role.MANAGER];
 
 const router = Router()
   .get("/seasons", getSeasons)
+  .get("/seasons/options", getSeasonsOptions)
   .post("/seasons", [isAuthenticated, isAuthorizedRole(authorizedRoles), seasonValidationHandler()], createSeason)
   .get("/seasons/:seasonId", getSeason)
   .put("/seasons/:seasonId", [isAuthenticated, isAuthorizedRole(authorizedRoles), seasonValidationHandler()], updateSeason)

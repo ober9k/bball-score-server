@@ -4,6 +4,9 @@ import type { Division, DivisionData } from "@/types/division";
 import type { Team } from "@/types/team";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
 import { StatusCodes } from "http-status-codes";
+import type { Option } from "@/types/option";
+import { findOptions } from "@/services/league.service";
+import type { DivisionDelegate } from "../../prisma/generated/models/Division";
 
 export async function findDivisions(): Promise<Division[]> {
   return prisma.division.findMany({
@@ -11,6 +14,10 @@ export async function findDivisions(): Promise<Division[]> {
       name: "asc",
     },
   });
+}
+
+export async function findDivisionsOptions(): Promise<Option[]> {
+  return findOptions<DivisionDelegate>(prisma.division);
 }
 
 export async function findDivisionById(id: number): Promise<Division | null> {

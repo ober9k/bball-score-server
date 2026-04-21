@@ -1,5 +1,12 @@
 import { getLocalLeague } from "@/services/league.service";
-import { findSeasonById, findSeasonDivisions, findSeasons, saveSeason, saveSeasonById } from "@/services/season.service";
+import {
+  findSeasonById,
+  findSeasonDivisions,
+  findSeasons,
+  findSeasonsOptions,
+  saveSeason,
+  saveSeasonById
+} from "@/services/season.service";
 import type { SeasonData } from "@/types/season";
 import type { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
@@ -22,6 +29,14 @@ export async function getSeasons(req: Request, res: Response) {
     .status(StatusCodes.OK)
     .json(
       await findSeasons()
+    );
+}
+
+export async function getSeasonsOptions(req: Request, res: Response) {
+  return res
+    .status(StatusCodes.OK)
+    .json(
+      await findSeasonsOptions()
     );
 }
 

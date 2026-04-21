@@ -1,4 +1,11 @@
-import { findDivisionById, findDivisions, findDivisionTeams, saveDivision, saveDivisionById } from "@/services/division.service";
+import {
+  findDivisionById,
+  findDivisions,
+  findDivisionsOptions,
+  findDivisionTeams,
+  saveDivision,
+  saveDivisionById
+} from "@/services/division.service";
 import { getLocalLeague } from "@/services/league.service";
 import type { DivisionData } from "@/types/division";
 import type { Request, Response } from "express";
@@ -22,6 +29,14 @@ export async function getDivisions(req: Request, res: Response) {
     .status(StatusCodes.OK)
     .json(
       await findDivisions()
+    );
+}
+
+export async function getDivisionsOptions(req: Request, res: Response) {
+  return res
+    .status(StatusCodes.OK)
+    .json(
+      await findDivisionsOptions()
     );
 }
 
