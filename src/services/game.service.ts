@@ -13,7 +13,7 @@ const getColumns = (columns: string[]) => columns.reduce(reducer, {});
  * TODO: this is temporary, need to work out a tidier way to handle all of this
  * (potentially via multiple requests instead)
  */
-const gameCols = getColumns(["id", "date", "phase", "round"]);
+const gameCols = getColumns(["id", "date", "phase", "round", "seasonId", "divisionId", "active", "archived"]);
 const gameTeamCols = getColumns(["id", "side", "score", "scoreByPeriod"]);
 const gameTeamPlayerCols = getColumns(["started", "seconds", "fgMade", "fgAttempted", "fg3Made", "fg3Attempted", "ftMade", "ftAttempted", "points", "offRebounds", "defRebounds", "rebounds", "assists", "steals", "blocks", "turnovers", "personalFouls", "technicalFouls"]);
 const teamCols = getColumns(["id", "name", "shortName"]);

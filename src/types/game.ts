@@ -15,4 +15,4 @@ export type Game = {
   gameTeams: GameTeam[],
 };
 
-export type GameData = Omit<Game, "id">;
+export type GameData = Omit<Game, "id" | "gameTeams">;
