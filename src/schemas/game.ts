@@ -14,6 +14,8 @@ export const zGame = z.object({
   phase: z.enum(phaseEnum),
   round: z.number()
     .min(RoundMinLength, minLengthMessage(RoundLabel, RoundMinLength)),
+  seasonId: z.number(),
+  divisionId: z.number(),
   active: z.boolean(),
   archived: z.boolean(),
 });
