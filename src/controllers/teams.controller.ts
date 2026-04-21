@@ -1,5 +1,5 @@
 import { getLocalLeague } from "@/services/league.service";
-import { findStatisticsLogsByTeamId } from "@/services/statistics.service";
+import { generateStatisticsLogsByTeamId } from "@/services/statistics.service";
 import { findTeamById, findTeamPlayers, findTeams, findTeamsOptions, saveTeam, saveTeamById } from "@/services/team.service";
 import type { TeamData } from "@/types/team";
 import type { Request, Response } from "express";
@@ -54,7 +54,7 @@ export async function getTeamStatistics(req: Request, res: Response) {
   return res
     .status(StatusCodes.OK)
     .json(
-      await findStatisticsLogsByTeamId(getTeamId(req))
+      await generateStatisticsLogsByTeamId(getTeamId(req))
     )
 }
 

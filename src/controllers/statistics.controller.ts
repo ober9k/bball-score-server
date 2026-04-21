@@ -1,4 +1,4 @@
-import { findStatisticsLogs, type StatisticsContext } from "@/services/statistics.service";
+import { generateStatisticsLogs, type StatisticsContext } from "@/services/statistics.service";
 import type { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
@@ -6,7 +6,7 @@ const getStatistics = async(req: Request, res: Response, context: StatisticsCont
   return res
     .status(StatusCodes.OK)
     .json(
-      await findStatisticsLogs(context)
+      await generateStatisticsLogs(context)
     );
 }
 
