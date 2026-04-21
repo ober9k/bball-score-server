@@ -18,38 +18,13 @@ const playerCols = getColumns(["id", "name", "position", "number", "height"]);
 
 export type StatisticsContext = "averages" | "totals";
 
-export async function generateStatisticsLogs(context: StatisticsContext): Promise<StatisticsLog[]> {
-  const playerLogs: any[] = await prisma.gameTeamPlayer.findMany({
-    select: {
-      ...gameTeamPlayerCols,
-      team: {
-        select: {
-          ...teamCols,
-        },
-      },
-      player: {
-        select: {
-          ...playerCols,
-        }
-      }
-    }
-  });
+export async function generateStatisticsLogs(averages: boolean = false, teamId?: number): Promise<StatisticsLog[]> {
+  let where = {}; /* empty otherwise */
 
-  const playerStatisticsLogs = new Map<number, StatisticsLog>();
-
-  playerLogs
-    .forEach(accumulateStatisticsFn(playerStatisticsLogs));
-
-  if (context === "averages") {
-    playerStatisticsLogs.forEach((log) => {
-      log.stats = calculateAverages(log);
-    });
+  if (teamId && teamId > 0) {
+    where = { ... { teamId } };
   }
 
-  return [ ...playerStatisticsLogs.values() ];
-}
-
-export async function generateStatisticsLogsByTeamId(teamId: number): Promises<StatisticsLog> {
   const playerLogs: any[] = await prisma.gameTeamPlayer.findMany({
     select: {
       ...gameTeamPlayerCols,
@@ -64,9 +39,7 @@ export async function generateStatisticsLogsByTeamId(teamId: number): Promises<S
         }
       }
     },
-    where: {
-      teamId: teamId,
-    }
+    where,
   });
 
   const playerStatisticsLogs = new Map<number, StatisticsLog>();
@@ -74,11 +47,15 @@ export async function generateStatisticsLogsByTeamId(teamId: number): Promises<S
   playerLogs
     .forEach(accumulateStatisticsFn(playerStatisticsLogs));
 
-  // if (context === "averages") {
+  if (averages) {
     playerStatisticsLogs.forEach((log) => {
       log.stats = calculateAverages(log);
     });
-  // }
+  }
 
   return [ ...playerStatisticsLogs.values() ];
+}
+
+export async function generateStatisticsLogsByTeamId(teamId: number): Promise<StatisticsLog[]> {
+  return generateStatisticsLogs(false, teamId);
 }

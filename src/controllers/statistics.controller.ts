@@ -6,7 +6,7 @@ const getStatistics = async(req: Request, res: Response, context: StatisticsCont
   return res
     .status(StatusCodes.OK)
     .json(
-      await generateStatisticsLogs(context)
+      await generateStatisticsLogs(context === "averages")
     );
 }
 
