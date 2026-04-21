@@ -17,5 +17,5 @@ export function getBaseUrl(): string {
  * Base URL for all API URLs relative to a league.
  */
 export function getBaseLeagueUrl(): string {
-  return buildApiUrl([getBaseUrl(), "league", ":leagueId"]);
+  return buildApiUrl([getBaseUrl(), "leagues", ":leagueId"]);
 }
