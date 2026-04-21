@@ -1,11 +1,4 @@
-import {
-  createTeam,
-  getTeam,
-  getTeamPlayers,
-  getTeams,
-  getTeamsOptions,
-  updateTeam
-} from "@/controllers/teams.controller";
+import { createTeam, getTeam, getTeamPlayers, getTeams, getTeamsOptions, getTeamStatistics, updateTeam } from "@/controllers/teams.controller";
 import { isAuthorizedRole } from "@/middlewares/auth-role";
 import { isAuthenticated } from "@/middlewares/auth-token";
 import { teamValidationHandler } from "@/schemas/team";
@@ -20,6 +13,7 @@ const router = Router()
   .post("/teams", [isAuthenticated, isAuthorizedRole(authorizedRoles), teamValidationHandler()], createTeam)
   .get("/teams/:teamId", getTeam)
   .put("/teams/:teamId", [isAuthenticated, isAuthorizedRole(authorizedRoles), teamValidationHandler()], updateTeam)
-  .get("/teams/:teamId/players", getTeamPlayers);
+  .get("/teams/:teamId/players", getTeamPlayers)
+  .get("/teams/:teamId/statistics", getTeamStatistics)
 
 export { router as teamsRoutes };

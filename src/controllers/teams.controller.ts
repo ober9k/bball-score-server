@@ -1,16 +1,9 @@
 import { getLocalLeague } from "@/services/league.service";
-import {
-  findTeamById,
-  findTeamPlayers,
-  findTeams,
-  findTeamsOptions,
-  saveTeam,
-  saveTeamById
-} from "@/services/team.service";
+import { findStatisticsLogsByTeamId } from "@/services/statistics.service";
+import { findTeamById, findTeamPlayers, findTeams, findTeamsOptions, saveTeam, saveTeamById } from "@/services/team.service";
 import type { TeamData } from "@/types/team";
 import type { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
-import { findSeasonsOptions } from "@/services/season.service";
 
 function getTeamId(req: Request): number {
   return +req.params.teamId;
@@ -57,6 +50,13 @@ export async function createTeam(req: Request, res: Response) {
     );
 }
 
+export async function getTeamStatistics(req: Request, res: Response) {
+  return res
+    .status(StatusCodes.OK)
+    .json(
+      await findStatisticsLogsByTeamId(getTeamId(req))
+    )
+}
 
 export async function updateTeam(req: Request, res: Response) {
   return res

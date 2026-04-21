@@ -66,3 +66,55 @@ export async function findStatisticsLogs(context: StatisticsContext): Promise<St
 
   return [ ...playerStatisticsLogs.values() ];
 }
+
+export async function findStatisticsLogsByTeamId(teamId: number): Promises<StatisticsLog> {
+  const playerLogs: any[] = await prisma.gameTeamPlayer.findMany({
+    select: {
+      ...gameTeamPlayerCols,
+      team: {
+        select: {
+          ...teamCols,
+        },
+      },
+      player: {
+        select: {
+          ...playerCols,
+        }
+      }
+    },
+    where: {
+      teamId: teamId,
+    }
+  });
+
+  const playerStatisticsLogs = new Map<number, StatisticsLog>();
+
+  /**
+   * TODO: this is temporary, mostly for experimental result handling
+   * (this should be included elsewhere and tidied up to reduce duplication)
+   */
+  playerLogs
+    .forEach((pl) => {
+      const { player } = pl;
+      const { id } = player;
+
+      if (!playerStatisticsLogs.has(id)) {
+        playerStatisticsLogs.set(id, generateEmptyStatisticsLog(pl));
+      }
+
+      const log   = playerStatisticsLogs.get(id)!;
+      const stats = extractStats(pl);
+
+      log.played  += getPlayed(pl.seconds);
+      log.started += getStarted(pl.started);
+      log.stats    = calculateTotals(log, stats);
+    });
+
+  // if (context === "averages") {
+    playerStatisticsLogs.forEach((log) => {
+      log.stats = calculateAverages(log);
+    });
+  // }
+
+  return [ ...playerStatisticsLogs.values() ];
+}
