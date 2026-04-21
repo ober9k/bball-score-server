@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import type { StatisticsLog } from "@/types/statistics-log";
-import { calculateAverages, calculateTotals, extractStats, generateEmptyStatisticsLog, getPlayed, getStarted } from "@/utils/stats-utils";
+import { accumulateStatisticsFn, calculateAverages } from "@/utils/stats-utils";
 
 /**
  * TODO: this is temporary, need to work out a tidier way to handle all of this
@@ -37,26 +37,8 @@ export async function findStatisticsLogs(context: StatisticsContext): Promise<St
 
   const playerStatisticsLogs = new Map<number, StatisticsLog>();
 
-  /**
-   * TODO: this is temporary, mostly for experimental result handling
-   * (this should be included elsewhere and tidied up to reduce duplication)
-   */
   playerLogs
-    .forEach((pl) => {
-      const { player } = pl;
-      const { id } = player;
-
-      if (!playerStatisticsLogs.has(id)) {
-        playerStatisticsLogs.set(id, generateEmptyStatisticsLog(pl));
-      }
-
-      const log   = playerStatisticsLogs.get(id)!;
-      const stats = extractStats(pl);
-
-      log.played  += getPlayed(pl.seconds);
-      log.started += getStarted(pl.started);
-      log.stats    = calculateTotals(log, stats);
-    });
+    .forEach(accumulateStatisticsFn(playerStatisticsLogs));
 
   if (context === "averages") {
     playerStatisticsLogs.forEach((log) => {
@@ -89,26 +71,8 @@ export async function findStatisticsLogsByTeamId(teamId: number): Promises<Stati
 
   const playerStatisticsLogs = new Map<number, StatisticsLog>();
 
-  /**
-   * TODO: this is temporary, mostly for experimental result handling
-   * (this should be included elsewhere and tidied up to reduce duplication)
-   */
   playerLogs
-    .forEach((pl) => {
-      const { player } = pl;
-      const { id } = player;
-
-      if (!playerStatisticsLogs.has(id)) {
-        playerStatisticsLogs.set(id, generateEmptyStatisticsLog(pl));
-      }
-
-      const log   = playerStatisticsLogs.get(id)!;
-      const stats = extractStats(pl);
-
-      log.played  += getPlayed(pl.seconds);
-      log.started += getStarted(pl.started);
-      log.stats    = calculateTotals(log, stats);
-    });
+    .forEach(accumulateStatisticsFn(playerStatisticsLogs));
 
   // if (context === "averages") {
     playerStatisticsLogs.forEach((log) => {

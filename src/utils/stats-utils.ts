@@ -91,3 +91,25 @@ export function calculateAverages(log: StatisticsLog): Stats {
     ...acc, [key]: log.stats[key] / played,
   }), {}) as Stats;
 }
+
+/**
+ * TODO: this is temporary, mostly for experimental result handling
+ * (this should be included elsewhere and tidied up to reduce duplication)
+ */
+export function accumulateStatisticsFn(playerStatisticsLogs: Map<number, StatisticsLog>) {
+  return function (playerLog: any): void {
+    const { player } = playerLog;
+    const { id } = player;
+
+    if (!playerStatisticsLogs.has(id)) {
+      playerStatisticsLogs.set(id, generateEmptyStatisticsLog(playerLog));
+    }
+
+    const log   = playerStatisticsLogs.get(id)!;
+    const stats = extractStats(playerLog);
+
+    log.played  += getPlayed(playerLog.seconds);
+    log.started += getStarted(playerLog.started);
+    log.stats    = calculateTotals(log, stats);
+  };
+}
