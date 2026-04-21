@@ -1,9 +1,20 @@
-import { findGameById, findGames } from "@/services/game.service";
+import { findGameById, findGames, saveGame, saveGameById } from "@/services/game.service";
+import { getLocalLeague } from "@/services/league.service";
+import type { GameData } from "@/types/game";
 import type { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
 function getGameId(req: Request): number {
   return +req.params.gameId;
+}
+
+function getGameData(req: Request, res: Response): GameData {
+  const { date, phase, round, active, archived, seasonId, divisionId } = req.body;
+  const { id: leagueId } = getLocalLeague(res);
+
+  return {
+    date: new Date(date), phase, round, active, archived, seasonId, divisionId, leagueId,
+  };
 }
 
 export async function getGames(req: Request, res: Response) {
@@ -57,5 +68,21 @@ export async function getGame(req: Request, res: Response) {
             ],
           }
         })
+    );
+}
+
+export async function createGame(req: Request, res: Response) {
+  return res
+    .status(StatusCodes.CREATED)
+    .json(
+      await saveGame(getGameData(req, res))
+    );
+}
+
+export async function updateGame(req: Request, res: Response) {
+  return res
+    .status(StatusCodes.OK)
+    .json(
+      await saveGameById(getGameId(req), getGameData(req, res))
     );
 }

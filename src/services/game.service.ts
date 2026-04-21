@@ -1,6 +1,8 @@
 import { prisma } from "@/lib/prisma";
 import HttpException from "@/models/http-exception.model";
 import type { Game } from "@/types/game";
+import type { Team, TeamData } from "@/types/team";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
 import { StatusCodes } from "http-status-codes";
 
 /**
@@ -78,4 +80,40 @@ export async function findGameById(id: number): Promise<any | null> {
   }
 
   return game;
+}
+
+export async function saveGame(data: GameData): Promise<Game | null> {
+  try {
+    return await prisma.game.create({
+      data: {
+        ...data,
+      },
+    });
+  }
+  catch (error) {
+    throw new HttpException(StatusCodes.INTERNAL_SERVER_ERROR, "InternalServerError", `An unexpected error occurred: ${error.message}`);
+  }
+}
+
+export async function saveGameById(id: number, data: GameData): Promise<Game | null> {
+  try {
+    return await prisma.game.update({
+      data: {
+        ...data,
+      },
+      where: {
+        id,
+      },
+    });
+  }
+  catch (error) {
+    if (error instanceof PrismaClientKnownRequestError) {
+      if (error.code === 'P2025') {
+        throw new HttpException(StatusCodes.NOT_FOUND, "NotFound", "Unable to find game with `gameId` provided to update.");
+      }
+    }
+    else {
+      throw new HttpException(StatusCodes.INTERNAL_SERVER_ERROR, "InternalServerError", `An unexpected error occurred: ${error.message}`);
+    }
+  }
 }
