@@ -1,18 +1,11 @@
 import { getLocalLeague } from "@/services/league.service";
-import {
-  findSeasonById,
-  findSeasonDivisions,
-  findSeasons,
-  findSeasonsOptions,
-  saveSeason,
-  saveSeasonById
-} from "@/services/season.service";
+import { findAll, findAllAsOptions, findById, findDivisionsBySeasonId, save, saveById } from "@/services/season.service";
 import type { SeasonData } from "@/types/season";
 import type { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
 function getSeasonId(req: Request): number {
-  return +req.params.seasonId;
+  return +req.params.id;
 }
 
 function getSeasonData(req: Request, res: Response): SeasonData {
@@ -28,15 +21,7 @@ export async function getSeasons(req: Request, res: Response) {
   return res
     .status(StatusCodes.OK)
     .json(
-      await findSeasons()
-    );
-}
-
-export async function getSeasonsOptions(req: Request, res: Response) {
-  return res
-    .status(StatusCodes.OK)
-    .json(
-      await findSeasonsOptions()
+      await findAll()
     );
 }
 
@@ -44,7 +29,15 @@ export async function getSeason(req: Request, res: Response) {
   return res
     .status(StatusCodes.OK)
     .json(
-      await findSeasonById(getSeasonId(req))
+      await findById(getSeasonId(req))
+    );
+}
+
+export async function getSeasonsOptions(req: Request, res: Response) {
+  return res
+    .status(StatusCodes.OK)
+    .json(
+      await findAllAsOptions()
     );
 }
 
@@ -52,7 +45,7 @@ export async function createSeason(req: Request, res: Response) {
   return res
     .status(StatusCodes.CREATED)
     .json(
-      await saveSeason(getSeasonData(req, res))
+      await save(getSeasonData(req, res))
     );
 }
 
@@ -60,14 +53,16 @@ export async function updateSeason(req: Request, res: Response) {
   return res
     .status(StatusCodes.OK)
     .json(
-      await saveSeasonById(getSeasonId(req), getSeasonData(req, res))
+      await saveById(getSeasonId(req), getSeasonData(req, res))
     );
 }
 
 export async function getSeasonDivisions(req: Request, res: Response) {
+  await findById(getSeasonId(req)); /* trigger an initial failure if not found */
+
   return res
     .status(StatusCodes.OK)
     .json(
-      await findSeasonDivisions(getSeasonId(req))
+      await findDivisionsBySeasonId(getSeasonId(req))
     );
 }
