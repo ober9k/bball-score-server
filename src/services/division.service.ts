@@ -1,79 +1,82 @@
+import { toDivision, toOption, toTeam } from "@/lib/converters";
 import { prisma } from "@/lib/prisma";
-import HttpException from "@/models/http-exception.model";
 import type { Division, DivisionData } from "@/types/division";
-import type { Team } from "@/types/team";
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
-import { StatusCodes } from "http-status-codes";
 import type { Option } from "@/types/option";
-import { findOptions } from "@/services/league.service";
-import type { DivisionDelegate } from "../../prisma/generated/models/Division";
+import type { Team } from "@/types/team";
+import { SortOrder } from "@prisma/generated/internal/prismaNamespace";
+import type { DivisionOrderByWithRelationInput, DivisionSelect } from "@prisma/generated/models/Division";
 
-export async function findDivisions(): Promise<Division[]> {
-  return prisma.division.findMany({
-    orderBy: {
-      name: "asc",
-    },
+function defaultSelect(): DivisionSelect {
+  return {
+    id:       true,
+    name:     true,
+    seasonId: true,
+    active:   true,
+    archived: true,
+    leagueId: true,
+  };
+}
+
+function defaultOrderBy(): DivisionOrderByWithRelationInput {
+  return {
+    name: SortOrder.asc,
+  };
+}
+
+export async function findAll(): Promise<Division[]> {
+  const items: any[] = await prisma.division.findMany({
+    select:  defaultSelect(),
+    orderBy: defaultOrderBy(),
   });
+
+  return items
+    .map(toDivision);
 }
 
-export async function findDivisionsOptions(): Promise<Option[]> {
-  return findOptions<DivisionDelegate>(prisma.division);
-}
-
-export async function findDivisionById(id: number): Promise<Division | null> {
-  const division = await prisma.division.findUnique({
-    where: {
-      id,
-    },
+export async function findById(id: number): Promise<Division | null> {
+  const item: any = await prisma.division.findUniqueOrThrow({
+    select: defaultSelect(),
+    where:  { id },
   });
 
-  if (!division) {
-    throw new HttpException(StatusCodes.NOT_FOUND, "NotFound", "Unable to find division with `divisionId` provided.");
-  }
-
-  return division;
+  return (item)
+    ? toDivision(item)
+    : null;
 }
 
-export async function saveDivision(data: DivisionData): Promise<Division | null> {
-  try {
-    return await prisma.division.create({
-      data: {
-        ...data,
-      },
-    });
-  }
-  catch (error) {
-    throw new HttpException(StatusCodes.INTERNAL_SERVER_ERROR, "InternalServerError", `An unexpected error occurred: ${error.message}`);
-  }
+export async function findAllAsOptions(): Promise<Option[]> {
+  return (await findAll())
+    .map(toOption);
 }
 
-export async function saveDivisionById(id: number, data: DivisionData): Promise<Division | null> {
-  try {
-    return await prisma.division.update({
-      data: {
-        ...data,
-      },
-      where: {
-        id,
-      },
-    });
-  }
-  catch (error) {
-    if (error instanceof PrismaClientKnownRequestError) {
-      if (error.code === 'P2025') {
-        throw new HttpException(StatusCodes.NOT_FOUND, "NotFound", "Unable to find division with `divisionId` provided to update.");
-      }
-    }
-    else {
-      throw new HttpException(StatusCodes.INTERNAL_SERVER_ERROR, "InternalServerError", `An unexpected error occurred: ${error.message}`);
-    }
-  }
-}
-
-export async function findDivisionTeams(id: number): Promise<Team[]> {
-  return prisma.team.findMany({
-    where: {
-      divisionId: id,
-    },
+export async function save(data: DivisionData): Promise<Division | null> {
+  const item: any = prisma.division.create({
+    data: { ...data },
   });
+
+  return (item)
+    ? toDivision(item)
+    : null;
+}
+
+export async function saveById(id: number, data: DivisionData): Promise<Division | null> {
+  const item: any = prisma.division.update({
+    data:  { ...data },
+    where: { id },
+  });
+
+  return (item)
+    ? toDivision(item)
+    : null;
+}
+
+/* todo, this should potentially be relocated */
+export async function findTeamsByDivisionId(divisionId: number): Promise<Team[]> {
+  const items: any[] = await prisma.team.findMany({
+    where:   { divisionId },
+    orderBy: defaultOrderBy(),
+  });
+
+  return items
+    .map(toTeam);
 }

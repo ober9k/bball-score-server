@@ -1,10 +1,10 @@
 export type Division = {
-  id: number,
-  name: string,
-  active: boolean,
+  id:       number,
+  name:     string,
+  seasonId: number,
+  active:   boolean,
   archived: boolean,
   leagueId: number,
-  seasonId: number,
 };
 
 export type DivisionData = Omit<Division, "id">;

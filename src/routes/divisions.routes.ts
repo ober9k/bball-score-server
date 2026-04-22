@@ -1,24 +1,21 @@
-import {
-  createDivision,
-  getDivision,
-  getDivisions, getDivisionsOptions,
-  getDivisionTeams,
-  updateDivision
-} from "@/controllers/divisions.controller";
+import { createDivision, getDivision, getDivisions, getDivisionsOptions, getDivisionTeams, updateDivision } from "@/controllers/divisions.controller";
 import { isAuthorizedRole } from "@/middlewares/auth-role";
 import { isAuthenticated } from "@/middlewares/auth-token";
 import { divisionValidationHandler } from "@/schemas/division";
-import { Router } from "express";
 import { Role } from "@/types/user/role";
+import { Router } from "express";
 
 const authorizedRoles = [Role.ADMINISTRATOR, Role.MANAGER];
+const authorizedPaths = [isAuthenticated, isAuthorizedRole(authorizedRoles)];
 
 const router = Router()
+  // divisions
   .get("/divisions", getDivisions)
+  .get("/divisions/:id", getDivision)
   .get("/divisions/options", getDivisionsOptions)
-  .post("/divisions", [isAuthenticated, isAuthorizedRole(authorizedRoles), divisionValidationHandler()], createDivision)
-  .get("/divisions/:divisionId", getDivision)
-  .put("/divisions/:divisionId", [isAuthenticated, isAuthorizedRole(authorizedRoles), divisionValidationHandler()], updateDivision)
-  .get("/divisions/:divisionId/teams", getDivisionTeams);
+  .get("/divisions/:id/teams", getDivisionTeams)
+  // divisions (create/update)
+  .post("/divisions", [...authorizedPaths, divisionValidationHandler()], createDivision)
+  .put("/divisions/:id", [...authorizedPaths, divisionValidationHandler()], updateDivision);
 
 export { router as divisionsRoutes };
