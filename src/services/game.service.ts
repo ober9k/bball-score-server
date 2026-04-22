@@ -15,6 +15,16 @@ function defaultSelect(): GameSelect {
     active:     true,
     archived:   true,
     leagueId:   true,
+    gameTeams: {
+      select: {
+        id:            true,
+        side:          true,
+        score:         true,
+        scoreByPeriod: true, /* to rename */
+        gameId:        true,
+        teamId:        true,
+      },
+    },
   };
 }
 
