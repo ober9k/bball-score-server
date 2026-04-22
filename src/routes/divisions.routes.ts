@@ -1,6 +1,7 @@
 import { createDivision, getDivision, getDivisions, getDivisionsOptions, getDivisionTeams, updateDivision } from "@/controllers/divisions.controller";
 import { isAuthorizedRole } from "@/middlewares/auth-role";
 import { isAuthenticated } from "@/middlewares/auth-token";
+import { validateIdHandler } from "@/middlewares/validate-id-handler";
 import { divisionValidationHandler } from "@/schemas/division";
 import { Role } from "@/types/user/role";
 import { Router } from "express";
@@ -12,10 +13,10 @@ const router = Router()
   // divisions
   .get("/divisions", getDivisions)
   .get("/divisions/options", getDivisionsOptions)
-  .get("/divisions/:id", getDivision)
-  .get("/divisions/:id/teams", getDivisionTeams)
+  .get("/divisions/:id", [validateIdHandler], getDivision)
+  .get("/divisions/:id/teams", [validateIdHandler], getDivisionTeams)
   // divisions (create/update)
   .post("/divisions", [...authorizedPaths, divisionValidationHandler()], createDivision)
-  .put("/divisions/:id", [...authorizedPaths, divisionValidationHandler()], updateDivision);
+  .put("/divisions/:id", [...authorizedPaths, validateIdHandler, divisionValidationHandler()], updateDivision);
 
 export { router as divisionsRoutes };
