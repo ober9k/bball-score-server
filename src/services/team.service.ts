@@ -1,86 +1,87 @@
+import { toOption, toTeam } from "@/lib/converters";
 import { prisma } from "@/lib/prisma";
-import HttpException from "@/models/http-exception.model";
+import type { Option } from "@/types/option";
 import type { Player } from "@/types/player";
 import type { Team, TeamData } from "@/types/team";
 import type { TeamPlayer } from "@/types/team-player";
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
-import { StatusCodes } from "http-status-codes";
-import type { Option } from "@/types/option";
-import { findOptions } from "@/services/league.service";
-import type { TeamDelegate } from "../../prisma/generated/models/Team";
+import { SortOrder, type TeamOrderByWithRelationInput } from "@prisma/generated/internal/prismaNamespace";
+import type { TeamSelect } from "@prisma/generated/models/Team";
 
-export async function findTeams(): Promise<Team[]> {
-  return prisma.team.findMany({
-    orderBy: {
-      name: "asc",
-    },
+function defaultSelect(): TeamSelect {
+  return {
+    id:         true,
+    name:       true,
+    shortName:  true,
+    divisionId: true,
+    active:     true,
+    archived:   true,
+    leagueId:   true,
+  };
+}
+
+function defaultOrderBy(): TeamOrderByWithRelationInput {
+  return {
+    name: SortOrder.asc,
+  };
+}
+
+export async function findAll(): Promise<Team[]> {
+  const items: any[] = await prisma.team.findMany({
+    select:  defaultSelect(),
+    orderBy: defaultOrderBy(),
   });
+
+  return items
+    .map(toTeam);
 }
 
-export async function findTeamsOptions(): Promise<Option[]> {
-  return findOptions<TeamDelegate>(prisma.team);
-}
-
-export async function findTeamById(id: number): Promise<Team | null> {
-  const team = await prisma.team.findUnique({
-    where: {
-      id,
-    },
+export async function findById(id: number): Promise<Team | null> {
+  const item: any = await prisma.team.findUniqueOrThrow({
+    select: defaultSelect(),
+    where:  { id },
   });
 
-  if (!team) {
-    throw new HttpException(StatusCodes.NOT_FOUND, "NotFound", "Unable to find team with `teamId` provided.");
-  }
-
-  return team;
+  return (item)
+    ? toTeam(item)
+    : null;
 }
 
-export async function saveTeam(data: TeamData): Promise<Team | null> {
-  try {
-    return await prisma.team.create({
-      data: {
-        ...data,
-      },
-    });
-  }
-  catch (error) {
-    throw new HttpException(StatusCodes.INTERNAL_SERVER_ERROR, "InternalServerError", `An unexpected error occurred: ${error.message}`);
-  }
+export async function findAllAsOptions(): Promise<Option[]> {
+  console.log("all", await findAll());
+
+  return (await findAll())
+    .map(toOption);
 }
 
-export async function saveTeamById(id: number, data: TeamData): Promise<Team | null> {
-  try {
-    return await prisma.team.update({
-      data: {
-        ...data,
-      },
-      where: {
-        id,
-      },
-    });
-  }
-  catch (error) {
-    if (error instanceof PrismaClientKnownRequestError) {
-      if (error.code === 'P2025') {
-        throw new HttpException(StatusCodes.NOT_FOUND, "NotFound", "Unable to find team with `teamId` provided to update.");
-      }
-    }
-    else {
-      throw new HttpException(StatusCodes.INTERNAL_SERVER_ERROR, "InternalServerError", `An unexpected error occurred: ${error.message}`);
-    }
-  }
+export async function save(data: TeamData): Promise<Team | null> {
+  const item: any = await prisma.team.create({
+    data: { ...data },
+  });
+
+  return (item)
+    ? toTeam(item)
+    : null;
 }
 
-export async function findTeamPlayers(id: number): Promise<Player[]> {
-  const players = await prisma.teamPlayer.findMany({
-    where: {
-      teamId: id,
-    },
+export async function saveById(id: number, data: TeamData): Promise<Team | null> {
+  const item: any = prisma.team.update({
+    data: { ...data },
+    where: { id },
+  });
+
+  return (item)
+    ? toTeam(item)
+    : null;
+}
+
+export async function findPlayersTeamId(teamId: number): Promise<Player[]> {
+  const items: any[] = await prisma.teamPlayer.findMany({
+    where: { teamId },
     include: {
       player: true,
     },
   }) as TeamPlayer[];
 
-  return players
+  return items
     .map((tp) => tp.player);
 }

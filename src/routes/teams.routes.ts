@@ -6,14 +6,17 @@ import { Role } from "@/types/user/role";
 import { Router } from "express";
 
 const authorizedRoles = [Role.ADMINISTRATOR, Role.MANAGER];
+const authorizedPaths = [isAuthenticated, isAuthorizedRole(authorizedRoles)];
 
 const router = Router()
+  // teams
   .get("/teams", getTeams)
+  .get("/teams/:id", getTeam)
+  .get("/teams/:id/players", getTeamPlayers)
+  .get("/teams/:id/statistics", getTeamStatistics)
   .get("/teams/options", getTeamsOptions)
-  .post("/teams", [isAuthenticated, isAuthorizedRole(authorizedRoles), teamValidationHandler()], createTeam)
-  .get("/teams/:teamId", getTeam)
-  .put("/teams/:teamId", [isAuthenticated, isAuthorizedRole(authorizedRoles), teamValidationHandler()], updateTeam)
-  .get("/teams/:teamId/players", getTeamPlayers)
-  .get("/teams/:teamId/statistics", getTeamStatistics)
+  // teams (create/update)
+  .post("/teams", [...authorizedPaths, teamValidationHandler()], createTeam)
+  .put("/teams/:id", [...authorizedPaths, teamValidationHandler()], updateTeam)
 
 export { router as teamsRoutes };

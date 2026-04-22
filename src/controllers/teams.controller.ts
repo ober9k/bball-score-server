@@ -1,12 +1,12 @@
 import { getLocalLeague } from "@/services/league.service";
 import { generateStatisticsLogsByTeamId } from "@/services/statistics.service";
-import { findTeamById, findTeamPlayers, findTeams, findTeamsOptions, saveTeam, saveTeamById } from "@/services/team.service";
+import { findAll, findAllAsOptions, findById, findPlayersTeamId, save, saveById } from "@/services/team.service";
 import type { TeamData } from "@/types/team";
 import type { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
 function getTeamId(req: Request): number {
-  return +req.params.teamId;
+  return +req.params.id;
 }
 
 function getTeamData(req: Request, res: Response): TeamData {
@@ -22,15 +22,7 @@ export async function getTeams(req: Request, res: Response) {
   return res
     .status(StatusCodes.OK)
     .json(
-      await findTeams()
-    );
-}
-
-export async function getTeamsOptions(req: Request, res: Response) {
-  return res
-    .status(StatusCodes.OK)
-    .json(
-      await findTeamsOptions()
+      await findAll()
     );
 }
 
@@ -38,7 +30,15 @@ export async function getTeam(req: Request, res: Response) {
   return res
     .status(StatusCodes.OK)
     .json(
-      await findTeamById(getTeamId(req))
+      await findById(getTeamId(req))
+    );
+}
+
+export async function getTeamsOptions(req: Request, res: Response) {
+  return res
+    .status(StatusCodes.OK)
+    .json(
+      await findAllAsOptions()
     );
 }
 
@@ -46,30 +46,34 @@ export async function createTeam(req: Request, res: Response) {
   return res
     .status(StatusCodes.CREATED)
     .json(
-      await saveTeam(getTeamData(req, res))
+      await save(getTeamData(req, res))
     );
-}
-
-export async function getTeamStatistics(req: Request, res: Response) {
-  return res
-    .status(StatusCodes.OK)
-    .json(
-      await generateStatisticsLogsByTeamId(getTeamId(req))
-    )
 }
 
 export async function updateTeam(req: Request, res: Response) {
   return res
     .status(StatusCodes.OK)
     .json(
-      await saveTeamById(getTeamId(req), getTeamData(req, res))
+      await saveById(getTeamId(req), getTeamData(req, res))
     );
 }
 
 export async function getTeamPlayers(req: Request, res: Response) {
+  await findById(getTeamId(req)); /* trigger an initial failure if not found */
+
   return res
     .status(StatusCodes.OK)
     .json(
-      await findTeamPlayers(getTeamId(req))
+      await findPlayersTeamId(getTeamId(req))
     );
+}
+
+export async function getTeamStatistics(req: Request, res: Response) {
+  await findById(getTeamId(req)); /* trigger an initial failure if not found */
+
+  return res
+    .status(StatusCodes.OK)
+    .json(
+      await generateStatisticsLogsByTeamId(getTeamId(req))
+    )
 }
