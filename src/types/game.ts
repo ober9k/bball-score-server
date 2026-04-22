@@ -4,7 +4,7 @@ import type { GamePhaseType } from "@/types/game/game-phase";
 
 export type Game = {
   id: number,
-  date: Date
+  date: Date,
   phase: GamePhaseType,
   round: number,
   active: boolean,

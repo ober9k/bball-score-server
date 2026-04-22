@@ -46,8 +46,6 @@ export async function findById(id: number): Promise<Team | null> {
 }
 
 export async function findAllAsOptions(): Promise<Option[]> {
-  console.log("all", await findAll());
-
   return (await findAll())
     .map(toOption);
 }
@@ -64,7 +62,7 @@ export async function save(data: TeamData): Promise<Team | null> {
 
 export async function saveById(id: number, data: TeamData): Promise<Team | null> {
   const item: any = prisma.team.update({
-    data: { ...data },
+    data:  { ...data },
     where: { id },
   });
 

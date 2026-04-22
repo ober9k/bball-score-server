@@ -1,119 +1,67 @@
+import { toGame } from "@/lib/converters";
 import { prisma } from "@/lib/prisma";
-import HttpException from "@/models/http-exception.model";
-import type { Game } from "@/types/game";
-import type { Team, TeamData } from "@/types/team";
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
-import { StatusCodes } from "http-status-codes";
+import type { Game, GameData } from "@/types/game";
+import { type GameOrderByWithRelationInput, SortOrder } from "@prisma/generated/internal/prismaNamespace";
+import type { GameSelect } from "@prisma/generated/models/Game";
 
-/**
- * TODO: this is temporary, need to work out a tidier way to handle all of this
- */
-const reducer = (acc, cur: string) => ({ ...acc, [cur]: true });
-const getColumns = (columns: string[]) => columns.reduce(reducer, {});
-
-/**
- * TODO: this is temporary, need to work out a tidier way to handle all of this
- * (potentially via multiple requests instead)
- */
-const gameCols = getColumns(["id", "date", "phase", "round", "seasonId", "divisionId", "active", "archived"]);
-const gameTeamCols = getColumns(["id", "side", "score", "scoreByPeriod"]);
-const gameTeamPlayerCols = getColumns(["started", "seconds", "fgMade", "fgAttempted", "fg3Made", "fg3Attempted", "ftMade", "ftAttempted", "points", "offRebounds", "defRebounds", "rebounds", "assists", "steals", "blocks", "turnovers", "personalFouls", "technicalFouls"]);
-const teamCols = getColumns(["id", "name", "shortName"]);
-const playerCols = getColumns(["id", "name", "position", "number", "height"]);
-
-/**
- * TODO: fix result data for a type instead of using any
- */
-export async function findGames(): Promise<any[]> {
-  return prisma.game.findMany({
-    select: {
-      ...gameCols,
-      gameTeams: {
-        select: {
-          ...gameTeamCols,
-          team: {
-            select: {
-              ...teamCols,
-            },
-          },
-        },
-      },
-    },
-  });
+function defaultSelect(): GameSelect {
+  return {
+    id:         true,
+    date:       true,
+    phase:      true,
+    round:      true,
+    seasonId:   true,
+    divisionId: true,
+    active:     true,
+    archived:   true,
+    leagueId:   true,
+  };
 }
 
-/**
- * TODO: fix result data for a type instead of using any
- */
-export async function findGameById(id: number): Promise<any | null> {
-  const game = await prisma.game.findUnique({
-    where: {
-      id,
-    },
-    select: {
-      ...gameCols,
-      gameTeams: {
-        select: {
-          ...gameTeamCols,
-          team: {
-            select: {
-              ...teamCols,
-            },
-          },
-          gameTeamPlayers: {
-            select: {
-              ...gameTeamPlayerCols,
-              player: {
-                select: {
-                  ...playerCols,
-                }
-              }
-            }
-          },
-        },
-      },
-    },
+function defaultOrderBy(): GameOrderByWithRelationInput {
+  return {
+    date: SortOrder.desc,
+  };
+}
+
+export async function findAll(): Promise<Game[]> {
+  const items: any[] = await prisma.game.findMany({
+    select:  defaultSelect(),
+    orderBy: defaultOrderBy(),
   });
 
-  if (!game) {
-    throw new HttpException(StatusCodes.NOT_FOUND, "NotFound", "Unable to find game with `gameId` provided.");
-  }
-
-  return game;
+  return items
+    .map(toGame);
 }
 
-export async function saveGame(data: GameData): Promise<Game | null> {
-  try {
-    return await prisma.game.create({
-      data: {
-        ...data,
-      },
-    });
-  }
-  catch (error) {
-    throw new HttpException(StatusCodes.INTERNAL_SERVER_ERROR, "InternalServerError", `An unexpected error occurred: ${error.message}`);
-  }
+export async function findById(id: number): Promise<Game | null> {
+  const item: any = await prisma.game.findUnique({
+    select: defaultSelect(),
+    where:  { id },
+  });
+
+  return (item)
+    ? toGame(item)
+    : null;
 }
 
-export async function saveGameById(id: number, data: GameData): Promise<Game | null> {
-  try {
-    return await prisma.game.update({
-      data: {
-        ...data,
-      },
-      where: {
-        id,
-      },
-    });
-  }
-  catch (error) {
-    if (error instanceof PrismaClientKnownRequestError) {
-      if (error.code === 'P2025') {
-        throw new HttpException(StatusCodes.NOT_FOUND, "NotFound", "Unable to find game with `gameId` provided to update.");
-      }
-    }
-    else {
-      throw new HttpException(StatusCodes.INTERNAL_SERVER_ERROR, "InternalServerError", `An unexpected error occurred: ${error.message}`);
-    }
-  }
+export async function save(data: GameData): Promise<Game | null> {
+  const item: any = await prisma.game.create({
+    data: { ...data },
+  });
+
+  return (item)
+    ? toGame(item)
+    : null;
+}
+
+export async function saveById(id: number, data: GameData): Promise<Game | null> {
+  const item: any = await prisma.game.update({
+    data: { ...data },
+    where: { id },
+  });
+
+  return (item)
+    ? toGame(item)
+    : null;
 }

@@ -1,11 +1,12 @@
-import { findGameById, findGames, saveGame, saveGameById } from "@/services/game.service";
+import { toStats } from "@/lib/converters";
+import { findAll, findById, save, saveById } from "@/services/game.service";
 import { getLocalLeague } from "@/services/league.service";
 import type { GameData } from "@/types/game";
 import type { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
 function getGameId(req: Request): number {
-  return +req.params.gameId;
+  return +req.params.id;
 }
 
 function getGameData(req: Request, res: Response): GameData {
@@ -21,37 +22,16 @@ export async function getGames(req: Request, res: Response) {
   return res
     .status(StatusCodes.OK)
     .json(
-      await findGames()
+      await findAll()
     );
 }
 
 export async function getGame(req: Request, res: Response) {
-
-  const toStats = (gtp) => ({
-    seconds:        gtp.seconds,
-    fgMade:         gtp.fgMade,
-    fgAttempted:    gtp.fgAttempted,
-    fg3Made:        gtp.fg3Made,
-    fg3Attempted:   gtp.fg3Attempted,
-    ftMade:         gtp.ftMade,
-    ftAttempted:    gtp.ftAttempted,
-    points:         gtp.points,
-    offRebounds:    gtp.offRebounds,
-    defRebounds:    gtp.defRebounds,
-    rebounds:       gtp.rebounds,
-    assists:        gtp.assists,
-    steals:         gtp.steals,
-    blocks:         gtp.blocks,
-    turnovers:      gtp.turnovers,
-    personalFouls:  gtp.personalFouls,
-    technicalFouls: gtp.technicalFouls,
-  });
-
   /* a bit ugly for now */
   return res
     .status(StatusCodes.OK)
     .json(
-      await findGameById(getGameId(req))
+      await findById(getGameId(req))
         .then((game) => {
           return {
             ...game,
@@ -75,7 +55,7 @@ export async function createGame(req: Request, res: Response) {
   return res
     .status(StatusCodes.CREATED)
     .json(
-      await saveGame(getGameData(req, res))
+      await save(getGameData(req, res))
     );
 }
 
@@ -83,6 +63,6 @@ export async function updateGame(req: Request, res: Response) {
   return res
     .status(StatusCodes.OK)
     .json(
-      await saveGameById(getGameId(req), getGameData(req, res))
+      await saveById(getGameId(req), getGameData(req, res))
     );
 }
