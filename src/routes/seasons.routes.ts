@@ -11,8 +11,8 @@ const authorizedPaths = [isAuthenticated, isAuthorizedRole(authorizedRoles)];
 const router = Router()
   // seasons
   .get("/seasons", getSeasons)
-  .get("/seasons/:id", getSeason)
   .get("/seasons/options", getSeasonsOptions)
+  .get("/seasons/:id", getSeason)
   .get("/seasons/:id/divisions", getSeasonDivisions)
   // seasons (create/update)
   .post("/seasons", [...authorizedPaths, seasonValidationHandler()], createSeason)

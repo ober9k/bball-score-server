@@ -11,10 +11,10 @@ const authorizedPaths = [isAuthenticated, isAuthorizedRole(authorizedRoles)];
 const router = Router()
   // teams
   .get("/teams", getTeams)
+  .get("/teams/options", getTeamsOptions)
   .get("/teams/:id", getTeam)
   .get("/teams/:id/players", getTeamPlayers)
   .get("/teams/:id/statistics", getTeamStatistics)
-  .get("/teams/options", getTeamsOptions)
   // teams (create/update)
   .post("/teams", [...authorizedPaths, teamValidationHandler()], createTeam)
   .put("/teams/:id", [...authorizedPaths, teamValidationHandler()], updateTeam)

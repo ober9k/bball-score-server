@@ -11,8 +11,8 @@ const authorizedPaths = [isAuthenticated, isAuthorizedRole(authorizedRoles)];
 const router = Router()
   // divisions
   .get("/divisions", getDivisions)
-  .get("/divisions/:id", getDivision)
   .get("/divisions/options", getDivisionsOptions)
+  .get("/divisions/:id", getDivision)
   .get("/divisions/:id/teams", getDivisionTeams)
   // divisions (create/update)
   .post("/divisions", [...authorizedPaths, divisionValidationHandler()], createDivision)
