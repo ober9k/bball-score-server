@@ -1,6 +1,6 @@
 import { getLocalLeague } from "@/services/league.service";
 import { generateStatisticsLogsByTeamId } from "@/services/statistics.service";
-import { findAll, findAllAsOptions, findById, findPlayersTeamId, save, saveById } from "@/services/team.service";
+import { findAll, findAllAsOptions, findById, findPlayersByTeamId, save, saveById } from "@/services/team.service";
 import type { TeamData } from "@/types/team";
 import type { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
@@ -64,7 +64,7 @@ export async function getTeamPlayers(req: Request, res: Response) {
   return res
     .status(StatusCodes.OK)
     .json(
-      await findPlayersTeamId(getTeamId(req))
+      await findPlayersByTeamId(getTeamId(req))
     );
 }
 

@@ -1,9 +1,8 @@
-import { toOption, toTeam } from "@/lib/converters";
+import { toOption, toPlayer, toTeam } from "@/lib/converters";
 import { prisma } from "@/lib/prisma";
 import type { Option } from "@/types/option";
 import type { Player } from "@/types/player";
 import type { Team, TeamData } from "@/types/team";
-import type { TeamPlayer } from "@/types/team-player";
 import { SortOrder, type TeamOrderByWithRelationInput } from "@prisma/generated/internal/prismaNamespace";
 import type { TeamSelect } from "@prisma/generated/models/Team";
 
@@ -74,14 +73,15 @@ export async function saveById(id: number, data: TeamData): Promise<Team | null>
     : null;
 }
 
-export async function findPlayersTeamId(teamId: number): Promise<Player[]> {
+/* todo, this should potentially be relocated */
+export async function findPlayersByTeamId(teamId: number): Promise<Player[]> {
   const items: any[] = await prisma.teamPlayer.findMany({
     where: { teamId },
     include: {
       player: true,
     },
-  }) as TeamPlayer[];
+  });
 
   return items
-    .map((tp) => tp.player);
+    .map((tp) => toPlayer(tp.player));
 }

@@ -1,79 +1,80 @@
+import { toPlayer, toTeam } from "@/lib/converters";
 import { prisma } from "@/lib/prisma";
-import HttpException from "@/models/http-exception.model";
 import type { Player, PlayerData } from "@/types/player";
 import type { Team } from "@/types/team";
-import type { TeamPlayer } from "@/types/team-player";
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
-import { StatusCodes } from "http-status-codes";
+import { type PlayerOrderByWithRelationInput, SortOrder } from "@prisma/generated/internal/prismaNamespace";
+import type { PlayerSelect } from "@prisma/generated/models/Player";
 
-export async function findPlayers(): Promise<Player[]> {
-  return prisma.player.findMany({
-    orderBy: {
-      name: "asc",
-    },
+function defaultSelect(): PlayerSelect {
+  return {
+    id:       true,
+    name:     true,
+    position: true,
+    number:   true,
+    height:   true,
+    active:   true,
+    archived: true,
+    leagueId: true,
+  };
+}
+
+function defaultOrderBy(): PlayerOrderByWithRelationInput {
+  return {
+    name: SortOrder.asc,
+  };
+}
+
+export async function findAll(): Promise<Player[]> {
+  const items: any[] = await prisma.player.findMany({
+    select:  defaultSelect(),
+    orderBy: defaultOrderBy(),
   });
+
+  return items
+    .map(toPlayer);
 }
 
-export async function findPlayerById(id: number): Promise<Player | null> {
-  const player = await prisma.player.findUnique({
-    where: {
-      id,
-    },
+export async function findById(id: number): Promise<Player | null> {
+  const item: any = await prisma.player.findUniqueOrThrow({
+    select:  defaultSelect(),
+    where:   { id },
   });
 
-  if (!player) {
-    throw new HttpException(StatusCodes.NOT_FOUND, "NotFound", "Unable to find player with `playerId` provided.");
-  }
-
-  return player;
+  return (item)
+    ? toPlayer(item)
+    : null;
 }
 
-export async function savePlayer(data: PlayerData): Promise<Player | null> {
-  try {
-    return await prisma.player.create({
-      data: {
-        ...data,
-      },
-    });
-  }
-  catch (error) {
-    throw new HttpException(StatusCodes.INTERNAL_SERVER_ERROR, "InternalServerError", `An unexpected error occurred: ${error.message}`);
-  }
+export async function save(data: PlayerData): Promise<Player | null> {
+  const item: any = await prisma.player.create({
+    data: { ...data },
+  });
+
+  return (item)
+    ? toPlayer(item)
+    : null;
 }
 
-export async function savePlayerById(id: number, data: PlayerData): Promise<Player | null> {
-  try {
-    return await prisma.player.update({
-      data: {
-        ...data,
-      },
-      where: {
-        id,
-      },
-    });
-  }
-  catch (error) {
-    if (error instanceof PrismaClientKnownRequestError) {
-      if (error.code === 'P2025') {
-        throw new HttpException(StatusCodes.NOT_FOUND, "NotFound", "Unable to find player with `playerId` provided to update.");
-      }
-    }
-    else {
-      throw new HttpException(StatusCodes.INTERNAL_SERVER_ERROR, "InternalServerError", `An unexpected error occurred: ${error.message}`);
-    }
-  }
+export async function saveById(id: number, data: PlayerData): Promise<Player | null> {
+  const item: any = await prisma.player.update({
+    data:  { ...data },
+    where: { id },
+  });
+
+  return (item)
+    ? toPlayer(item)
+    : null;
 }
 
-export async function findPlayerTeams(id: number): Promise<Team[]> {
-  const teams = await prisma.teamPlayer.findMany({
-    where: {
-      playerId: id,
-    },
+/* todo, this should potentially be relocated */
+export async function findTeamsByPlayerId(playerId: number): Promise<Team[]> {
+  const items: any[] = await prisma.teamPlayer.findMany({
+    where: { playerId },
     include: {
       team: true,
     },
-  }) as TeamPlayer[];
+  });
 
-  return teams
-    .map((tp) => tp.team);
+  return items
+    .map((tp) => toTeam(tp.team));
 }
