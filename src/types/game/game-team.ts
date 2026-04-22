@@ -1,7 +1,6 @@
 import type { GameTeamPlayer } from "@/types/game/game-team-player";
 import type { GameTeamSideType, SideType } from "@/types/game/game-team-side";
-import type { Player } from "@/types/player";
-import type { Stats } from "node:fs";
+import type { Stats } from "@/types/stats";
 
 export type GameTeam = {
   teamSide: GameTeamSideType,
@@ -23,7 +22,7 @@ export type TeamLog = {
 };
 
 export type PlayerLog = {
-  playerId: number,
   started:  boolean,
   stats:    Stats,
+  playerId: number,
 };

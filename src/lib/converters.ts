@@ -1,6 +1,6 @@
 import type { Division } from "@/types/division";
 import type { Game } from "@/types/game";
-import type { TeamLog } from "@/types/game/game-team";
+import type { PlayerLog, TeamLog } from "@/types/game/game-team";
 import type { Option } from "@/types/option";
 import type { Player } from "@/types/player";
 import type { Season } from "@/types/season";
@@ -76,7 +76,15 @@ export function toTeamLog(data: any): TeamLog {
     byPeriod:   data.scoreByPeriod, /* to rename */
     gameId:     data.gameId,
     teamId:     data.teamId,
-    playerLogs: [],
+    playerLogs: data.gameTeamPlayers.map(toPlayerLog), /* temporary to be renamed */
+  };
+}
+
+export function toPlayerLog(data: any): PlayerLog {
+  return {
+    started:  data.started,
+    stats:    toStats(data),
+    playerId: data.playerId,
   };
 }
 

@@ -23,6 +23,29 @@ function defaultSelect(): GameSelect {
         scoreByPeriod: true, /* to rename */
         gameId:        true,
         teamId:        true,
+        gameTeamPlayers: {
+          select: {
+            started:        true,
+            seconds:        true,
+            fgMade:         true,
+            fgAttempted:    true,
+            fg3Made:        true,
+            fg3Attempted:   true,
+            ftMade:         true,
+            ftAttempted:    true,
+            points:         true,
+            offRebounds:    true,
+            defRebounds:    true,
+            rebounds:       true,
+            assists:        true,
+            steals:         true,
+            blocks:         true,
+            turnovers:      true,
+            personalFouls:  true,
+            technicalFouls: true,
+            playerId:       true,
+          }
+        }
       },
     },
   };
