@@ -32,22 +32,6 @@ export async function getGame(req: Request, res: Response) {
     .status(StatusCodes.OK)
     .json(
       await findById(getGameId(req))
-        .then((game) => {
-          return {
-            ...game,
-            teamLogs: [
-              ...game.teamLogs.map((tl) => ({
-                ...tl,
-                playerLogs: tl.teamLogs
-                  .map((pl) => ({
-                    player:  pl.player,
-                    started: pl.started,
-                    stats:   toStats(pl),
-                  }))
-              })),
-            ],
-          }
-        })
     );
 }
 
