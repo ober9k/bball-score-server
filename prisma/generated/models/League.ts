@@ -303,8 +303,8 @@ export type LeagueScalarWhereWithAggregatesInput = {
 export type LeagueCreateInput = {
   name: string
   slug: string
-  active: boolean
-  archived: boolean
+  active?: boolean
+  archived?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   seasons?: Prisma.SeasonCreateNestedManyWithoutLeagueInput
@@ -318,8 +318,8 @@ export type LeagueUncheckedCreateInput = {
   id?: number
   name: string
   slug: string
-  active: boolean
-  archived: boolean
+  active?: boolean
+  archived?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   seasons?: Prisma.SeasonUncheckedCreateNestedManyWithoutLeagueInput
@@ -362,8 +362,8 @@ export type LeagueCreateManyInput = {
   id?: number
   name: string
   slug: string
-  active: boolean
-  archived: boolean
+  active?: boolean
+  archived?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -523,8 +523,8 @@ export type LeagueUpdateOneRequiredWithoutGameNestedInput = {
 export type LeagueCreateWithoutSeasonsInput = {
   name: string
   slug: string
-  active: boolean
-  archived: boolean
+  active?: boolean
+  archived?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   divisions?: Prisma.DivisionCreateNestedManyWithoutLeagueInput
@@ -537,8 +537,8 @@ export type LeagueUncheckedCreateWithoutSeasonsInput = {
   id?: number
   name: string
   slug: string
-  active: boolean
-  archived: boolean
+  active?: boolean
+  archived?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   divisions?: Prisma.DivisionUncheckedCreateNestedManyWithoutLeagueInput
@@ -593,8 +593,8 @@ export type LeagueUncheckedUpdateWithoutSeasonsInput = {
 export type LeagueCreateWithoutDivisionsInput = {
   name: string
   slug: string
-  active: boolean
-  archived: boolean
+  active?: boolean
+  archived?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   seasons?: Prisma.SeasonCreateNestedManyWithoutLeagueInput
@@ -607,8 +607,8 @@ export type LeagueUncheckedCreateWithoutDivisionsInput = {
   id?: number
   name: string
   slug: string
-  active: boolean
-  archived: boolean
+  active?: boolean
+  archived?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   seasons?: Prisma.SeasonUncheckedCreateNestedManyWithoutLeagueInput
@@ -663,8 +663,8 @@ export type LeagueUncheckedUpdateWithoutDivisionsInput = {
 export type LeagueCreateWithoutTeamsInput = {
   name: string
   slug: string
-  active: boolean
-  archived: boolean
+  active?: boolean
+  archived?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   seasons?: Prisma.SeasonCreateNestedManyWithoutLeagueInput
@@ -677,8 +677,8 @@ export type LeagueUncheckedCreateWithoutTeamsInput = {
   id?: number
   name: string
   slug: string
-  active: boolean
-  archived: boolean
+  active?: boolean
+  archived?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   seasons?: Prisma.SeasonUncheckedCreateNestedManyWithoutLeagueInput
@@ -733,8 +733,8 @@ export type LeagueUncheckedUpdateWithoutTeamsInput = {
 export type LeagueCreateWithoutPlayerInput = {
   name: string
   slug: string
-  active: boolean
-  archived: boolean
+  active?: boolean
+  archived?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   seasons?: Prisma.SeasonCreateNestedManyWithoutLeagueInput
@@ -747,8 +747,8 @@ export type LeagueUncheckedCreateWithoutPlayerInput = {
   id?: number
   name: string
   slug: string
-  active: boolean
-  archived: boolean
+  active?: boolean
+  archived?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   seasons?: Prisma.SeasonUncheckedCreateNestedManyWithoutLeagueInput
@@ -803,8 +803,8 @@ export type LeagueUncheckedUpdateWithoutPlayerInput = {
 export type LeagueCreateWithoutGameInput = {
   name: string
   slug: string
-  active: boolean
-  archived: boolean
+  active?: boolean
+  archived?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   seasons?: Prisma.SeasonCreateNestedManyWithoutLeagueInput
@@ -817,8 +817,8 @@ export type LeagueUncheckedCreateWithoutGameInput = {
   id?: number
   name: string
   slug: string
-  active: boolean
-  archived: boolean
+  active?: boolean
+  archived?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   seasons?: Prisma.SeasonUncheckedCreateNestedManyWithoutLeagueInput

@@ -53,15 +53,15 @@ export type TeamPlayer = Prisma.TeamPlayerModel
  */
 export type Game = Prisma.GameModel
 /**
- * Model GameTeam
+ * Model TeamLog
  * 
  */
-export type GameTeam = Prisma.GameTeamModel
+export type TeamLog = Prisma.TeamLogModel
 /**
- * Model GameTeamPlayer
+ * Model PlayerLog
  * 
  */
-export type GameTeamPlayer = Prisma.GameTeamPlayerModel
+export type PlayerLog = Prisma.PlayerLogModel
 /**
  * Model User
  * 

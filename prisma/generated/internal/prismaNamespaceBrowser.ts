@@ -58,8 +58,8 @@ export const ModelName = {
   Player: 'Player',
   TeamPlayer: 'TeamPlayer',
   Game: 'Game',
-  GameTeam: 'GameTeam',
-  GameTeamPlayer: 'GameTeamPlayer',
+  TeamLog: 'TeamLog',
+  PlayerLog: 'PlayerLog',
   User: 'User'
 } as const
 
@@ -176,21 +176,21 @@ export const GameScalarFieldEnum = {
 export type GameScalarFieldEnum = (typeof GameScalarFieldEnum)[keyof typeof GameScalarFieldEnum]
 
 
-export const GameTeamScalarFieldEnum = {
+export const TeamLogScalarFieldEnum = {
   id: 'id',
   side: 'side',
   score: 'score',
-  scoreByPeriod: 'scoreByPeriod',
+  byPeriod: 'byPeriod',
   gameId: 'gameId',
   teamId: 'teamId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type GameTeamScalarFieldEnum = (typeof GameTeamScalarFieldEnum)[keyof typeof GameTeamScalarFieldEnum]
+export type TeamLogScalarFieldEnum = (typeof TeamLogScalarFieldEnum)[keyof typeof TeamLogScalarFieldEnum]
 
 
-export const GameTeamPlayerScalarFieldEnum = {
+export const PlayerLogScalarFieldEnum = {
   started: 'started',
   seconds: 'seconds',
   fgMade: 'fgMade',
@@ -209,14 +209,14 @@ export const GameTeamPlayerScalarFieldEnum = {
   turnovers: 'turnovers',
   personalFouls: 'personalFouls',
   technicalFouls: 'technicalFouls',
-  gameTeamId: 'gameTeamId',
+  teamLogId: 'teamLogId',
   playerId: 'playerId',
   teamId: 'teamId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type GameTeamPlayerScalarFieldEnum = (typeof GameTeamPlayerScalarFieldEnum)[keyof typeof GameTeamPlayerScalarFieldEnum]
+export type PlayerLogScalarFieldEnum = (typeof PlayerLogScalarFieldEnum)[keyof typeof PlayerLogScalarFieldEnum]
 
 
 export const UserScalarFieldEnum = {
