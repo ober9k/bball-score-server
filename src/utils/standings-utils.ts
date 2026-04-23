@@ -37,7 +37,7 @@ export function generateStandingsLogs(games: any[]): Map<number, StandingsLog> {
   const standingsLogs = new Map<number, StandingsLog>();
 
   games
-    .map((g) => ([...g.gameTeams]))
+    .map((g) => ([...g.teamLogs]))
     .flat()
     .forEach((tl) => {
       const { team } = tl;

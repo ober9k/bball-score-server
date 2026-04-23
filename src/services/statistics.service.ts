@@ -12,7 +12,7 @@ const getColumns = (columns: string[]) => columns.reduce(reducer, {});
  * TODO: this is temporary, need to work out a tidier way to handle all of this
  * (potentially via multiple requests instead)
  */
-const gameTeamPlayerCols = getColumns(["started", "seconds", "fgMade", "fgAttempted", "fg3Made", "fg3Attempted", "ftMade", "ftAttempted", "points", "offRebounds", "defRebounds", "rebounds", "assists", "steals", "blocks", "turnovers", "personalFouls", "technicalFouls"]);
+const playerLogCols = getColumns(["started", "seconds", "fgMade", "fgAttempted", "fg3Made", "fg3Attempted", "ftMade", "ftAttempted", "points", "offRebounds", "defRebounds", "rebounds", "assists", "steals", "blocks", "turnovers", "personalFouls", "technicalFouls"]);
 const teamCols = getColumns(["id", "name", "shortName"]);
 const playerCols = getColumns(["id", "name", "position", "number", "height"]);
 
@@ -25,9 +25,9 @@ export async function generateStatisticsLogs(averages: boolean = false, teamId?:
     where = { ... { teamId } };
   }
 
-  const playerLogs: any[] = await prisma.gameTeamPlayer.findMany({
+  const playerLogs: any[] = await prisma.playerLog.findMany({
     select: {
-      ...gameTeamPlayerCols,
+      ...playerLogCols,
       team: {
         select: {
           ...teamCols,

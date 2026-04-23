@@ -9,16 +9,16 @@ const reducer = (acc, cur: string) => ({ ...acc, [cur]: true });
 const getColumns = (columns: string[]) => columns.reduce(reducer, {});
 
 const gameCols = getColumns(["id", "date", "phase", "round"]);
-const gameTeamCols = getColumns(["id", "side", "score", "byPeriod"]);
+const teamLogCols = getColumns(["id", "side", "score", "byPeriod"]);
 const teamCols = getColumns(["id", "name", "shortName"]);
 
 export async function generateStandings(): Promise<StandingsLog[]> {
   const games: any[] = await prisma.game.findMany({
     select: {
       ...gameCols,
-      gameTeams: {
+      teamLogs: {
         select: {
-          ...gameTeamCols,
+          ...teamLogCols,
           team: {
             select: {
               ...teamCols,
@@ -33,7 +33,7 @@ export async function generateStandings(): Promise<StandingsLog[]> {
 
   games
     .forEach((g) => {
-      const [ awayTeamLog, homeTeamLog ] = g.gameTeams as any[];
+      const [ awayTeamLog, homeTeamLog ] = g.teamLogs as any[];
       const { team: awayTeam } = awayTeamLog;
       const { team: homeTeam } = homeTeamLog;
 
