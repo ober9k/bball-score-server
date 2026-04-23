@@ -38,7 +38,7 @@ model Season {
   league    League     @relation(fields: [leagueId], references: [id])
   createdAt DateTime   @default(now())
   updatedAt DateTime   @default(now())
-  Game      Game[]
+  game      Game[]
 }
 
 model Division {
@@ -53,24 +53,24 @@ model Division {
   league    League   @relation(fields: [leagueId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
-  Game      Game[]
+  game      Game[]
 }
 
 model Team {
-  id             Int              @id @default(autoincrement())
-  name           String
-  shortName      String
-  active         Boolean          @default(false)
-  archived       Boolean          @default(false)
-  divisionId     Int
-  leagueId       Int
-  division       Division         @relation(fields: [divisionId], references: [id])
-  league         League           @relation(fields: [leagueId], references: [id])
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @default(now())
-  players        TeamPlayer[]
-  gameTeam       GameTeam[]
-  GameTeamPlayer GameTeamPlayer[]
+  id         Int          @id @default(autoincrement())
+  name       String
+  shortName  String
+  active     Boolean      @default(false)
+  archived   Boolean      @default(false)
+  divisionId Int
+  leagueId   Int
+  division   Division     @relation(fields: [divisionId], references: [id])
+  league     League       @relation(fields: [leagueId], references: [id])
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @default(now())
+  players    TeamPlayer[]
+  teamLogs   TeamLog[]
+  playerLogs PlayerLog[]
 }
 
 enum Position {
@@ -82,19 +82,19 @@ enum Position {
 }
 
 model Player {
-  id             Int              @id @default(autoincrement())
-  name           String
-  position       Position
-  number         String
-  height         String
-  active         Boolean          @default(false)
-  archived       Boolean          @default(false)
-  leagueId       Int
-  league         League           @relation(fields: [leagueId], references: [id])
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @default(now())
-  teams          TeamPlayer[]
-  GameTeamPlayer GameTeamPlayer[]
+  id         Int          @id @default(autoincrement())
+  name       String
+  position   Position
+  number     String
+  height     String
+  active     Boolean      @default(false)
+  archived   Boolean      @default(false)
+  leagueId   Int
+  league     League       @relation(fields: [leagueId], references: [id])
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @default(now())
+  teams      TeamPlayer[]
+  playerLogs PlayerLog[]
 }
 
 // The explicit join table model
@@ -115,21 +115,21 @@ enum GamePhase {
 }
 
 model Game {
-  id         Int        @id @default(autoincrement())
+  id         Int       @id @default(autoincrement())
   date       DateTime
   phase      GamePhase
   round      Int
-  active     Boolean    @default(false)
-  archived   Boolean    @default(false)
+  active     Boolean   @default(false)
+  archived   Boolean   @default(false)
   leagueId   Int
   seasonId   Int
   divisionId Int
-  league     League     @relation(fields: [leagueId], references: [id])
-  season     Season     @relation(fields: [seasonId], references: [id])
-  division   Division   @relation(fields: [divisionId], references: [id])
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @default(now())
-  gameTeams  GameTeam[]
+  league     League    @relation(fields: [leagueId], references: [id])
+  season     Season    @relation(fields: [seasonId], references: [id])
+  division   Division  @relation(fields: [divisionId], references: [id])
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @default(now())
+  teamLogs   TeamLog[]
 }
 
 enum TeamSide {
@@ -137,49 +137,49 @@ enum TeamSide {
   HOME_TEAM
 }
 
-model GameTeam {
-  id              Int              @id @default(autoincrement())
-  side            TeamSide
-  score           Int
-  scoreByPeriod   Int[]
-  gameId          Int
-  teamId          Int
-  game            Game             @relation(fields: [gameId], references: [id])
-  team            Team             @relation(fields: [teamId], references: [id])
-  createdAt       DateTime         @default(now())
-  updatedAt       DateTime         @default(now())
-  gameTeamPlayers GameTeamPlayer[]
+model TeamLog {
+  id         Int         @id @default(autoincrement())
+  side       TeamSide
+  score      Int
+  byPeriod   Int[]
+  gameId     Int
+  teamId     Int
+  game       Game        @relation(fields: [gameId], references: [id])
+  team       Team        @relation(fields: [teamId], references: [id])
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @default(now())
+  playerLogs PlayerLog[]
 }
 
-model GameTeamPlayer {
-  started        Boolean
-  seconds        Int
-  fgMade         Int
-  fgAttempted    Int
-  fg3Made        Int
-  fg3Attempted   Int
-  ftMade         Int
-  ftAttempted    Int
-  points         Int
-  offRebounds    Int
-  defRebounds    Int
-  rebounds       Int
-  assists        Int
-  steals         Int
-  blocks         Int
-  turnovers      Int
-  personalFouls  Int
-  technicalFouls Int
-  gameTeamId     Int
+model PlayerLog {
+  started        Boolean  @default(false)
+  seconds        Int      @default(0)
+  fgMade         Int      @default(0)
+  fgAttempted    Int      @default(0)
+  fg3Made        Int      @default(0)
+  fg3Attempted   Int      @default(0)
+  ftMade         Int      @default(0)
+  ftAttempted    Int      @default(0)
+  points         Int      @default(0)
+  offRebounds    Int      @default(0)
+  defRebounds    Int      @default(0)
+  rebounds       Int      @default(0)
+  assists        Int      @default(0)
+  steals         Int      @default(0)
+  blocks         Int      @default(0)
+  turnovers      Int      @default(0)
+  personalFouls  Int      @default(0)
+  technicalFouls Int      @default(0)
+  teamLogId      Int
   playerId       Int
   teamId         Int
-  gameTeam       GameTeam @relation(fields: [gameTeamId], references: [id])
+  teamLog        TeamLog  @relation(fields: [teamLogId], references: [id])
   team           Team     @relation(fields: [teamId], references: [id])
   player         Player   @relation(fields: [playerId], references: [id])
   createdAt      DateTime @default(now())
   updatedAt      DateTime @default(now())
 
-  @@id([gameTeamId, playerId, teamId]) // composite primary key
+  @@id([teamLogId, playerId, teamId]) // composite primary key
 }
 
 enum UserRole {
