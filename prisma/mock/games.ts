@@ -1,5 +1,4 @@
-import type { GamePhaseType } from "@/types/game/game-phase";
-import type { GameTeamSideType } from "@/types/game/game-team-side";
+import type { PhaseType, SideType } from "@/types/game";
 
 export const mapStats = (stats: number[]) => {
   const [
@@ -43,7 +42,7 @@ export const mapStats = (stats: number[]) => {
   }
 };
 
-export type MockGameTeamPlayer = {
+export type MockPlayerLog = {
   playerId:       number,
   started:        boolean,
   seconds:        number,
@@ -65,23 +64,23 @@ export type MockGameTeamPlayer = {
   technicalFouls: number,
 };
 
-export type MockGameTeam = {
+export type MockTeamLog = {
   teamId: number,
-  side: GameTeamSideType,
+  side: SideType,
   score: number,
-  scoreByPeriod: number[],
-  teamPlayers: MockGameTeamPlayer[],
+  byPeriod: number[],
+  playerLogs: MockPlayerLog[],
 };
 
 export type MockGame = {
-  date:       Date,
-  phase:      GamePhaseType,
-  round:      number,
-  gameTeams:  MockGameTeam[],
+  date:     Date,
+  phase:    PhaseType,
+  round:    number,
+  teamLogs: MockTeamLog[],
 };
 
-export const mockGameTeams: MockGameTeam[] = [
-  { teamId: 1, side: "AWAY_TEAM", score: 50, scoreByPeriod: [13,12,11,14], teamPlayers: [
+export const mockGameTeams: MockTeamLog[] = [
+  { teamId: 1, side: "AWAY_TEAM", score: 50, byPeriod: [13,12,11,14], playerLogs: [
       { playerId:  1, started: true,  ...mapStats([ 1664, 5, 12, 0, 2, 0, 0, 0, 5, 1, 0, 3, 1, 0, 4, 2, 0]) },
       { playerId:  2, started: true,  ...mapStats([ 1667, 2, 10, 1, 8, 0, 1, 0, 1, 2, 0, 1, 0, 0, 1, 2, 0]) },
       { playerId:  3, started: true,  ...mapStats([ 1194, 0,  4, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0]) },
@@ -91,7 +90,7 @@ export const mockGameTeams: MockGameTeam[] = [
       { playerId:  7, started: false, ...mapStats([ 1730, 2,  6, 0, 0, 0, 0, 0, 1, 4, 0, 2, 0, 0, 0, 1, 0]) },
       { playerId:  8, started: false, ...mapStats([    0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]) },
     ] },
-  { teamId: 2, side: "HOME_TEAM", score: 49, scoreByPeriod: [15,11,10,13], teamPlayers: [
+  { teamId: 2, side: "HOME_TEAM", score: 49, byPeriod: [15,11,10,13], playerLogs: [
       { playerId:  9, started: true,  ...mapStats([ 1850, 8, 16, 3, 7, 0, 1, 0, 1, 0, 0, 1, 3, 0, 2, 1, 0]) },
       { playerId: 10, started: true,  ...mapStats([ 1422, 0,  6, 0, 6, 0, 0, 0, 0, 2, 0, 1, 0, 0, 2, 1, 0]) },
       { playerId: 11, started: true,  ...mapStats([ 1824, 2,  7, 2, 4, 2, 2, 0, 0, 3, 0, 2, 1, 0, 1, 1, 0]) },
@@ -101,7 +100,7 @@ export const mockGameTeams: MockGameTeam[] = [
       { playerId: 15, started: false, ...mapStats([  968, 1,  3, 0, 2, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 5, 0]) },
       { playerId: 16, started: false, ...mapStats([    0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]) },
     ] },
-  { teamId: 1, side: "AWAY_TEAM", score: 56, scoreByPeriod: [], teamPlayers: [
+  { teamId: 1, side: "AWAY_TEAM", score: 56, byPeriod: [], playerLogs: [
       { playerId:  1, started: true,  ...mapStats([ 1421, 8, 13, 2, 5, 0, 1, 0, 4, 0, 0, 0, 2, 0, 0, 2, 0]) },
       { playerId:  2, started: true,  ...mapStats([ 1453, 2,  8, 1, 5, 2, 3, 0, 0, 3, 0, 2, 0, 1, 2, 3, 0]) },
       { playerId:  3, started: true,  ...mapStats([ 1646, 1,  5, 0, 0, 0, 2, 0, 2, 5, 0, 1, 1, 0, 2, 4, 0]) },
@@ -111,7 +110,7 @@ export const mockGameTeams: MockGameTeam[] = [
       { playerId:  7, started: false, ...mapStats([ 1314, 2,  9, 1, 3, 0, 0, 0, 1, 3, 0, 2, 3, 0, 0, 1, 0]) },
       { playerId:  8, started: false, ...mapStats([ 1259, 4, 10, 0, 0, 1, 3, 0, 3, 7, 0, 0, 0, 0, 0, 0, 0]) },
     ] },
-  { teamId: 3, side: "HOME_TEAM", score: 51, scoreByPeriod: [], teamPlayers: [
+  { teamId: 3, side: "HOME_TEAM", score: 51, byPeriod: [], playerLogs: [
       { playerId: 17, started: true,  ...mapStats([ 2183, 4,  7, 2, 4, 1, 2, 0, 3, 2, 0, 3, 2, 0, 3, 3, 0]) },
       { playerId: 18, started: true,  ...mapStats([ 1565, 1,  4, 1, 3, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0]) },
       { playerId: 19, started: true,  ...mapStats([    0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]) },
@@ -121,7 +120,7 @@ export const mockGameTeams: MockGameTeam[] = [
       { playerId: 23, started: false, ...mapStats([ 1796, 2,  5, 0, 2, 0, 0, 0, 3, 0, 0, 3, 4, 0, 1, 1, 0]) },
       { playerId: 24, started: false, ...mapStats([ 1656, 2,  5, 0, 0, 0, 0, 0, 1, 2, 0, 0, 1, 0, 1, 4, 0]) },
     ] },
-  { teamId: 2, side: "AWAY_TEAM", score: 44, scoreByPeriod: [], teamPlayers: [
+  { teamId: 2, side: "AWAY_TEAM", score: 44, byPeriod: [], playerLogs: [
       { playerId:  9, started: true,  ...mapStats([ 1676, 2,  6, 1, 4, 0, 0, 0, 1, 1, 0, 0, 2, 0, 0, 0, 0]) },
       { playerId: 10, started: true,  ...mapStats([  810, 0,  1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0]) },
       { playerId: 11, started: true,  ...mapStats([ 1771, 9, 20, 1, 6, 1, 4, 0, 2, 3, 0, 4, 2, 0, 2, 1, 0]) },
@@ -131,7 +130,7 @@ export const mockGameTeams: MockGameTeam[] = [
       { playerId: 15, started: false, ...mapStats([ 1258, 0,  2, 0, 0, 1, 2, 0, 5, 3, 0, 0, 0, 0, 1, 2, 0]) },
       { playerId: 16, started: false, ...mapStats([ 1341, 0,  0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 1, 0, 3, 4, 0]) },
     ] },
-  { teamId: 3, side: "HOME_TEAM", score: 50, scoreByPeriod: [], teamPlayers: [
+  { teamId: 3, side: "HOME_TEAM", score: 50, byPeriod: [], playerLogs: [
       { playerId: 17, started: true,  ...mapStats([ 1612, 3, 11, 0, 7, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2, 0]) },
       { playerId: 18, started: true,  ...mapStats([ 1129, 1,  5, 0, 2, 0, 0, 0, 2, 3, 0, 1, 1, 0, 1, 1, 0]) },
       { playerId: 19, started: true,  ...mapStats([ 2266, 3,  9, 0, 1, 3, 4, 0, 4, 3, 0, 9, 2, 0, 3, 2, 0]) },
@@ -144,8 +143,7 @@ export const mockGameTeams: MockGameTeam[] = [
 ];
 
 export const mockGames: MockGame[] = [
-  { date: new Date("2026-02-01"), phase: "REGULAR_SEASON", round: 1, gameTeams: [ ...mockGameTeams.slice(0, 2) ] },
-  { date: new Date("2026-02-08"), phase: "REGULAR_SEASON", round: 2, gameTeams: [ ...mockGameTeams.slice(2, 4) ] },
-  { date: new Date("2026-02-15"), phase: "REGULAR_SEASON", round: 3, gameTeams: [ ...mockGameTeams.slice(4, 6) ] },
+  { date: new Date("2026-02-01"), phase: "REGULAR_SEASON", round: 1, teamLogs: [ ...mockGameTeams.slice(0, 2) ] },
+  { date: new Date("2026-02-08"), phase: "REGULAR_SEASON", round: 2, teamLogs: [ ...mockGameTeams.slice(2, 4) ] },
+  { date: new Date("2026-02-15"), phase: "REGULAR_SEASON", round: 3, teamLogs: [ ...mockGameTeams.slice(4, 6) ] },
 ];
-

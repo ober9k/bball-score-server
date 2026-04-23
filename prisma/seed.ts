@@ -124,29 +124,29 @@ async function main() {
 
       const { id: gameId } = game;
 
-      for (const gt of g.gameTeams) {
+      for (const gt of g.teamLogs) {
         const teamId = gt.teamId;
-        const teamPlayers = gt.teamPlayers
+        const playerLogs = gt.playerLogs
           .map((gtp) => ({
             ...gtp, teamId,
           }));
 
-        const gameTeam = await prisma.gameTeam.create({
+        const teamLog = await prisma.teamLog.create({
           data: {
             side: gt.side,
             score: gt.score,
-            scoreByPeriod: gt.scoreByPeriod,
+            byPeriod: gt.byPeriod,
             gameId,
             teamId,
-            gameTeamPlayers: {
+            playerLogs: {
               create: [
-                ...teamPlayers
+                ...playerLogs
               ],
             }
           }
         }) as any;
 
-        console.log('Created gameTeam:', gameTeam);
+        console.log('Created teamLog:', teamLog);
       }
 
       console.log('Created game:', game);
