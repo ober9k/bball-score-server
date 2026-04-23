@@ -4,7 +4,7 @@ import { generateAveragesStatisticsLogs, generateTotalsStatisticsLogs } from "@/
 
 export type StatisticsMode = "averages" | "totals";
 
-export async function generateStatisticsLogs(mode: StatisticsMode = "totals"): Promise<StatisticsLog[]> {
+export async function generateStatisticsLogs(mode?: StatisticsMode): Promise<StatisticsLog[]> {
   const playerLogs = await findAll();
 
   return (mode === "averages")
@@ -12,7 +12,7 @@ export async function generateStatisticsLogs(mode: StatisticsMode = "totals"): P
     : generateTotalsStatisticsLogs(playerLogs)
 }
 
-export async function generateStatisticsLogsByTeamId(teamId: number, mode: StatisticsMode = "totals"): Promise<StatisticsLog[]> {
+export async function generateStatisticsLogsByTeamId(teamId: number, mode?: StatisticsMode): Promise<StatisticsLog[]> {
   const playerLogs = await findByTeamId(teamId);
 
   return (mode === "averages")

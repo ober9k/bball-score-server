@@ -1,4 +1,4 @@
-import { createTeam, getTeam, getTeamPlayers, getTeams, getTeamsOptions, getTeamStatistics, updateTeam } from "@/controllers/teams.controller";
+import { createTeam, getTeam, getTeamPlayers, getTeams, getTeamsOptions, getTeamStatisticsAverages, getTeamStatisticsTotals, updateTeam } from "@/controllers/teams.controller";
 import { isAuthorizedRole } from "@/middlewares/auth-role";
 import { isAuthenticated } from "@/middlewares/auth-token";
 import { validateIdHandler } from "@/middlewares/validate-id-handler";
@@ -15,7 +15,8 @@ const router = Router()
   .get("/teams/options", getTeamsOptions)
   .get("/teams/:id", [validateIdHandler], getTeam)
   .get("/teams/:id/players", [validateIdHandler], getTeamPlayers)
-  .get("/teams/:id/statistics", [validateIdHandler], getTeamStatistics)
+  .get("/teams/:id/statistics/averages", [validateIdHandler], getTeamStatisticsAverages)
+  .get("/teams/:id/statistics/totals", [validateIdHandler], getTeamStatisticsTotals)
   // teams (create/update)
   .post("/teams", [...authorizedPaths, teamValidationHandler()], createTeam)
   .put("/teams/:id", [...authorizedPaths, validateIdHandler, teamValidationHandler()], updateTeam)
