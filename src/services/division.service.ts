@@ -17,6 +17,8 @@ function defaultSelect(): DivisionSelect {
   };
 }
 
+export { defaultSelect as divisionDefaultSelect };
+
 function defaultOrderBy(): DivisionOrderByWithRelationInput {
   return {
     name: SortOrder.asc,

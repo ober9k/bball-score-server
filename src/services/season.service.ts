@@ -16,6 +16,8 @@ function defaultSelect(): SeasonSelect {
   };
 }
 
+export { defaultSelect as seasonDefaultSelect };
+
 function defaultOrderBy(): SeasonOrderByWithRelationInput {
   return {
     name: SortOrder.asc,

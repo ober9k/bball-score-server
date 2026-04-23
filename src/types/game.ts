@@ -1,4 +1,8 @@
+import type { Division } from "@/types/division";
+import type { Player } from "@/types/player";
+import type { Season } from "@/types/season";
 import type { Stats } from "@/types/stats";
+import type { Team } from "@/types/team";
 
 export const Phase = {
   PRE_SEASON:     "PRE_SEASON",
@@ -24,7 +28,9 @@ export type Game = {
   archived:   boolean,
   leagueId:   number,
   seasonId:   number,
+  season:     Season,
   divisionId: number,
+  division:   Division,
   teamLogs:   TeamLog[],
 };
 
@@ -37,6 +43,7 @@ export type TeamLog = {
   byPeriod:   number[], /* score by period */
   gameId:     number,
   teamId:     number,
+  team:       Team,
   playerLogs: PlayerLog[],
 };
 
@@ -44,4 +51,5 @@ export type PlayerLog = {
   started:  boolean,
   stats:    Stats,
   playerId: number,
+  player:   Player,
 };

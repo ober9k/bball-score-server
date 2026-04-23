@@ -1,5 +1,9 @@
 import { toGame } from "@/lib/converters";
 import { prisma } from "@/lib/prisma";
+import { divisionDefaultSelect } from "@/services/division.service";
+import { playerDefaultSelect } from "@/services/player.service";
+import { seasonDefaultSelect } from "@/services/season.service";
+import { teamDefaultSelect } from "@/services/team.service";
 import type { Game, GameData } from "@/types/game";
 import { type GameOrderByWithRelationInput, SortOrder } from "@prisma/generated/internal/prismaNamespace";
 import type { GameSelect } from "@prisma/generated/models/Game";
@@ -11,7 +15,13 @@ function defaultSelect(): GameSelect {
     phase:      true,
     round:      true,
     seasonId:   true,
+    season: {
+      select: seasonDefaultSelect(), /* TBD... some sort of select/hydration condition */
+    },
     divisionId: true,
+    division: {
+      select: divisionDefaultSelect(), /* TBD... some sort of select/hydration condition */
+    },
     active:     true,
     archived:   true,
     leagueId:   true,
@@ -23,7 +33,35 @@ function defaultSelect(): GameSelect {
         byPeriod:   true,
         gameId:     true,
         teamId:     true,
-        playerLogs: true, /* no need to filter out any fields */
+        team: {
+          select: teamDefaultSelect(),
+        },
+        playerLogs: {
+          select: {
+            started:        true,
+            seconds:        true,
+            fgMade:         true,
+            fgAttempted:    true,
+            fg3Made:        true,
+            fg3Attempted:   true,
+            ftMade:         true,
+            ftAttempted:    true,
+            points:         true,
+            offRebounds:    true,
+            defRebounds:    true,
+            rebounds:       true,
+            assists:        true,
+            steals:         true,
+            blocks:         true,
+            turnovers:      true,
+            personalFouls:  true,
+            technicalFouls: true,
+            playerId:       true,
+            player: {
+              select: playerDefaultSelect(),
+            },
+          },
+        },
       },
     },
   };

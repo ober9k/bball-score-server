@@ -59,7 +59,9 @@ export function toGame(data: any): Game {
     phase:      data.phase,
     round:      data.round,
     seasonId:   data.seasonId,
+    season:     toSeason(data.season),
     divisionId: data.divisionId,
+    division:   toDivision(data.division),
     active:     data.active,
     archived:   data.archived,
     leagueId:   data.leagueId,
@@ -75,6 +77,7 @@ export function toTeamLog(data: any): TeamLog {
     byPeriod:   data.byPeriod,
     gameId:     data.gameId,
     teamId:     data.teamId,
+    team:       toTeam(data.team),
     playerLogs: data.playerLogs.map(toPlayerLog),
   };
 }
@@ -84,6 +87,7 @@ export function toPlayerLog(data: any): PlayerLog {
     started:  data.started,
     stats:    toStats(data),
     playerId: data.playerId,
+    player:   toPlayer(data.player),
   };
 }
 

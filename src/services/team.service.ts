@@ -18,6 +18,8 @@ function defaultSelect(): TeamSelect {
   };
 }
 
+export { defaultSelect as teamDefaultSelect };
+
 function defaultOrderBy(): TeamOrderByWithRelationInput {
   return {
     name: SortOrder.asc,

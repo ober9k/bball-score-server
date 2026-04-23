@@ -18,6 +18,8 @@ function defaultSelect(): PlayerSelect {
   };
 }
 
+export { defaultSelect as playerDefaultSelect };
+
 function defaultOrderBy(): PlayerOrderByWithRelationInput {
   return {
     name: SortOrder.asc,
