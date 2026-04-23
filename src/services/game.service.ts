@@ -15,15 +15,15 @@ function defaultSelect(): GameSelect {
     active:     true,
     archived:   true,
     leagueId:   true,
-    gameTeams: {
+    teamLogs: {
       select: {
-        id:              true,
-        side:            true,
-        score:           true,
-        scoreByPeriod:   true, /* to rename */
-        gameId:          true,
-        teamId:          true,
-        gameTeamPlayers: true, /* no need to filter out any fields */
+        id:         true,
+        side:       true,
+        score:      true,
+        byPeriod:   true,
+        gameId:     true,
+        teamId:     true,
+        playerLogs: true, /* no need to filter out any fields */
       },
     },
   };
@@ -68,7 +68,7 @@ export async function save(data: GameData): Promise<Game | null> {
 
 export async function saveById(id: number, data: GameData): Promise<Game | null> {
   const item: any = await prisma.game.update({
-    data: { ...data },
+    data:  { ...data },
     where: { id },
   });
 

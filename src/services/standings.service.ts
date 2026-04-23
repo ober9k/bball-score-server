@@ -9,7 +9,7 @@ const reducer = (acc, cur: string) => ({ ...acc, [cur]: true });
 const getColumns = (columns: string[]) => columns.reduce(reducer, {});
 
 const gameCols = getColumns(["id", "date", "phase", "round"]);
-const gameTeamCols = getColumns(["id", "side", "score", "scoreByPeriod"]);
+const gameTeamCols = getColumns(["id", "side", "score", "byPeriod"]);
 const teamCols = getColumns(["id", "name", "shortName"]);
 
 export async function generateStandings(): Promise<StandingsLog[]> {

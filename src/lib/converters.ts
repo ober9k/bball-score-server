@@ -1,6 +1,5 @@
 import type { Division } from "@/types/division";
-import type { Game } from "@/types/game";
-import type { PlayerLog, TeamLog } from "@/types/game/game-team";
+import type { Game, PlayerLog, TeamLog } from "@/types/game";
 import type { Option } from "@/types/option";
 import type { Player } from "@/types/player";
 import type { Season } from "@/types/season";
@@ -64,7 +63,7 @@ export function toGame(data: any): Game {
     active:     data.active,
     archived:   data.archived,
     leagueId:   data.leagueId,
-    teamLogs:   data.gameTeams.map(toTeamLog), /* temporary to be renamed */
+    teamLogs:   data.teamLogs.map(toTeamLog),
   };
 }
 
@@ -73,10 +72,10 @@ export function toTeamLog(data: any): TeamLog {
     id:         data.id,
     side:       data.side,
     score:      data.score,
-    byPeriod:   data.scoreByPeriod, /* to rename */
+    byPeriod:   data.byPeriod,
     gameId:     data.gameId,
     teamId:     data.teamId,
-    playerLogs: data.gameTeamPlayers.map(toPlayerLog), /* temporary to be renamed */
+    playerLogs: data.playerLogs.map(toPlayerLog),
   };
 }
 

@@ -1,13 +1,13 @@
 import { minLengthMessage } from "@/lib/messages";
 import { validationHandler } from "@/middlewares/validation-handler";
-import { GamePhase, type GamePhaseType } from "@/types/game/game-phase";
+import { Phase, type PhaseType } from "@/types/game";
 import type { NextFunction, Request, Response } from "express";
 import { z } from "zod";
 
 const RoundLabel = "Round";
 const RoundMinLength = 1;
 
-const phaseEnum = Object.values(GamePhase) as [GamePhaseType, ...GamePhaseType[]];
+const phaseEnum = Object.values(Phase) as [PhaseType, ...PhaseType[]];
 
 export const zGame = z.object({
   date: z.date(),

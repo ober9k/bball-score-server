@@ -35,14 +35,14 @@ export async function getGame(req: Request, res: Response) {
         .then((game) => {
           return {
             ...game,
-            gameTeams: [
-              ...game.gameTeams.map((gt) => ({
-                ...gt,
-                gameTeamPlayers: gt.gameTeamPlayers
-                  .map((gtp) => ({
-                    player:  gtp.player,
-                    started: gtp.started,
-                    stats:   toStats(gtp),
+            teamLogs: [
+              ...game.teamLogs.map((tl) => ({
+                ...tl,
+                playerLogs: tl.teamLogs
+                  .map((pl) => ({
+                    player:  pl.player,
+                    started: pl.started,
+                    stats:   toStats(pl),
                   }))
               })),
             ],
