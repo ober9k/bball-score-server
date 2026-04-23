@@ -1,3 +1,4 @@
+import type { PlayerLog } from "@/types/game";
 import type { StatisticsLog } from "@/types/statistics-log";
 import type { Stats } from "@/types/stats";
 
@@ -23,7 +24,7 @@ export const statsKeys = [
   "turnovers",
   "personalFouls",
   "technicalFouls",
-];
+] as const;
 
 /**
  * Generate empty stats object.
@@ -34,7 +35,28 @@ function generateEmptyStats(): Stats {
   }), {}) as Stats;
 }
 
-export function generateEmptyStatisticsLog(playerLog: any): StatisticsLog {
+/**
+ * Accumulate stats based on player stats.
+ */
+function calculateTotals(log: StatisticsLog, stats: Stats): Stats {
+  return statsKeys.reduce((acc, key) => ({
+    ...acc, [key]: acc[key] + stats[key],
+  }), log.stats);
+}
+
+/**
+ * Average stats based on games played.
+ */
+function calculateAverages(log: StatisticsLog): Stats {
+  return statsKeys.reduce((acc, key) => ({
+    ...acc, [key]: log.stats[key] / log.played,
+  }), log.stats) as Stats;
+}
+
+/**
+ * Generate empty stats log with player/team filled.
+ */
+export function generateEmptyStatisticsLog(playerLog: PlayerLog): StatisticsLog {
   const { player, team } = playerLog;
   const { id } = player;
 
@@ -46,70 +68,36 @@ export function generateEmptyStatisticsLog(playerLog: any): StatisticsLog {
 }
 
 /**
- * Extract stats values from player log into separate object.
+ * Generate totals for players as statistics logs.
+ * This function is blind only to a player which it accumulates/groups the stats too.
  */
-export function extractStats(playerLog: any): Stats {
-  const stats = {};
+export function generateTotalsStatisticsLogs(playerLogs: PlayerLog[]): StatisticsLog[] {
+  /* stored in map for convenient access */
+  const statisticsLogs = playerLogs
+    .reduce((acc, playerLog) => {
+      if (!acc.has(playerLog.player.id)) {
+          acc.set(playerLog.player.id, generateEmptyStatisticsLog(playerLog));
+      }
 
-  statsKeys.forEach((key) => {
-    stats[key] = playerLog[key];
-  });
+      /* no `getOrInsert()` available */
+      const log = acc.get(playerLog.player.id)!;
+      log.played  += (playerLog.stats.seconds > 0) ? 1 : 0;
+      log.started += (playerLog.started) ? 1 : 0;
+      log.stats    = calculateTotals(log, playerLog.stats);
 
-  return stats as Stats;
+      return acc;
+    }, new Map<number, StatisticsLog>());
+
+  return [ ...statisticsLogs.values() ];
 }
 
 /**
- * Count for if player played based off started or seconds.
+ * Generate average for players as statistics logs.
+ * This function is blind only to a player which it accumulates/groups the stats too.
  */
-export function getPlayed(seconds: number): number {
-  return +(seconds > 0);
-}
-
-/**
- * Count for if player started.
- */
-export function getStarted(started: boolean): number {
-  return +(started);
-}
-
-/**
- * Add next set of stats to existing stats.
- */
-export function calculateTotals(log: StatisticsLog, stats: Stats): Stats {
-  return statsKeys.reduce((acc, key) => ({
-    ...acc, [key]: acc[key] + stats[key],
-  }), log.stats) as Stats;
-}
-
-/**
- * Add next set of stats to existing stats.
- */
-export function calculateAverages(log: StatisticsLog): Stats {
-  const { played } = log;
-
-  return statsKeys.reduce((acc, key) => ({
-    ...acc, [key]: log.stats[key] / played,
-  }), {}) as Stats;
-}
-
-/**
- * TODO: this is temporary, mostly for experimental result handling
- * (this should be included elsewhere and tidied up to reduce duplication)
- */
-export function accumulateStatisticsFn(playerStatisticsLogs: Map<number, StatisticsLog>) {
-  return function (playerLog: any): void {
-    const { player } = playerLog;
-    const { id } = player;
-
-    if (!playerStatisticsLogs.has(id)) {
-      playerStatisticsLogs.set(id, generateEmptyStatisticsLog(playerLog));
-    }
-
-    const log   = playerStatisticsLogs.get(id)!;
-    const stats = extractStats(playerLog);
-
-    log.played  += getPlayed(playerLog.seconds);
-    log.started += getStarted(playerLog.started);
-    log.stats    = calculateTotals(log, stats);
-  };
+export function generateAveragesStatisticsLogs(playerLogs: PlayerLog[]): StatisticsLog[] {
+  return generateTotalsStatisticsLogs(playerLogs)
+    .map((log) => ({
+        ...log, stats: calculateAverages(log)
+      }));
 }

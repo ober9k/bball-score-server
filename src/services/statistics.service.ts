@@ -1,61 +1,21 @@
-import { prisma } from "@/lib/prisma";
+import { findAll, findByTeamId } from "@/services/player-log.service";
 import type { StatisticsLog } from "@/types/statistics-log";
-import { accumulateStatisticsFn, calculateAverages } from "@/utils/stats-utils";
+import { generateAveragesStatisticsLogs, generateTotalsStatisticsLogs } from "@/utils/stats-utils";
 
-/**
- * TODO: this is temporary, need to work out a tidier way to handle all of this
- */
-const reducer = (acc, cur: string) => ({ ...acc, [cur]: true });
-const getColumns = (columns: string[]) => columns.reduce(reducer, {});
+export type StatisticsMode = "averages" | "totals";
 
-/**
- * TODO: this is temporary, need to work out a tidier way to handle all of this
- * (potentially via multiple requests instead)
- */
-const playerLogCols = getColumns(["started", "seconds", "fgMade", "fgAttempted", "fg3Made", "fg3Attempted", "ftMade", "ftAttempted", "points", "offRebounds", "defRebounds", "rebounds", "assists", "steals", "blocks", "turnovers", "personalFouls", "technicalFouls"]);
-const teamCols = getColumns(["id", "name", "shortName"]);
-const playerCols = getColumns(["id", "name", "position", "number", "height"]);
+export async function generateStatisticsLogs(mode: StatisticsMode = "totals"): Promise<StatisticsLog[]> {
+  const playerLogs = await findAll();
 
-export type StatisticsContext = "averages" | "totals";
-
-export async function generateStatisticsLogs(averages: boolean = false, teamId?: number): Promise<StatisticsLog[]> {
-  let where = {}; /* empty otherwise */
-
-  if (teamId && teamId > 0) {
-    where = { ... { teamId } };
-  }
-
-  const playerLogs: any[] = await prisma.playerLog.findMany({
-    select: {
-      ...playerLogCols,
-      team: {
-        select: {
-          ...teamCols,
-        },
-      },
-      player: {
-        select: {
-          ...playerCols,
-        }
-      }
-    },
-    where,
-  });
-
-  const playerStatisticsLogs = new Map<number, StatisticsLog>();
-
-  playerLogs
-    .forEach(accumulateStatisticsFn(playerStatisticsLogs));
-
-  if (averages) {
-    playerStatisticsLogs.forEach((log) => {
-      log.stats = calculateAverages(log);
-    });
-  }
-
-  return [ ...playerStatisticsLogs.values() ];
+  return (mode === "averages")
+    ? generateAveragesStatisticsLogs(playerLogs)
+    : generateTotalsStatisticsLogs(playerLogs)
 }
 
-export async function generateStatisticsLogsByTeamId(teamId: number): Promise<StatisticsLog[]> {
-  return generateStatisticsLogs(false, teamId);
+export async function generateStatisticsLogsByTeamId(teamId: number, mode: StatisticsMode = "totals"): Promise<StatisticsLog[]> {
+  const playerLogs = await findByTeamId(teamId);
+
+  return (mode === "averages")
+    ? generateAveragesStatisticsLogs(playerLogs)
+    : generateTotalsStatisticsLogs(playerLogs)
 }
