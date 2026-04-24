@@ -12,10 +12,10 @@ const authorizedPaths = [isAuthenticated, isAuthorizedRole(authorizedRoles)];
 const router = Router()
   // players
   .get("/players", getPlayers)
-  .get("/players/:playerId", [validateIdHandler], getPlayer)
-  .get("/players/:playerId/teams", [validateIdHandler], getPlayerTeams)
+  .get("/players/:id", [validateIdHandler], getPlayer)
+  .get("/players/:id/teams", [validateIdHandler], getPlayerTeams)
   // players (create/update)
   .post("/players", [...authorizedPaths, playerValidationHandler()], createPlayer)
-  .put("/players/:playerId", [...authorizedPaths, validateIdHandler, playerValidationHandler()], updatePlayer);
+  .put("/players/:id", [...authorizedPaths, validateIdHandler, playerValidationHandler()], updatePlayer);
 
 export { router as playersRoutes };
