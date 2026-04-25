@@ -26,6 +26,8 @@ function defaultOrderBy(): TeamOrderByWithRelationInput {
   };
 }
 
+export { defaultOrderBy as teamDefaultOrderBy };
+
 export async function findAll(): Promise<Team[]> {
   const items: any[] = await prisma.team.findMany({
     select:  defaultSelect(),
@@ -71,17 +73,4 @@ export async function saveById(id: number, data: TeamData): Promise<Team | null>
   return (item)
     ? toTeam(item)
     : null;
-}
-
-/* todo, this should potentially be relocated */
-export async function findPlayersByTeamId(teamId: number): Promise<Player[]> {
-  const items: any[] = await prisma.teamPlayer.findMany({
-    where: { teamId },
-    include: {
-      player: true,
-    },
-  });
-
-  return items
-    .map((tp) => toPlayer(tp.player));
 }

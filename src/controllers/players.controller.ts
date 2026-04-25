@@ -1,5 +1,6 @@
 import { getLocalLeague } from "@/services/league.service";
-import { findAll, findById, findTeamsByPlayerId, save, saveById } from "@/services/player.service";
+import { findAll, findById, save, saveById } from "@/services/player.service";
+import { findTeamsByPlayerId } from "@/services/team-player.service";
 import type { PlayerData } from "@/types/player";
 import type { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";

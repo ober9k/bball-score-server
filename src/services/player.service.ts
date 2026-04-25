@@ -1,7 +1,6 @@
-import { toPlayer, toTeam } from "@/lib/converters";
+import { toPlayer } from "@/lib/converters";
 import { prisma } from "@/lib/prisma";
 import type { Player, PlayerData } from "@/types/player";
-import type { Team } from "@/types/team";
 import { type PlayerOrderByWithRelationInput, SortOrder } from "@prisma/generated/internal/prismaNamespace";
 import type { PlayerSelect } from "@prisma/generated/models/Player";
 
@@ -25,6 +24,8 @@ function defaultOrderBy(): PlayerOrderByWithRelationInput {
     name: SortOrder.asc,
   };
 }
+
+export { defaultOrderBy as playerDefaultOrderBy };
 
 export async function findAll(): Promise<Player[]> {
   const items: any[] = await prisma.player.findMany({
@@ -66,17 +67,4 @@ export async function saveById(id: number, data: PlayerData): Promise<Player | n
   return (item)
     ? toPlayer(item)
     : null;
-}
-
-/* todo, this should potentially be relocated */
-export async function findTeamsByPlayerId(playerId: number): Promise<Team[]> {
-  const items: any[] = await prisma.teamPlayer.findMany({
-    where: { playerId },
-    include: {
-      team: true,
-    },
-  });
-
-  return items
-    .map((tp) => toTeam(tp.team));
 }
