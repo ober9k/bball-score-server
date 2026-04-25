@@ -128,7 +128,7 @@ async function main() {
         const teamId = gt.teamId;
         const playerLogs = gt.playerLogs
           .map((gtp) => ({
-            ...gtp, teamId,
+            ...gtp, teamId, seasonId, divisionId,
           }));
 
         const teamLog = await prisma.teamLog.create({
@@ -137,6 +137,8 @@ async function main() {
             score: gt.score,
             byPeriod: gt.byPeriod,
             gameId,
+            seasonId,
+            divisionId,
             teamId,
             playerLogs: {
               create: [

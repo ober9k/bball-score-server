@@ -29,31 +29,35 @@ model League {
 }
 
 model Season {
-  id        Int        @id @default(autoincrement())
-  name      String
-  active    Boolean    @default(false)
-  archived  Boolean    @default(false)
-  divisions Division[]
-  leagueId  Int
-  league    League     @relation(fields: [leagueId], references: [id])
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @default(now())
-  game      Game[]
+  id         Int         @id @default(autoincrement())
+  name       String
+  active     Boolean     @default(false)
+  archived   Boolean     @default(false)
+  divisions  Division[]
+  leagueId   Int
+  league     League      @relation(fields: [leagueId], references: [id])
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @default(now())
+  game       Game[]
+  teamLogs   TeamLog[]
+  playerLogs PlayerLog[]
 }
 
 model Division {
-  id        Int      @id @default(autoincrement())
-  name      String
-  active    Boolean  @default(false)
-  archived  Boolean  @default(false)
-  teams     Team[]
-  seasonId  Int
-  leagueId  Int
-  season    Season   @relation(fields: [seasonId], references: [id])
-  league    League   @relation(fields: [leagueId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-  game      Game[]
+  id         Int         @id @default(autoincrement())
+  name       String
+  active     Boolean     @default(false)
+  archived   Boolean     @default(false)
+  teams      Team[]
+  seasonId   Int
+  leagueId   Int
+  season     Season      @relation(fields: [seasonId], references: [id])
+  league     League      @relation(fields: [leagueId], references: [id])
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @default(now())
+  game       Game[]
+  teamLogs   TeamLog[]
+  playerLogs PlayerLog[]
 }
 
 model Team {
@@ -143,8 +147,12 @@ model TeamLog {
   score      Int
   byPeriod   Int[]
   gameId     Int
+  seasonId   Int
+  divisionId Int
   teamId     Int
   game       Game        @relation(fields: [gameId], references: [id])
+  season     Season      @relation(fields: [seasonId], references: [id])
+  division   Division    @relation(fields: [divisionId], references: [id])
   team       Team        @relation(fields: [teamId], references: [id])
   createdAt  DateTime    @default(now())
   updatedAt  DateTime    @default(now())
@@ -171,9 +179,13 @@ model PlayerLog {
   personalFouls  Int      @default(0)
   technicalFouls Int      @default(0)
   teamLogId      Int
+  seasonId       Int
+  divisionId     Int
   playerId       Int
   teamId         Int
   teamLog        TeamLog  @relation(fields: [teamLogId], references: [id])
+  season         Season   @relation(fields: [seasonId], references: [id])
+  division       Division @relation(fields: [divisionId], references: [id])
   team           Team     @relation(fields: [teamId], references: [id])
   player         Player   @relation(fields: [playerId], references: [id])
   createdAt      DateTime @default(now())
