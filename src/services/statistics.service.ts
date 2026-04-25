@@ -1,4 +1,4 @@
-import { findAll, findByTeamId } from "@/services/player-log.service";
+import { findAll, findByPlayerId, findByTeamId } from "@/services/player-log.service";
 import type { StatisticsLog } from "@/types/statistics-log";
 import { generateAveragesStatisticsLogs, generateTotalsStatisticsLogs } from "@/utils/stats-utils";
 
@@ -14,6 +14,14 @@ export async function generateStatisticsLogs(mode?: StatisticsMode): Promise<Sta
 
 export async function generateStatisticsLogsByTeamId(teamId: number, mode?: StatisticsMode): Promise<StatisticsLog[]> {
   const playerLogs = await findByTeamId(teamId);
+
+  return (mode === "averages")
+    ? generateAveragesStatisticsLogs(playerLogs)
+    : generateTotalsStatisticsLogs(playerLogs)
+}
+
+export async function generateStatisticsLogsByPlayerId(playerId: number, mode?: StatisticsMode): Promise<StatisticsLog[]> {
+  const playerLogs = await findByPlayerId(playerId);
 
   return (mode === "averages")
     ? generateAveragesStatisticsLogs(playerLogs)

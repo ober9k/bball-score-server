@@ -1,5 +1,7 @@
 import { getLocalLeague } from "@/services/league.service";
 import { findAll, findById, save, saveById } from "@/services/player.service";
+import { generateStatisticsLogsByPlayerId, generateStatisticsLogsByTeamId } from "@/services/statistics.service";
+import type { StatisticsMode } from "@/services/statistics.service";
 import { findTeamsByPlayerId } from "@/services/team-player.service";
 import type { PlayerData } from "@/types/player";
 import type { Request, Response } from "express";
@@ -58,4 +60,22 @@ export async function getPlayerTeams(req: Request, res: Response) {
     .json(
       await findTeamsByPlayerId(getPlayerId(req))
     );
+}
+
+async function getPlayerStatistics(req: Request, res: Response, mode: StatisticsMode) {
+  await findById(getPlayerId(req)); /* trigger an initial failure if not found */
+
+  return res
+    .status(StatusCodes.OK)
+    .json(
+      await generateStatisticsLogsByPlayerId(getPlayerId(req), mode)
+    )
+}
+
+export async function getPlayerStatisticsAverages(req: Request, res: Response) {
+  return getPlayerStatistics(req, res, "averages");
+}
+
+export async function getPlayerStatisticsTotals(req: Request, res: Response) {
+  return getPlayerStatistics(req, res, "totals");
 }

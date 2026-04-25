@@ -48,3 +48,13 @@ export async function findByTeamId(teamId: number): Promise<PlayerLog[]> {
   return items
     .map(toPlayerLog);
 }
+
+export async function findByPlayerId(playerId: number): Promise<PlayerLog[]> {
+  const items: any[] = await prisma.playerLog.findMany({
+    select: defaultSelect(),
+    where:  { playerId },
+  });
+
+  return items
+    .map(toPlayerLog);
+}
