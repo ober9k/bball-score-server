@@ -1,7 +1,6 @@
-import { toOption, toPlayer, toTeam } from "@/lib/converters";
+import { toOption, toTeam } from "@/lib/converters";
 import { prisma } from "@/lib/prisma";
 import type { Option } from "@/types/option";
-import type { Player } from "@/types/player";
 import type { Team, TeamData } from "@/types/team";
 import { SortOrder, type TeamOrderByWithRelationInput } from "@prisma/generated/internal/prismaNamespace";
 import type { TeamSelect } from "@prisma/generated/models/Team";

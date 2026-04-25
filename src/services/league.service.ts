@@ -1,12 +1,9 @@
 import { prisma } from "@/lib/prisma";
 import HttpException from "@/models/http-exception.model";
 import type { League } from "@/types/league";
+import type { Option } from "@/types/option";
 import type { Response } from "express";
 import { StatusCodes } from "http-status-codes";
-import type { Option } from "@/types/option";
-import type { SeasonDelegate } from "../../prisma/generated/models/Season";
-import type { DivisionDelegate } from "../../prisma/generated/models/Division";
-import type { TeamDelegate } from "../../prisma/generated/models/Team";
 
 /**
  * Helper for getting leagueId passed to controllers.

@@ -4,7 +4,7 @@ import { playerDefaultOrderBy, playerDefaultSelect } from "@/services/player.ser
 import { teamDefaultOrderBy, teamDefaultSelect } from "@/services/team.service";
 import type { Player } from "@/types/player";
 import type { Team } from "@/types/team";
-import { SortOrder, type TeamOrderByWithRelationInput, type TeamPlayerSelect } from "@prisma/generated/internal/prismaNamespace";
+import { type TeamPlayerSelect } from "@prisma/generated/internal/prismaNamespace";
 
 function defaultSelectForTeam(): TeamPlayerSelect {
   return {
