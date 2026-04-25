@@ -29,7 +29,7 @@ export const mapStats = (stats: number[]) => {
     fg3Attempted,
     ftMade,
     ftAttempted,
-    points: fgMade * 2 + fg3Made + fgMade,
+    points: fgMade * 2 + fg3Made + ftMade,
     offRebounds,
     defRebounds,
     rebounds: offRebounds + defRebounds,
