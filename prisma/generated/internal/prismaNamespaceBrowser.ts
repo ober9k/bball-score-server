@@ -182,6 +182,8 @@ export const TeamLogScalarFieldEnum = {
   score: 'score',
   byPeriod: 'byPeriod',
   gameId: 'gameId',
+  seasonId: 'seasonId',
+  divisionId: 'divisionId',
   teamId: 'teamId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -210,6 +212,8 @@ export const PlayerLogScalarFieldEnum = {
   personalFouls: 'personalFouls',
   technicalFouls: 'technicalFouls',
   teamLogId: 'teamLogId',
+  seasonId: 'seasonId',
+  divisionId: 'divisionId',
   playerId: 'playerId',
   teamId: 'teamId',
   createdAt: 'createdAt',
