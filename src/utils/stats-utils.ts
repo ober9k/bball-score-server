@@ -57,14 +57,14 @@ function calculateAverages(log: StatisticsLog): Stats {
  * Generate empty stats log with player/team filled.
  */
 export function generateEmptyStatisticsLog(playerLog: PlayerLog): StatisticsLog {
-  const { player, team } = playerLog;
+  const { player, team, season, game } = playerLog;
   const { id } = player;
 
   const played  = 0;
   const started = 0;
   const stats   = generateEmptyStats();
 
-  return { id, player, team, played, started, stats };
+  return { id, player, team, season, game, played, started, stats };
 }
 
 /**
@@ -100,4 +100,28 @@ export function generateAveragesStatisticsLogs(playerLogs: PlayerLog[]): Statist
     .map((log) => ({
         ...log, stats: calculateAverages(log)
       }));
+}
+
+/**
+ * Generate totals for players as statistics logs.
+ * This function is blind only to a player which it accumulates/groups the stats too.
+ */
+export function generateGamesStatisticsLogs(playerLogs: PlayerLog[]): StatisticsLog[] {
+  /* stored in map for convenient access */
+  const statisticsLogs = playerLogs
+    .reduce((acc, playerLog) => {
+      if (!acc.has(playerLog.game!.id)) {
+        acc.set(playerLog.game!.id, generateEmptyStatisticsLog(playerLog));
+      }
+
+      /* no `getOrInsert()` available */
+      const log = acc.get(playerLog.player.id)!;
+      log.played  += (playerLog.stats.seconds > 0) ? 1 : 0;
+      log.started += (playerLog.started) ? 1 : 0;
+      log.stats    = calculateTotals(log, playerLog.stats);
+
+      return acc;
+    }, new Map<number, StatisticsLog>());
+
+  return [ ...statisticsLogs.values() ];
 }

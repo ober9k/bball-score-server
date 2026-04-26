@@ -79,3 +79,7 @@ export async function getPlayerStatisticsAverages(req: Request, res: Response) {
 export async function getPlayerStatisticsTotals(req: Request, res: Response) {
   return getPlayerStatistics(req, res, "totals");
 }
+
+export async function getPlayerStatisticsGames(req: Request, res: Response) {
+  return getPlayerStatistics(req, res, "games");
+}

@@ -67,6 +67,30 @@ function defaultSelect(): GameSelect {
   };
 }
 
+function simpleSelect(): GameSelect {
+  return {
+    id:         true,
+    date:       true,
+    phase:      true,
+    round:      true,
+    teamLogs: {
+      select: {
+        id:         true,
+        side:       true,
+        score:      true,
+        byPeriod:   true,
+        teamId:     true,
+        team: {
+          select: teamDefaultSelect(),
+        },
+      },
+    },
+  };
+}
+
+export { defaultSelect as gameDefaultSelect };
+export { simpleSelect as gameSimpleSelect };
+
 function defaultOrderBy(): GameOrderByWithRelationInput {
   return {
     date: SortOrder.desc,

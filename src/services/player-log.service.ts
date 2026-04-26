@@ -1,5 +1,6 @@
-import { toPlayerLog } from "@/lib/converters";
+import { toPlayerLog, toShallowGame } from "@/lib/converters";
 import { prisma } from "@/lib/prisma";
+import { gameSimpleSelect } from "@/services/game.service";
 import type { PlayerLog } from "@/types/game";
 import type { PlayerLogSelect } from "@prisma/generated/models/PlayerLog";
 
@@ -51,7 +52,17 @@ export async function findByTeamId(teamId: number): Promise<PlayerLog[]> {
 
 export async function findByPlayerId(playerId: number): Promise<PlayerLog[]> {
   const items: any[] = await prisma.playerLog.findMany({
-    select: defaultSelect(),
+    select: { ... defaultSelect() , seasonId: true, season: true },
+    where:  { playerId },
+  });
+
+  return items
+    .map(toPlayerLog);
+}
+
+export async function findByPlayerIdWithGames(playerId: number): Promise<PlayerLog[]> {
+  const items: any[] = await prisma.playerLog.findMany({
+    select: { ... defaultSelect() , seasonId: true, season: true, gameId: true, game: { select: gameSimpleSelect() } },
     where:  { playerId },
   });
 

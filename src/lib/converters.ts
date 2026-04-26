@@ -69,6 +69,16 @@ export function toGame(data: any): Game {
   };
 }
 
+export function toShallowGame(data: any): any {
+  return {
+    id:       data.id,
+    date:     data.date,
+    phase:    data.phase,
+    round:    data.round,
+    teamLogs: (data.teamLogs || []).map(toShallowTeamLog)
+  };
+}
+
 export function toTeamLog(data: any): TeamLog {
   return {
     id:         data.id,
@@ -82,13 +92,39 @@ export function toTeamLog(data: any): TeamLog {
   };
 }
 
-export function toPlayerLog(data: any): PlayerLog {
+export function toShallowTeamLog(data: any): any {
   return {
+    id:         data.id,
+    side:       data.side,
+    score:      data.score,
+    byPeriod:   data.byPeriod,
+    teamId:     data.teamId,
+    team:       toTeam(data.team),
+    playerLogs: [], /* ignore */
+  };
+}
+
+export function toPlayerLog(data: any): PlayerLog {
+  const result: PlayerLog = {
     started:  data.started,
     stats:    toStats(data),
     playerId: data.playerId,
     player:   toPlayer(data.player),
   };
+
+  if (data.season) {
+    result.seasonId = data.seasonId;
+    result.season = toSeason(data.season);
+  }
+
+  console.log("data.game", !!data.game);
+
+  if (data.game) {
+    result.gameId = data.gameId;
+    result.game = toShallowGame(data.game);
+  }
+
+  return result;
 }
 
 export function toStats(data: any): Stats {

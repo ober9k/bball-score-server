@@ -52,4 +52,9 @@ export type PlayerLog = {
   stats:    Stats,
   playerId: number,
   player:   Player,
+  /* temp */
+  seasonId?: number,
+  season?:   Season,
+  gameId?:   number,
+  game?:     Game,
 };
