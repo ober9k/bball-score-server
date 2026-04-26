@@ -216,6 +216,7 @@ export const PlayerLogScalarFieldEnum = {
   divisionId: 'divisionId',
   playerId: 'playerId',
   teamId: 'teamId',
+  gameId: 'gameId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

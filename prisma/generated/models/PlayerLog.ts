@@ -49,6 +49,7 @@ export type PlayerLogAvgAggregateOutputType = {
   divisionId: number | null
   playerId: number | null
   teamId: number | null
+  gameId: number | null
 }
 
 export type PlayerLogSumAggregateOutputType = {
@@ -74,6 +75,7 @@ export type PlayerLogSumAggregateOutputType = {
   divisionId: number | null
   playerId: number | null
   teamId: number | null
+  gameId: number | null
 }
 
 export type PlayerLogMinAggregateOutputType = {
@@ -100,6 +102,7 @@ export type PlayerLogMinAggregateOutputType = {
   divisionId: number | null
   playerId: number | null
   teamId: number | null
+  gameId: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -128,6 +131,7 @@ export type PlayerLogMaxAggregateOutputType = {
   divisionId: number | null
   playerId: number | null
   teamId: number | null
+  gameId: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -156,6 +160,7 @@ export type PlayerLogCountAggregateOutputType = {
   divisionId: number
   playerId: number
   teamId: number
+  gameId: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -185,6 +190,7 @@ export type PlayerLogAvgAggregateInputType = {
   divisionId?: true
   playerId?: true
   teamId?: true
+  gameId?: true
 }
 
 export type PlayerLogSumAggregateInputType = {
@@ -210,6 +216,7 @@ export type PlayerLogSumAggregateInputType = {
   divisionId?: true
   playerId?: true
   teamId?: true
+  gameId?: true
 }
 
 export type PlayerLogMinAggregateInputType = {
@@ -236,6 +243,7 @@ export type PlayerLogMinAggregateInputType = {
   divisionId?: true
   playerId?: true
   teamId?: true
+  gameId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -264,6 +272,7 @@ export type PlayerLogMaxAggregateInputType = {
   divisionId?: true
   playerId?: true
   teamId?: true
+  gameId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -292,6 +301,7 @@ export type PlayerLogCountAggregateInputType = {
   divisionId?: true
   playerId?: true
   teamId?: true
+  gameId?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -407,6 +417,7 @@ export type PlayerLogGroupByOutputType = {
   divisionId: number
   playerId: number
   teamId: number
+  gameId: number
   createdAt: Date
   updatedAt: Date
   _count: PlayerLogCountAggregateOutputType | null
@@ -458,6 +469,7 @@ export type PlayerLogWhereInput = {
   divisionId?: Prisma.IntFilter<"PlayerLog"> | number
   playerId?: Prisma.IntFilter<"PlayerLog"> | number
   teamId?: Prisma.IntFilter<"PlayerLog"> | number
+  gameId?: Prisma.IntFilter<"PlayerLog"> | number
   createdAt?: Prisma.DateTimeFilter<"PlayerLog"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PlayerLog"> | Date | string
   teamLog?: Prisma.XOR<Prisma.TeamLogScalarRelationFilter, Prisma.TeamLogWhereInput>
@@ -465,6 +477,7 @@ export type PlayerLogWhereInput = {
   division?: Prisma.XOR<Prisma.DivisionScalarRelationFilter, Prisma.DivisionWhereInput>
   team?: Prisma.XOR<Prisma.TeamScalarRelationFilter, Prisma.TeamWhereInput>
   player?: Prisma.XOR<Prisma.PlayerScalarRelationFilter, Prisma.PlayerWhereInput>
+  game?: Prisma.XOR<Prisma.GameScalarRelationFilter, Prisma.GameWhereInput>
 }
 
 export type PlayerLogOrderByWithRelationInput = {
@@ -491,6 +504,7 @@ export type PlayerLogOrderByWithRelationInput = {
   divisionId?: Prisma.SortOrder
   playerId?: Prisma.SortOrder
   teamId?: Prisma.SortOrder
+  gameId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   teamLog?: Prisma.TeamLogOrderByWithRelationInput
@@ -498,6 +512,7 @@ export type PlayerLogOrderByWithRelationInput = {
   division?: Prisma.DivisionOrderByWithRelationInput
   team?: Prisma.TeamOrderByWithRelationInput
   player?: Prisma.PlayerOrderByWithRelationInput
+  game?: Prisma.GameOrderByWithRelationInput
 }
 
 export type PlayerLogWhereUniqueInput = Prisma.AtLeast<{
@@ -528,6 +543,7 @@ export type PlayerLogWhereUniqueInput = Prisma.AtLeast<{
   divisionId?: Prisma.IntFilter<"PlayerLog"> | number
   playerId?: Prisma.IntFilter<"PlayerLog"> | number
   teamId?: Prisma.IntFilter<"PlayerLog"> | number
+  gameId?: Prisma.IntFilter<"PlayerLog"> | number
   createdAt?: Prisma.DateTimeFilter<"PlayerLog"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PlayerLog"> | Date | string
   teamLog?: Prisma.XOR<Prisma.TeamLogScalarRelationFilter, Prisma.TeamLogWhereInput>
@@ -535,6 +551,7 @@ export type PlayerLogWhereUniqueInput = Prisma.AtLeast<{
   division?: Prisma.XOR<Prisma.DivisionScalarRelationFilter, Prisma.DivisionWhereInput>
   team?: Prisma.XOR<Prisma.TeamScalarRelationFilter, Prisma.TeamWhereInput>
   player?: Prisma.XOR<Prisma.PlayerScalarRelationFilter, Prisma.PlayerWhereInput>
+  game?: Prisma.XOR<Prisma.GameScalarRelationFilter, Prisma.GameWhereInput>
 }, "teamLogId_playerId_teamId">
 
 export type PlayerLogOrderByWithAggregationInput = {
@@ -561,6 +578,7 @@ export type PlayerLogOrderByWithAggregationInput = {
   divisionId?: Prisma.SortOrder
   playerId?: Prisma.SortOrder
   teamId?: Prisma.SortOrder
+  gameId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.PlayerLogCountOrderByAggregateInput
@@ -597,6 +615,7 @@ export type PlayerLogScalarWhereWithAggregatesInput = {
   divisionId?: Prisma.IntWithAggregatesFilter<"PlayerLog"> | number
   playerId?: Prisma.IntWithAggregatesFilter<"PlayerLog"> | number
   teamId?: Prisma.IntWithAggregatesFilter<"PlayerLog"> | number
+  gameId?: Prisma.IntWithAggregatesFilter<"PlayerLog"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"PlayerLog"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"PlayerLog"> | Date | string
 }
@@ -627,6 +646,7 @@ export type PlayerLogCreateInput = {
   division: Prisma.DivisionCreateNestedOneWithoutPlayerLogsInput
   team: Prisma.TeamCreateNestedOneWithoutPlayerLogsInput
   player: Prisma.PlayerCreateNestedOneWithoutPlayerLogsInput
+  game: Prisma.GameCreateNestedOneWithoutPlayerLogsInput
 }
 
 export type PlayerLogUncheckedCreateInput = {
@@ -653,6 +673,7 @@ export type PlayerLogUncheckedCreateInput = {
   divisionId: number
   playerId: number
   teamId: number
+  gameId: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -683,6 +704,7 @@ export type PlayerLogUpdateInput = {
   division?: Prisma.DivisionUpdateOneRequiredWithoutPlayerLogsNestedInput
   team?: Prisma.TeamUpdateOneRequiredWithoutPlayerLogsNestedInput
   player?: Prisma.PlayerUpdateOneRequiredWithoutPlayerLogsNestedInput
+  game?: Prisma.GameUpdateOneRequiredWithoutPlayerLogsNestedInput
 }
 
 export type PlayerLogUncheckedUpdateInput = {
@@ -709,6 +731,7 @@ export type PlayerLogUncheckedUpdateInput = {
   divisionId?: Prisma.IntFieldUpdateOperationsInput | number
   playerId?: Prisma.IntFieldUpdateOperationsInput | number
   teamId?: Prisma.IntFieldUpdateOperationsInput | number
+  gameId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -737,6 +760,7 @@ export type PlayerLogCreateManyInput = {
   divisionId: number
   playerId: number
   teamId: number
+  gameId: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -788,6 +812,7 @@ export type PlayerLogUncheckedUpdateManyInput = {
   divisionId?: Prisma.IntFieldUpdateOperationsInput | number
   playerId?: Prisma.IntFieldUpdateOperationsInput | number
   teamId?: Prisma.IntFieldUpdateOperationsInput | number
+  gameId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -832,6 +857,7 @@ export type PlayerLogCountOrderByAggregateInput = {
   divisionId?: Prisma.SortOrder
   playerId?: Prisma.SortOrder
   teamId?: Prisma.SortOrder
+  gameId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -859,6 +885,7 @@ export type PlayerLogAvgOrderByAggregateInput = {
   divisionId?: Prisma.SortOrder
   playerId?: Prisma.SortOrder
   teamId?: Prisma.SortOrder
+  gameId?: Prisma.SortOrder
 }
 
 export type PlayerLogMaxOrderByAggregateInput = {
@@ -885,6 +912,7 @@ export type PlayerLogMaxOrderByAggregateInput = {
   divisionId?: Prisma.SortOrder
   playerId?: Prisma.SortOrder
   teamId?: Prisma.SortOrder
+  gameId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -913,6 +941,7 @@ export type PlayerLogMinOrderByAggregateInput = {
   divisionId?: Prisma.SortOrder
   playerId?: Prisma.SortOrder
   teamId?: Prisma.SortOrder
+  gameId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -940,6 +969,7 @@ export type PlayerLogSumOrderByAggregateInput = {
   divisionId?: Prisma.SortOrder
   playerId?: Prisma.SortOrder
   teamId?: Prisma.SortOrder
+  gameId?: Prisma.SortOrder
 }
 
 export type PlayerLogCreateNestedManyWithoutSeasonInput = {
@@ -1110,6 +1140,48 @@ export type PlayerLogUncheckedUpdateManyWithoutPlayerNestedInput = {
   deleteMany?: Prisma.PlayerLogScalarWhereInput | Prisma.PlayerLogScalarWhereInput[]
 }
 
+export type PlayerLogCreateNestedManyWithoutGameInput = {
+  create?: Prisma.XOR<Prisma.PlayerLogCreateWithoutGameInput, Prisma.PlayerLogUncheckedCreateWithoutGameInput> | Prisma.PlayerLogCreateWithoutGameInput[] | Prisma.PlayerLogUncheckedCreateWithoutGameInput[]
+  connectOrCreate?: Prisma.PlayerLogCreateOrConnectWithoutGameInput | Prisma.PlayerLogCreateOrConnectWithoutGameInput[]
+  createMany?: Prisma.PlayerLogCreateManyGameInputEnvelope
+  connect?: Prisma.PlayerLogWhereUniqueInput | Prisma.PlayerLogWhereUniqueInput[]
+}
+
+export type PlayerLogUncheckedCreateNestedManyWithoutGameInput = {
+  create?: Prisma.XOR<Prisma.PlayerLogCreateWithoutGameInput, Prisma.PlayerLogUncheckedCreateWithoutGameInput> | Prisma.PlayerLogCreateWithoutGameInput[] | Prisma.PlayerLogUncheckedCreateWithoutGameInput[]
+  connectOrCreate?: Prisma.PlayerLogCreateOrConnectWithoutGameInput | Prisma.PlayerLogCreateOrConnectWithoutGameInput[]
+  createMany?: Prisma.PlayerLogCreateManyGameInputEnvelope
+  connect?: Prisma.PlayerLogWhereUniqueInput | Prisma.PlayerLogWhereUniqueInput[]
+}
+
+export type PlayerLogUpdateManyWithoutGameNestedInput = {
+  create?: Prisma.XOR<Prisma.PlayerLogCreateWithoutGameInput, Prisma.PlayerLogUncheckedCreateWithoutGameInput> | Prisma.PlayerLogCreateWithoutGameInput[] | Prisma.PlayerLogUncheckedCreateWithoutGameInput[]
+  connectOrCreate?: Prisma.PlayerLogCreateOrConnectWithoutGameInput | Prisma.PlayerLogCreateOrConnectWithoutGameInput[]
+  upsert?: Prisma.PlayerLogUpsertWithWhereUniqueWithoutGameInput | Prisma.PlayerLogUpsertWithWhereUniqueWithoutGameInput[]
+  createMany?: Prisma.PlayerLogCreateManyGameInputEnvelope
+  set?: Prisma.PlayerLogWhereUniqueInput | Prisma.PlayerLogWhereUniqueInput[]
+  disconnect?: Prisma.PlayerLogWhereUniqueInput | Prisma.PlayerLogWhereUniqueInput[]
+  delete?: Prisma.PlayerLogWhereUniqueInput | Prisma.PlayerLogWhereUniqueInput[]
+  connect?: Prisma.PlayerLogWhereUniqueInput | Prisma.PlayerLogWhereUniqueInput[]
+  update?: Prisma.PlayerLogUpdateWithWhereUniqueWithoutGameInput | Prisma.PlayerLogUpdateWithWhereUniqueWithoutGameInput[]
+  updateMany?: Prisma.PlayerLogUpdateManyWithWhereWithoutGameInput | Prisma.PlayerLogUpdateManyWithWhereWithoutGameInput[]
+  deleteMany?: Prisma.PlayerLogScalarWhereInput | Prisma.PlayerLogScalarWhereInput[]
+}
+
+export type PlayerLogUncheckedUpdateManyWithoutGameNestedInput = {
+  create?: Prisma.XOR<Prisma.PlayerLogCreateWithoutGameInput, Prisma.PlayerLogUncheckedCreateWithoutGameInput> | Prisma.PlayerLogCreateWithoutGameInput[] | Prisma.PlayerLogUncheckedCreateWithoutGameInput[]
+  connectOrCreate?: Prisma.PlayerLogCreateOrConnectWithoutGameInput | Prisma.PlayerLogCreateOrConnectWithoutGameInput[]
+  upsert?: Prisma.PlayerLogUpsertWithWhereUniqueWithoutGameInput | Prisma.PlayerLogUpsertWithWhereUniqueWithoutGameInput[]
+  createMany?: Prisma.PlayerLogCreateManyGameInputEnvelope
+  set?: Prisma.PlayerLogWhereUniqueInput | Prisma.PlayerLogWhereUniqueInput[]
+  disconnect?: Prisma.PlayerLogWhereUniqueInput | Prisma.PlayerLogWhereUniqueInput[]
+  delete?: Prisma.PlayerLogWhereUniqueInput | Prisma.PlayerLogWhereUniqueInput[]
+  connect?: Prisma.PlayerLogWhereUniqueInput | Prisma.PlayerLogWhereUniqueInput[]
+  update?: Prisma.PlayerLogUpdateWithWhereUniqueWithoutGameInput | Prisma.PlayerLogUpdateWithWhereUniqueWithoutGameInput[]
+  updateMany?: Prisma.PlayerLogUpdateManyWithWhereWithoutGameInput | Prisma.PlayerLogUpdateManyWithWhereWithoutGameInput[]
+  deleteMany?: Prisma.PlayerLogScalarWhereInput | Prisma.PlayerLogScalarWhereInput[]
+}
+
 export type PlayerLogCreateNestedManyWithoutTeamLogInput = {
   create?: Prisma.XOR<Prisma.PlayerLogCreateWithoutTeamLogInput, Prisma.PlayerLogUncheckedCreateWithoutTeamLogInput> | Prisma.PlayerLogCreateWithoutTeamLogInput[] | Prisma.PlayerLogUncheckedCreateWithoutTeamLogInput[]
   connectOrCreate?: Prisma.PlayerLogCreateOrConnectWithoutTeamLogInput | Prisma.PlayerLogCreateOrConnectWithoutTeamLogInput[]
@@ -1177,6 +1249,7 @@ export type PlayerLogCreateWithoutSeasonInput = {
   division: Prisma.DivisionCreateNestedOneWithoutPlayerLogsInput
   team: Prisma.TeamCreateNestedOneWithoutPlayerLogsInput
   player: Prisma.PlayerCreateNestedOneWithoutPlayerLogsInput
+  game: Prisma.GameCreateNestedOneWithoutPlayerLogsInput
 }
 
 export type PlayerLogUncheckedCreateWithoutSeasonInput = {
@@ -1202,6 +1275,7 @@ export type PlayerLogUncheckedCreateWithoutSeasonInput = {
   divisionId: number
   playerId: number
   teamId: number
+  gameId: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1259,6 +1333,7 @@ export type PlayerLogScalarWhereInput = {
   divisionId?: Prisma.IntFilter<"PlayerLog"> | number
   playerId?: Prisma.IntFilter<"PlayerLog"> | number
   teamId?: Prisma.IntFilter<"PlayerLog"> | number
+  gameId?: Prisma.IntFilter<"PlayerLog"> | number
   createdAt?: Prisma.DateTimeFilter<"PlayerLog"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PlayerLog"> | Date | string
 }
@@ -1288,6 +1363,7 @@ export type PlayerLogCreateWithoutDivisionInput = {
   season: Prisma.SeasonCreateNestedOneWithoutPlayerLogsInput
   team: Prisma.TeamCreateNestedOneWithoutPlayerLogsInput
   player: Prisma.PlayerCreateNestedOneWithoutPlayerLogsInput
+  game: Prisma.GameCreateNestedOneWithoutPlayerLogsInput
 }
 
 export type PlayerLogUncheckedCreateWithoutDivisionInput = {
@@ -1313,6 +1389,7 @@ export type PlayerLogUncheckedCreateWithoutDivisionInput = {
   seasonId: number
   playerId: number
   teamId: number
+  gameId: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1368,6 +1445,7 @@ export type PlayerLogCreateWithoutTeamInput = {
   season: Prisma.SeasonCreateNestedOneWithoutPlayerLogsInput
   division: Prisma.DivisionCreateNestedOneWithoutPlayerLogsInput
   player: Prisma.PlayerCreateNestedOneWithoutPlayerLogsInput
+  game: Prisma.GameCreateNestedOneWithoutPlayerLogsInput
 }
 
 export type PlayerLogUncheckedCreateWithoutTeamInput = {
@@ -1393,6 +1471,7 @@ export type PlayerLogUncheckedCreateWithoutTeamInput = {
   seasonId: number
   divisionId: number
   playerId: number
+  gameId: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1448,6 +1527,7 @@ export type PlayerLogCreateWithoutPlayerInput = {
   season: Prisma.SeasonCreateNestedOneWithoutPlayerLogsInput
   division: Prisma.DivisionCreateNestedOneWithoutPlayerLogsInput
   team: Prisma.TeamCreateNestedOneWithoutPlayerLogsInput
+  game: Prisma.GameCreateNestedOneWithoutPlayerLogsInput
 }
 
 export type PlayerLogUncheckedCreateWithoutPlayerInput = {
@@ -1473,6 +1553,7 @@ export type PlayerLogUncheckedCreateWithoutPlayerInput = {
   seasonId: number
   divisionId: number
   teamId: number
+  gameId: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1503,6 +1584,88 @@ export type PlayerLogUpdateManyWithWhereWithoutPlayerInput = {
   data: Prisma.XOR<Prisma.PlayerLogUpdateManyMutationInput, Prisma.PlayerLogUncheckedUpdateManyWithoutPlayerInput>
 }
 
+export type PlayerLogCreateWithoutGameInput = {
+  started?: boolean
+  seconds?: number
+  fgMade?: number
+  fgAttempted?: number
+  fg3Made?: number
+  fg3Attempted?: number
+  ftMade?: number
+  ftAttempted?: number
+  points?: number
+  offRebounds?: number
+  defRebounds?: number
+  rebounds?: number
+  assists?: number
+  steals?: number
+  blocks?: number
+  turnovers?: number
+  personalFouls?: number
+  technicalFouls?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  teamLog: Prisma.TeamLogCreateNestedOneWithoutPlayerLogsInput
+  season: Prisma.SeasonCreateNestedOneWithoutPlayerLogsInput
+  division: Prisma.DivisionCreateNestedOneWithoutPlayerLogsInput
+  team: Prisma.TeamCreateNestedOneWithoutPlayerLogsInput
+  player: Prisma.PlayerCreateNestedOneWithoutPlayerLogsInput
+}
+
+export type PlayerLogUncheckedCreateWithoutGameInput = {
+  started?: boolean
+  seconds?: number
+  fgMade?: number
+  fgAttempted?: number
+  fg3Made?: number
+  fg3Attempted?: number
+  ftMade?: number
+  ftAttempted?: number
+  points?: number
+  offRebounds?: number
+  defRebounds?: number
+  rebounds?: number
+  assists?: number
+  steals?: number
+  blocks?: number
+  turnovers?: number
+  personalFouls?: number
+  technicalFouls?: number
+  teamLogId: number
+  seasonId: number
+  divisionId: number
+  playerId: number
+  teamId: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type PlayerLogCreateOrConnectWithoutGameInput = {
+  where: Prisma.PlayerLogWhereUniqueInput
+  create: Prisma.XOR<Prisma.PlayerLogCreateWithoutGameInput, Prisma.PlayerLogUncheckedCreateWithoutGameInput>
+}
+
+export type PlayerLogCreateManyGameInputEnvelope = {
+  data: Prisma.PlayerLogCreateManyGameInput | Prisma.PlayerLogCreateManyGameInput[]
+  skipDuplicates?: boolean
+}
+
+export type PlayerLogUpsertWithWhereUniqueWithoutGameInput = {
+  where: Prisma.PlayerLogWhereUniqueInput
+  update: Prisma.XOR<Prisma.PlayerLogUpdateWithoutGameInput, Prisma.PlayerLogUncheckedUpdateWithoutGameInput>
+  create: Prisma.XOR<Prisma.PlayerLogCreateWithoutGameInput, Prisma.PlayerLogUncheckedCreateWithoutGameInput>
+}
+
+export type PlayerLogUpdateWithWhereUniqueWithoutGameInput = {
+  where: Prisma.PlayerLogWhereUniqueInput
+  data: Prisma.XOR<Prisma.PlayerLogUpdateWithoutGameInput, Prisma.PlayerLogUncheckedUpdateWithoutGameInput>
+}
+
+export type PlayerLogUpdateManyWithWhereWithoutGameInput = {
+  where: Prisma.PlayerLogScalarWhereInput
+  data: Prisma.XOR<Prisma.PlayerLogUpdateManyMutationInput, Prisma.PlayerLogUncheckedUpdateManyWithoutGameInput>
+}
+
 export type PlayerLogCreateWithoutTeamLogInput = {
   started?: boolean
   seconds?: number
@@ -1528,6 +1691,7 @@ export type PlayerLogCreateWithoutTeamLogInput = {
   division: Prisma.DivisionCreateNestedOneWithoutPlayerLogsInput
   team: Prisma.TeamCreateNestedOneWithoutPlayerLogsInput
   player: Prisma.PlayerCreateNestedOneWithoutPlayerLogsInput
+  game: Prisma.GameCreateNestedOneWithoutPlayerLogsInput
 }
 
 export type PlayerLogUncheckedCreateWithoutTeamLogInput = {
@@ -1553,6 +1717,7 @@ export type PlayerLogUncheckedCreateWithoutTeamLogInput = {
   divisionId: number
   playerId: number
   teamId: number
+  gameId: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1606,6 +1771,7 @@ export type PlayerLogCreateManySeasonInput = {
   divisionId: number
   playerId: number
   teamId: number
+  gameId: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1635,6 +1801,7 @@ export type PlayerLogUpdateWithoutSeasonInput = {
   division?: Prisma.DivisionUpdateOneRequiredWithoutPlayerLogsNestedInput
   team?: Prisma.TeamUpdateOneRequiredWithoutPlayerLogsNestedInput
   player?: Prisma.PlayerUpdateOneRequiredWithoutPlayerLogsNestedInput
+  game?: Prisma.GameUpdateOneRequiredWithoutPlayerLogsNestedInput
 }
 
 export type PlayerLogUncheckedUpdateWithoutSeasonInput = {
@@ -1660,6 +1827,7 @@ export type PlayerLogUncheckedUpdateWithoutSeasonInput = {
   divisionId?: Prisma.IntFieldUpdateOperationsInput | number
   playerId?: Prisma.IntFieldUpdateOperationsInput | number
   teamId?: Prisma.IntFieldUpdateOperationsInput | number
+  gameId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1687,6 +1855,7 @@ export type PlayerLogUncheckedUpdateManyWithoutSeasonInput = {
   divisionId?: Prisma.IntFieldUpdateOperationsInput | number
   playerId?: Prisma.IntFieldUpdateOperationsInput | number
   teamId?: Prisma.IntFieldUpdateOperationsInput | number
+  gameId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1714,6 +1883,7 @@ export type PlayerLogCreateManyDivisionInput = {
   seasonId: number
   playerId: number
   teamId: number
+  gameId: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1743,6 +1913,7 @@ export type PlayerLogUpdateWithoutDivisionInput = {
   season?: Prisma.SeasonUpdateOneRequiredWithoutPlayerLogsNestedInput
   team?: Prisma.TeamUpdateOneRequiredWithoutPlayerLogsNestedInput
   player?: Prisma.PlayerUpdateOneRequiredWithoutPlayerLogsNestedInput
+  game?: Prisma.GameUpdateOneRequiredWithoutPlayerLogsNestedInput
 }
 
 export type PlayerLogUncheckedUpdateWithoutDivisionInput = {
@@ -1768,6 +1939,7 @@ export type PlayerLogUncheckedUpdateWithoutDivisionInput = {
   seasonId?: Prisma.IntFieldUpdateOperationsInput | number
   playerId?: Prisma.IntFieldUpdateOperationsInput | number
   teamId?: Prisma.IntFieldUpdateOperationsInput | number
+  gameId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1795,6 +1967,7 @@ export type PlayerLogUncheckedUpdateManyWithoutDivisionInput = {
   seasonId?: Prisma.IntFieldUpdateOperationsInput | number
   playerId?: Prisma.IntFieldUpdateOperationsInput | number
   teamId?: Prisma.IntFieldUpdateOperationsInput | number
+  gameId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1822,6 +1995,7 @@ export type PlayerLogCreateManyTeamInput = {
   seasonId: number
   divisionId: number
   playerId: number
+  gameId: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1851,6 +2025,7 @@ export type PlayerLogUpdateWithoutTeamInput = {
   season?: Prisma.SeasonUpdateOneRequiredWithoutPlayerLogsNestedInput
   division?: Prisma.DivisionUpdateOneRequiredWithoutPlayerLogsNestedInput
   player?: Prisma.PlayerUpdateOneRequiredWithoutPlayerLogsNestedInput
+  game?: Prisma.GameUpdateOneRequiredWithoutPlayerLogsNestedInput
 }
 
 export type PlayerLogUncheckedUpdateWithoutTeamInput = {
@@ -1876,6 +2051,7 @@ export type PlayerLogUncheckedUpdateWithoutTeamInput = {
   seasonId?: Prisma.IntFieldUpdateOperationsInput | number
   divisionId?: Prisma.IntFieldUpdateOperationsInput | number
   playerId?: Prisma.IntFieldUpdateOperationsInput | number
+  gameId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1903,6 +2079,7 @@ export type PlayerLogUncheckedUpdateManyWithoutTeamInput = {
   seasonId?: Prisma.IntFieldUpdateOperationsInput | number
   divisionId?: Prisma.IntFieldUpdateOperationsInput | number
   playerId?: Prisma.IntFieldUpdateOperationsInput | number
+  gameId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1930,6 +2107,7 @@ export type PlayerLogCreateManyPlayerInput = {
   seasonId: number
   divisionId: number
   teamId: number
+  gameId: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1959,6 +2137,7 @@ export type PlayerLogUpdateWithoutPlayerInput = {
   season?: Prisma.SeasonUpdateOneRequiredWithoutPlayerLogsNestedInput
   division?: Prisma.DivisionUpdateOneRequiredWithoutPlayerLogsNestedInput
   team?: Prisma.TeamUpdateOneRequiredWithoutPlayerLogsNestedInput
+  game?: Prisma.GameUpdateOneRequiredWithoutPlayerLogsNestedInput
 }
 
 export type PlayerLogUncheckedUpdateWithoutPlayerInput = {
@@ -1984,6 +2163,7 @@ export type PlayerLogUncheckedUpdateWithoutPlayerInput = {
   seasonId?: Prisma.IntFieldUpdateOperationsInput | number
   divisionId?: Prisma.IntFieldUpdateOperationsInput | number
   teamId?: Prisma.IntFieldUpdateOperationsInput | number
+  gameId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -2010,6 +2190,119 @@ export type PlayerLogUncheckedUpdateManyWithoutPlayerInput = {
   teamLogId?: Prisma.IntFieldUpdateOperationsInput | number
   seasonId?: Prisma.IntFieldUpdateOperationsInput | number
   divisionId?: Prisma.IntFieldUpdateOperationsInput | number
+  teamId?: Prisma.IntFieldUpdateOperationsInput | number
+  gameId?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type PlayerLogCreateManyGameInput = {
+  started?: boolean
+  seconds?: number
+  fgMade?: number
+  fgAttempted?: number
+  fg3Made?: number
+  fg3Attempted?: number
+  ftMade?: number
+  ftAttempted?: number
+  points?: number
+  offRebounds?: number
+  defRebounds?: number
+  rebounds?: number
+  assists?: number
+  steals?: number
+  blocks?: number
+  turnovers?: number
+  personalFouls?: number
+  technicalFouls?: number
+  teamLogId: number
+  seasonId: number
+  divisionId: number
+  playerId: number
+  teamId: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type PlayerLogUpdateWithoutGameInput = {
+  started?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  seconds?: Prisma.IntFieldUpdateOperationsInput | number
+  fgMade?: Prisma.IntFieldUpdateOperationsInput | number
+  fgAttempted?: Prisma.IntFieldUpdateOperationsInput | number
+  fg3Made?: Prisma.IntFieldUpdateOperationsInput | number
+  fg3Attempted?: Prisma.IntFieldUpdateOperationsInput | number
+  ftMade?: Prisma.IntFieldUpdateOperationsInput | number
+  ftAttempted?: Prisma.IntFieldUpdateOperationsInput | number
+  points?: Prisma.IntFieldUpdateOperationsInput | number
+  offRebounds?: Prisma.IntFieldUpdateOperationsInput | number
+  defRebounds?: Prisma.IntFieldUpdateOperationsInput | number
+  rebounds?: Prisma.IntFieldUpdateOperationsInput | number
+  assists?: Prisma.IntFieldUpdateOperationsInput | number
+  steals?: Prisma.IntFieldUpdateOperationsInput | number
+  blocks?: Prisma.IntFieldUpdateOperationsInput | number
+  turnovers?: Prisma.IntFieldUpdateOperationsInput | number
+  personalFouls?: Prisma.IntFieldUpdateOperationsInput | number
+  technicalFouls?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  teamLog?: Prisma.TeamLogUpdateOneRequiredWithoutPlayerLogsNestedInput
+  season?: Prisma.SeasonUpdateOneRequiredWithoutPlayerLogsNestedInput
+  division?: Prisma.DivisionUpdateOneRequiredWithoutPlayerLogsNestedInput
+  team?: Prisma.TeamUpdateOneRequiredWithoutPlayerLogsNestedInput
+  player?: Prisma.PlayerUpdateOneRequiredWithoutPlayerLogsNestedInput
+}
+
+export type PlayerLogUncheckedUpdateWithoutGameInput = {
+  started?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  seconds?: Prisma.IntFieldUpdateOperationsInput | number
+  fgMade?: Prisma.IntFieldUpdateOperationsInput | number
+  fgAttempted?: Prisma.IntFieldUpdateOperationsInput | number
+  fg3Made?: Prisma.IntFieldUpdateOperationsInput | number
+  fg3Attempted?: Prisma.IntFieldUpdateOperationsInput | number
+  ftMade?: Prisma.IntFieldUpdateOperationsInput | number
+  ftAttempted?: Prisma.IntFieldUpdateOperationsInput | number
+  points?: Prisma.IntFieldUpdateOperationsInput | number
+  offRebounds?: Prisma.IntFieldUpdateOperationsInput | number
+  defRebounds?: Prisma.IntFieldUpdateOperationsInput | number
+  rebounds?: Prisma.IntFieldUpdateOperationsInput | number
+  assists?: Prisma.IntFieldUpdateOperationsInput | number
+  steals?: Prisma.IntFieldUpdateOperationsInput | number
+  blocks?: Prisma.IntFieldUpdateOperationsInput | number
+  turnovers?: Prisma.IntFieldUpdateOperationsInput | number
+  personalFouls?: Prisma.IntFieldUpdateOperationsInput | number
+  technicalFouls?: Prisma.IntFieldUpdateOperationsInput | number
+  teamLogId?: Prisma.IntFieldUpdateOperationsInput | number
+  seasonId?: Prisma.IntFieldUpdateOperationsInput | number
+  divisionId?: Prisma.IntFieldUpdateOperationsInput | number
+  playerId?: Prisma.IntFieldUpdateOperationsInput | number
+  teamId?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type PlayerLogUncheckedUpdateManyWithoutGameInput = {
+  started?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  seconds?: Prisma.IntFieldUpdateOperationsInput | number
+  fgMade?: Prisma.IntFieldUpdateOperationsInput | number
+  fgAttempted?: Prisma.IntFieldUpdateOperationsInput | number
+  fg3Made?: Prisma.IntFieldUpdateOperationsInput | number
+  fg3Attempted?: Prisma.IntFieldUpdateOperationsInput | number
+  ftMade?: Prisma.IntFieldUpdateOperationsInput | number
+  ftAttempted?: Prisma.IntFieldUpdateOperationsInput | number
+  points?: Prisma.IntFieldUpdateOperationsInput | number
+  offRebounds?: Prisma.IntFieldUpdateOperationsInput | number
+  defRebounds?: Prisma.IntFieldUpdateOperationsInput | number
+  rebounds?: Prisma.IntFieldUpdateOperationsInput | number
+  assists?: Prisma.IntFieldUpdateOperationsInput | number
+  steals?: Prisma.IntFieldUpdateOperationsInput | number
+  blocks?: Prisma.IntFieldUpdateOperationsInput | number
+  turnovers?: Prisma.IntFieldUpdateOperationsInput | number
+  personalFouls?: Prisma.IntFieldUpdateOperationsInput | number
+  technicalFouls?: Prisma.IntFieldUpdateOperationsInput | number
+  teamLogId?: Prisma.IntFieldUpdateOperationsInput | number
+  seasonId?: Prisma.IntFieldUpdateOperationsInput | number
+  divisionId?: Prisma.IntFieldUpdateOperationsInput | number
+  playerId?: Prisma.IntFieldUpdateOperationsInput | number
   teamId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2038,6 +2331,7 @@ export type PlayerLogCreateManyTeamLogInput = {
   divisionId: number
   playerId: number
   teamId: number
+  gameId: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -2067,6 +2361,7 @@ export type PlayerLogUpdateWithoutTeamLogInput = {
   division?: Prisma.DivisionUpdateOneRequiredWithoutPlayerLogsNestedInput
   team?: Prisma.TeamUpdateOneRequiredWithoutPlayerLogsNestedInput
   player?: Prisma.PlayerUpdateOneRequiredWithoutPlayerLogsNestedInput
+  game?: Prisma.GameUpdateOneRequiredWithoutPlayerLogsNestedInput
 }
 
 export type PlayerLogUncheckedUpdateWithoutTeamLogInput = {
@@ -2092,6 +2387,7 @@ export type PlayerLogUncheckedUpdateWithoutTeamLogInput = {
   divisionId?: Prisma.IntFieldUpdateOperationsInput | number
   playerId?: Prisma.IntFieldUpdateOperationsInput | number
   teamId?: Prisma.IntFieldUpdateOperationsInput | number
+  gameId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -2119,6 +2415,7 @@ export type PlayerLogUncheckedUpdateManyWithoutTeamLogInput = {
   divisionId?: Prisma.IntFieldUpdateOperationsInput | number
   playerId?: Prisma.IntFieldUpdateOperationsInput | number
   teamId?: Prisma.IntFieldUpdateOperationsInput | number
+  gameId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -2149,6 +2446,7 @@ export type PlayerLogSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   divisionId?: boolean
   playerId?: boolean
   teamId?: boolean
+  gameId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   teamLog?: boolean | Prisma.TeamLogDefaultArgs<ExtArgs>
@@ -2156,6 +2454,7 @@ export type PlayerLogSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   division?: boolean | Prisma.DivisionDefaultArgs<ExtArgs>
   team?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
   player?: boolean | Prisma.PlayerDefaultArgs<ExtArgs>
+  game?: boolean | Prisma.GameDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["playerLog"]>
 
 export type PlayerLogSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -2182,6 +2481,7 @@ export type PlayerLogSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   divisionId?: boolean
   playerId?: boolean
   teamId?: boolean
+  gameId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   teamLog?: boolean | Prisma.TeamLogDefaultArgs<ExtArgs>
@@ -2189,6 +2489,7 @@ export type PlayerLogSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   division?: boolean | Prisma.DivisionDefaultArgs<ExtArgs>
   team?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
   player?: boolean | Prisma.PlayerDefaultArgs<ExtArgs>
+  game?: boolean | Prisma.GameDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["playerLog"]>
 
 export type PlayerLogSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -2215,6 +2516,7 @@ export type PlayerLogSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   divisionId?: boolean
   playerId?: boolean
   teamId?: boolean
+  gameId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   teamLog?: boolean | Prisma.TeamLogDefaultArgs<ExtArgs>
@@ -2222,6 +2524,7 @@ export type PlayerLogSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   division?: boolean | Prisma.DivisionDefaultArgs<ExtArgs>
   team?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
   player?: boolean | Prisma.PlayerDefaultArgs<ExtArgs>
+  game?: boolean | Prisma.GameDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["playerLog"]>
 
 export type PlayerLogSelectScalar = {
@@ -2248,17 +2551,19 @@ export type PlayerLogSelectScalar = {
   divisionId?: boolean
   playerId?: boolean
   teamId?: boolean
+  gameId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type PlayerLogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"started" | "seconds" | "fgMade" | "fgAttempted" | "fg3Made" | "fg3Attempted" | "ftMade" | "ftAttempted" | "points" | "offRebounds" | "defRebounds" | "rebounds" | "assists" | "steals" | "blocks" | "turnovers" | "personalFouls" | "technicalFouls" | "teamLogId" | "seasonId" | "divisionId" | "playerId" | "teamId" | "createdAt" | "updatedAt", ExtArgs["result"]["playerLog"]>
+export type PlayerLogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"started" | "seconds" | "fgMade" | "fgAttempted" | "fg3Made" | "fg3Attempted" | "ftMade" | "ftAttempted" | "points" | "offRebounds" | "defRebounds" | "rebounds" | "assists" | "steals" | "blocks" | "turnovers" | "personalFouls" | "technicalFouls" | "teamLogId" | "seasonId" | "divisionId" | "playerId" | "teamId" | "gameId" | "createdAt" | "updatedAt", ExtArgs["result"]["playerLog"]>
 export type PlayerLogInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   teamLog?: boolean | Prisma.TeamLogDefaultArgs<ExtArgs>
   season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
   division?: boolean | Prisma.DivisionDefaultArgs<ExtArgs>
   team?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
   player?: boolean | Prisma.PlayerDefaultArgs<ExtArgs>
+  game?: boolean | Prisma.GameDefaultArgs<ExtArgs>
 }
 export type PlayerLogIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   teamLog?: boolean | Prisma.TeamLogDefaultArgs<ExtArgs>
@@ -2266,6 +2571,7 @@ export type PlayerLogIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   division?: boolean | Prisma.DivisionDefaultArgs<ExtArgs>
   team?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
   player?: boolean | Prisma.PlayerDefaultArgs<ExtArgs>
+  game?: boolean | Prisma.GameDefaultArgs<ExtArgs>
 }
 export type PlayerLogIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   teamLog?: boolean | Prisma.TeamLogDefaultArgs<ExtArgs>
@@ -2273,6 +2579,7 @@ export type PlayerLogIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   division?: boolean | Prisma.DivisionDefaultArgs<ExtArgs>
   team?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
   player?: boolean | Prisma.PlayerDefaultArgs<ExtArgs>
+  game?: boolean | Prisma.GameDefaultArgs<ExtArgs>
 }
 
 export type $PlayerLogPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2283,6 +2590,7 @@ export type $PlayerLogPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     division: Prisma.$DivisionPayload<ExtArgs>
     team: Prisma.$TeamPayload<ExtArgs>
     player: Prisma.$PlayerPayload<ExtArgs>
+    game: Prisma.$GamePayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     started: boolean
@@ -2308,6 +2616,7 @@ export type $PlayerLogPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     divisionId: number
     playerId: number
     teamId: number
+    gameId: number
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["playerLog"]>
@@ -2709,6 +3018,7 @@ export interface Prisma__PlayerLogClient<T, Null = never, ExtArgs extends runtim
   division<T extends Prisma.DivisionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DivisionDefaultArgs<ExtArgs>>): Prisma.Prisma__DivisionClient<runtime.Types.Result.GetResult<Prisma.$DivisionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   team<T extends Prisma.TeamDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TeamDefaultArgs<ExtArgs>>): Prisma.Prisma__TeamClient<runtime.Types.Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   player<T extends Prisma.PlayerDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PlayerDefaultArgs<ExtArgs>>): Prisma.Prisma__PlayerClient<runtime.Types.Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  game<T extends Prisma.GameDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.GameDefaultArgs<ExtArgs>>): Prisma.Prisma__GameClient<runtime.Types.Result.GetResult<Prisma.$GamePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2761,6 +3071,7 @@ export interface PlayerLogFieldRefs {
   readonly divisionId: Prisma.FieldRef<"PlayerLog", 'Int'>
   readonly playerId: Prisma.FieldRef<"PlayerLog", 'Int'>
   readonly teamId: Prisma.FieldRef<"PlayerLog", 'Int'>
+  readonly gameId: Prisma.FieldRef<"PlayerLog", 'Int'>
   readonly createdAt: Prisma.FieldRef<"PlayerLog", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"PlayerLog", 'DateTime'>
 }
