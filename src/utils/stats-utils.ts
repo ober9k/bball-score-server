@@ -115,7 +115,7 @@ export function generateGamesStatisticsLogs(playerLogs: PlayerLog[]): Statistics
       }
 
       /* no `getOrInsert()` available */
-      const log = acc.get(playerLog.player.id)!;
+      const log = acc.get(playerLog.game!.id)!;
       log.played  += (playerLog.stats.seconds > 0) ? 1 : 0;
       log.started += (playerLog.started) ? 1 : 0;
       log.stats    = calculateTotals(log, playerLog.stats);
