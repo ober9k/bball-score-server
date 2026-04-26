@@ -119,21 +119,22 @@ enum GamePhase {
 }
 
 model Game {
-  id         Int       @id @default(autoincrement())
+  id         Int         @id @default(autoincrement())
   date       DateTime
   phase      GamePhase
   round      Int
-  active     Boolean   @default(false)
-  archived   Boolean   @default(false)
+  active     Boolean     @default(false)
+  archived   Boolean     @default(false)
   leagueId   Int
   seasonId   Int
   divisionId Int
-  league     League    @relation(fields: [leagueId], references: [id])
-  season     Season    @relation(fields: [seasonId], references: [id])
-  division   Division  @relation(fields: [divisionId], references: [id])
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @default(now())
+  league     League      @relation(fields: [leagueId], references: [id])
+  season     Season      @relation(fields: [seasonId], references: [id])
+  division   Division    @relation(fields: [divisionId], references: [id])
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @default(now())
   teamLogs   TeamLog[]
+  playerLogs PlayerLog[]
 }
 
 enum TeamSide {
@@ -183,11 +184,13 @@ model PlayerLog {
   divisionId     Int
   playerId       Int
   teamId         Int
+  gameId         Int
   teamLog        TeamLog  @relation(fields: [teamLogId], references: [id])
   season         Season   @relation(fields: [seasonId], references: [id])
   division       Division @relation(fields: [divisionId], references: [id])
   team           Team     @relation(fields: [teamId], references: [id])
   player         Player   @relation(fields: [playerId], references: [id])
+  game           Game     @relation(fields: [gameId], references: [id])
   createdAt      DateTime @default(now())
   updatedAt      DateTime @default(now())
 
