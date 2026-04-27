@@ -106,6 +106,8 @@ function defaultOrderBy(): GameOrderByWithRelationInput {
   };
 }
 
+export { defaultOrderBy as gameDefaultOrderBy };
+
 export async function findAll(): Promise<Game[]> {
   const items: any[] = await prisma.game.findMany({
     select:  defaultSelect(),

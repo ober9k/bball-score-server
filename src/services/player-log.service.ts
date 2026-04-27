@@ -1,7 +1,8 @@
 import { toPlayerLog, toShallowGame } from "@/lib/converters";
 import { prisma } from "@/lib/prisma";
-import { gameSimpleSelect } from "@/services/game.service";
+import { gameDefaultOrderBy, gameSimpleSelect } from "@/services/game.service";
 import type { PlayerLog } from "@/types/game";
+import { SortOrder } from "@prisma/generated/internal/prismaNamespace";
 import type { PlayerLogSelect } from "@prisma/generated/models/PlayerLog";
 
 function defaultSelect(): PlayerLogSelect {
@@ -64,6 +65,9 @@ export async function findByPlayerIdWithGames(playerId: number): Promise<PlayerL
   const items: any[] = await prisma.playerLog.findMany({
     select: { ... defaultSelect() , seasonId: true, season: true, gameId: true, game: { select: gameSimpleSelect() } },
     where:  { playerId },
+    orderBy: {
+      game: gameDefaultOrderBy(),
+    }
   });
 
   return items
