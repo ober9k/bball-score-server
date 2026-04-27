@@ -83,6 +83,15 @@ function simpleSelect(): GameSelect {
         team: {
           select: teamDefaultSelect(),
         },
+        playerLogs: {
+          select: {
+            /* need to redo this */
+            playerId: true,
+            player: {
+              select: playerDefaultSelect(),
+            },
+          },
+        },
       },
     },
   };

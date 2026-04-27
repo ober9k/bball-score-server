@@ -100,7 +100,7 @@ export function toShallowTeamLog(data: any): any {
     byPeriod:   data.byPeriod,
     teamId:     data.teamId,
     team:       toTeam(data.team),
-    playerLogs: [], /* ignore */
+    playerLogs: data.playerLogs.map(toShallowPlayerLog),
   };
 }
 
@@ -117,14 +117,19 @@ export function toPlayerLog(data: any): PlayerLog {
     result.season = toSeason(data.season);
   }
 
-  console.log("data.game", !!data.game);
-
   if (data.game) {
     result.gameId = data.gameId;
     result.game = toShallowGame(data.game);
   }
 
   return result;
+}
+
+export function toShallowPlayerLog(data: any): any {
+  return {
+    playerId: data.playerId,
+    player:   toPlayer(data.player),
+  };
 }
 
 export function toStats(data: any): Stats {
