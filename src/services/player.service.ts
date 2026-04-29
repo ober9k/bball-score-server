@@ -17,7 +17,20 @@ function defaultSelect(): PlayerSelect {
   };
 }
 
+function briefSelect(): PlayerSelect {
+  return {
+    id:       true,
+    name:     true,
+    position: true,
+    number:   true,
+    height:   true,
+    active:   true,
+    archived: true,
+  };
+}
+
 export { defaultSelect as playerDefaultSelect };
+export { briefSelect as playerBriefSelect };
 
 function defaultOrderBy(): PlayerOrderByWithRelationInput {
   return {

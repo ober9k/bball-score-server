@@ -1,8 +1,8 @@
 import { toGame } from "@/lib/converters";
 import { prisma } from "@/lib/prisma";
-import { divisionDefaultSelect } from "@/services/division.service";
+import { divisionBriefSelect, divisionDefaultSelect } from "@/services/division.service";
 import { playerDefaultSelect } from "@/services/player.service";
-import { seasonDefaultSelect } from "@/services/season.service";
+import { seasonBriefSelect, seasonDefaultSelect } from "@/services/season.service";
 import { teamDefaultSelect } from "@/services/team.service";
 import type { Game, GameData } from "@/types/game";
 import { type GameOrderByWithRelationInput, SortOrder } from "@prisma/generated/internal/prismaNamespace";
@@ -67,6 +67,21 @@ function defaultSelect(): GameSelect {
   };
 }
 
+function briefSelect(): GameSelect {
+  return {
+    id:         true,
+    date:       true,
+    phase:      true,
+    round:      true,
+    seasonId:   true,
+    season:     { select: seasonBriefSelect() },
+    divisionId: true,
+    division:   { select: divisionBriefSelect() },
+    active:     true,
+    archived:   true,
+  };
+}
+
 function simpleSelect(): GameSelect {
   return {
     id:         true,
@@ -98,6 +113,7 @@ function simpleSelect(): GameSelect {
 }
 
 export { defaultSelect as gameDefaultSelect };
+export { briefSelect as gameBriefSelect };
 export { simpleSelect as gameSimpleSelect };
 
 function defaultOrderBy(): GameOrderByWithRelationInput {

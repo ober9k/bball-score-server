@@ -1,5 +1,6 @@
 import { toOption, toTeam } from "@/lib/converters";
 import { prisma } from "@/lib/prisma";
+import { divisionBriefSelect } from "@/services/division.service";
 import type { Option } from "@/types/option";
 import type { Team, TeamData } from "@/types/team";
 import { SortOrder, type TeamOrderByWithRelationInput } from "@prisma/generated/internal/prismaNamespace";
@@ -17,7 +18,20 @@ function defaultSelect(): TeamSelect {
   };
 }
 
+function briefSelect(): TeamSelect {
+  return {
+    id:         true,
+    name:       true,
+    shortName:  true,
+    divisionId: true,
+    division:   { select: divisionBriefSelect() },
+    active:     true,
+    archived:   true,
+  };
+}
+
 export { defaultSelect as teamDefaultSelect };
+export { briefSelect as teamBriefSelect };
 
 function defaultOrderBy(): TeamOrderByWithRelationInput {
   return {

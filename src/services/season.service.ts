@@ -16,7 +16,17 @@ function defaultSelect(): SeasonSelect {
   };
 }
 
+function briefSelect(): SeasonSelect {
+  return {
+    id:       true,
+    name:     true,
+    active:   true,
+    archived: true,
+  };
+}
+
 export { defaultSelect as seasonDefaultSelect };
+export { briefSelect as seasonBriefSelect };
 
 function defaultOrderBy(): SeasonOrderByWithRelationInput {
   return {
