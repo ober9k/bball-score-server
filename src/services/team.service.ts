@@ -1,8 +1,8 @@
-import { toOption, toTeam } from "@/lib/converters";
+import { toBriefTeam, toOption, toTeam } from "@/lib/converters";
 import { prisma } from "@/lib/prisma";
 import { divisionBriefSelect } from "@/services/division.service";
 import type { Option } from "@/types/option";
-import type { Team, TeamData } from "@/types/team";
+import type { BriefTeam, Team, TeamData } from "@/types/team";
 import { SortOrder, type TeamOrderByWithRelationInput } from "@prisma/generated/internal/prismaNamespace";
 import type { TeamSelect } from "@prisma/generated/models/Team";
 
@@ -41,24 +41,51 @@ function defaultOrderBy(): TeamOrderByWithRelationInput {
 
 export { defaultOrderBy as teamDefaultOrderBy };
 
-export async function findAll(): Promise<Team[]> {
-  const items: any[] = await prisma.team.findMany({
-    select:  defaultSelect(),
+export async function _findAll(brief?: boolean): Promise<any[]> {
+  return prisma.team.findMany({
+    select:  (brief)
+      ? briefSelect()
+      : defaultSelect(),
     orderBy: defaultOrderBy(),
   });
+}
+
+export async function findAll(brief?: boolean): Promise<Team[]> {
+  const items: any[] = await _findAll(brief);
 
   return items
     .map(toTeam);
 }
 
-export async function findById(id: number): Promise<Team | null> {
-  const item: any = await prisma.team.findUniqueOrThrow({
-    select: defaultSelect(),
+export async function findBriefAll(brief?: boolean): Promise<BriefTeam[]> {
+  const items: any[] = await _findAll(brief);
+
+  return items
+    .map(toBriefTeam);
+}
+
+async function _findById(id: number, brief?: boolean): Promise<any> {
+  return prisma.team.findUniqueOrThrow({
+    select: (brief)
+      ? briefSelect()
+      : defaultSelect(),
     where:  { id },
   });
+}
+
+export async function findById(id: number, brief?: boolean): Promise<Team | null> {
+  const item: any = await _findById(id, brief);
 
   return (item)
     ? toTeam(item)
+    : null;
+}
+
+export async function findBriefById(id: number, brief?: boolean): Promise<BriefTeam | null> {
+  const item: any = await _findById(id, brief);
+
+  return (item)
+    ? toBriefTeam(item)
     : null;
 }
 

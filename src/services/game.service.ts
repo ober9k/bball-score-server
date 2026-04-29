@@ -1,10 +1,10 @@
-import { toGame } from "@/lib/converters";
+import { toBriefGame, toGame } from "@/lib/converters";
 import { prisma } from "@/lib/prisma";
 import { divisionBriefSelect, divisionDefaultSelect } from "@/services/division.service";
 import { playerDefaultSelect } from "@/services/player.service";
 import { seasonBriefSelect, seasonDefaultSelect } from "@/services/season.service";
 import { teamDefaultSelect } from "@/services/team.service";
-import type { Game, GameData } from "@/types/game";
+import type { BriefGame, Game, GameData } from "@/types/game";
 import { type GameOrderByWithRelationInput, SortOrder } from "@prisma/generated/internal/prismaNamespace";
 import type { GameSelect } from "@prisma/generated/models/Game";
 
@@ -124,24 +124,51 @@ function defaultOrderBy(): GameOrderByWithRelationInput {
 
 export { defaultOrderBy as gameDefaultOrderBy };
 
-export async function findAll(): Promise<Game[]> {
-  const items: any[] = await prisma.game.findMany({
-    select:  defaultSelect(),
+export async function _findAll(brief?: boolean): Promise<any[]> {
+  return prisma.game.findMany({
+    select:  (brief)
+      ? briefSelect()
+      : defaultSelect(),
     orderBy: defaultOrderBy(),
   });
+}
+
+export async function findAll(brief?: boolean): Promise<Game[]> {
+  const items: any[] = await _findAll(brief);
 
   return items
     .map(toGame);
 }
 
-export async function findById(id: number): Promise<Game | null> {
-  const item: any = await prisma.game.findUnique({
-    select: defaultSelect(),
+export async function findBriefAll(brief?: boolean): Promise<BriefGame[]> {
+  const items: any[] = await _findAll(brief);
+
+  return items
+    .map(toBriefGame);
+}
+
+async function _findById(id: number, brief?: boolean): Promise<any> {
+  return prisma.game.findUniqueOrThrow({
+    select: (brief)
+      ? briefSelect()
+      : defaultSelect(),
     where:  { id },
   });
+}
+
+export async function findById(id: number, brief?: boolean): Promise<Game | null> {
+  const item: any = await _findById(id, brief);
 
   return (item)
     ? toGame(item)
+    : null;
+}
+
+export async function findBriefById(id: number, brief?: boolean): Promise<BriefGame | null> {
+  const item: any = await _findById(id, brief);
+
+  return (item)
+    ? toBriefGame(item)
     : null;
 }
 

@@ -1,8 +1,8 @@
-import { toDivision, toOption, toSeason } from "@/lib/converters";
+import { toBriefSeason, toDivision, toOption, toSeason } from "@/lib/converters";
 import { prisma } from "@/lib/prisma";
 import type { Division } from "@/types/division";
 import type { Option } from "@/types/option";
-import type { Season, SeasonData } from "@/types/season";
+import type { BriefSeason, Season, SeasonData } from "@/types/season";
 import { SortOrder } from "@prisma/generated/internal/prismaNamespace";
 import type { SeasonOrderByWithRelationInput, SeasonSelect } from "@prisma/generated/models/Season";
 
@@ -34,24 +34,51 @@ function defaultOrderBy(): SeasonOrderByWithRelationInput {
   };
 }
 
-export async function findAll(): Promise<Season[]> {
-  const items: any[] = await prisma.season.findMany({
-    select:  defaultSelect(),
+export async function _findAll(brief?: boolean): Promise<any[]> {
+  return prisma.season.findMany({
+    select:  (brief)
+      ? briefSelect()
+      : defaultSelect(),
     orderBy: defaultOrderBy(),
   });
+}
+
+export async function findAll(brief?: boolean): Promise<Season[]> {
+  const items: any[] = await _findAll(brief);
 
   return items
     .map(toSeason);
 }
 
-export async function findById(id: number): Promise<Season | null> {
-  const item: any = await prisma.season.findUniqueOrThrow({
-    select: defaultSelect(),
+export async function findBriefAll(brief?: boolean): Promise<BriefSeason[]> {
+  const items: any[] = await _findAll(brief);
+
+  return items
+    .map(toBriefSeason);
+}
+
+async function _findById(id: number, brief?: boolean): Promise<any> {
+  return prisma.season.findUniqueOrThrow({
+    select: (brief)
+      ? briefSelect()
+      : defaultSelect(),
     where:  { id },
   });
+}
+
+export async function findById(id: number, brief?: boolean): Promise<Season | null> {
+  const item: any = await _findById(id, brief);
 
   return (item)
     ? toSeason(item)
+    : null;
+}
+
+export async function findBriefById(id: number, brief?: boolean): Promise<BriefSeason | null> {
+  const item: any = await _findById(id, brief);
+
+  return (item)
+    ? toBriefSeason(item)
     : null;
 }
 

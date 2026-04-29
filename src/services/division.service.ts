@@ -1,7 +1,7 @@
-import { toDivision, toOption, toTeam } from "@/lib/converters";
+import { toBriefDivision, toDivision, toOption, toTeam } from "@/lib/converters";
 import { prisma } from "@/lib/prisma";
 import { seasonBriefSelect } from "@/services/season.service";
-import type { Division, DivisionData } from "@/types/division";
+import type { BriefDivision, Division, DivisionData } from "@/types/division";
 import type { Option } from "@/types/option";
 import type { Team } from "@/types/team";
 import { SortOrder } from "@prisma/generated/internal/prismaNamespace";
@@ -38,24 +38,51 @@ function defaultOrderBy(): DivisionOrderByWithRelationInput {
   };
 }
 
-export async function findAll(): Promise<Division[]> {
-  const items: any[] = await prisma.division.findMany({
-    select:  defaultSelect(),
+export async function _findAll(brief?: boolean): Promise<any[]> {
+  return prisma.division.findMany({
+    select:  (brief)
+      ? briefSelect()
+      : defaultSelect(),
     orderBy: defaultOrderBy(),
   });
+}
+
+export async function findAll(brief?: boolean): Promise<Division[]> {
+  const items: any[] = await _findAll(brief);
 
   return items
     .map(toDivision);
 }
 
-export async function findById(id: number): Promise<Division | null> {
-  const item: any = await prisma.division.findUniqueOrThrow({
-    select: defaultSelect(),
+export async function findBriefAll(brief?: boolean): Promise<BriefDivision[]> {
+  const items: any[] = await _findAll(brief);
+
+  return items
+    .map(toBriefDivision);
+}
+
+async function _findById(id: number, brief?: boolean): Promise<any> {
+  return prisma.division.findUniqueOrThrow({
+    select: (brief)
+      ? briefSelect()
+      : defaultSelect(),
     where:  { id },
   });
+}
+
+export async function findById(id: number, brief?: boolean): Promise<Division | null> {
+  const item: any = await _findById(id, brief);
 
   return (item)
     ? toDivision(item)
+    : null;
+}
+
+export async function findBriefById(id: number, brief?: boolean): Promise<BriefDivision | null> {
+  const item: any = await _findById(id, brief);
+
+  return (item)
+    ? toBriefDivision(item)
     : null;
 }
 
