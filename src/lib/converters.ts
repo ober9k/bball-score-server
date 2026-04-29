@@ -1,10 +1,23 @@
-import type { Division } from "@/types/division";
-import type { Game, PlayerLog, TeamLog } from "@/types/game";
+import type { Activatable, Archivable } from "@/types/base";
+import type { BriefDivision, Division } from "@/types/division";
+import type { BriefGame, Game, PlayerLog, TeamLog } from "@/types/game";
 import type { Option } from "@/types/option";
-import type { Player } from "@/types/player";
-import type { Season } from "@/types/season";
+import type { BriefPlayer, Player } from "@/types/player";
+import type { BriefSeason, Season } from "@/types/season";
 import type { Stats } from "@/types/stats";
-import type { Team } from "@/types/team";
+import type { BriefTeam, Team } from "@/types/team";
+
+function withActivatable(data: any): Activatable {
+  return {
+    activated: data.active, /* todo: to be renamed */
+  };
+}
+
+function withArchivable(data: any): Archivable {
+  return {
+    archived: data.archived, /* todo: to be renamed */
+  };
+}
 
 export function toSeason(data: any): Season {
   return {
@@ -16,6 +29,15 @@ export function toSeason(data: any): Season {
   };
 }
 
+export function toBriefSeason(data: any): BriefSeason {
+  return {
+    id:        data.id,
+    name:      data.name,
+    ...withActivatable(data),
+    ...withArchivable(data),
+  };
+}
+
 export function toDivision(data: any): Division {
   return {
     id:       data.id,
@@ -24,6 +46,17 @@ export function toDivision(data: any): Division {
     archived: data.archived,
     seasonId: data.seasonId,
     leagueId: data.leagueId,
+  };
+}
+
+export function toBriefDivision(data: any): BriefDivision {
+  return {
+    id:       data.id,
+    name:     data.name,
+    seasonId: data.seasonId,
+    season:   toBriefSeason(data.season),
+    ...withActivatable(data),
+    ...withArchivable(data),
   };
 }
 
@@ -39,6 +72,18 @@ export function toTeam(data: any): Team {
   };
 }
 
+export function toBriefTeam(data: any): BriefTeam {
+  return {
+    id:         data.id,
+    name:       data.name,
+    shortName:  data.shortName,
+    divisionId: data.divisionId,
+    division:   toBriefDivision(data.division),
+    ...withActivatable(data),
+    ...withArchivable(data),
+  };
+}
+
 export function toPlayer(data: any): Player {
   return {
     id:       data.id,
@@ -49,6 +94,18 @@ export function toPlayer(data: any): Player {
     active:   data.active,
     archived: data.archived,
     leagueId: data.leagueId,
+  };
+}
+
+export function toBriefPlayer(data: any): BriefPlayer {
+  return {
+    id:       data.id,
+    name:     data.name,
+    position: data.position,
+    number:   data.number,
+    height:   data.height,
+    ...withActivatable(data),
+    ...withArchivable(data),
   };
 }
 
@@ -66,6 +123,21 @@ export function toGame(data: any): Game {
     archived:   data.archived,
     leagueId:   data.leagueId,
     teamLogs:   data.teamLogs.map(toTeamLog),
+  };
+}
+
+export function toBriefGame(data: any): BriefGame {
+  return {
+    id:         data.id,
+    date:       data.date,
+    phase:      data.phase,
+    round:      data.round,
+    seasonId:   data.seasonId,
+    season:     toBriefSeason(data.season),
+    divisionId: data.divisionId,
+    division:   toBriefDivision(data.division),
+    ...withActivatable(data),
+    ...withArchivable(data),
   };
 }
 
