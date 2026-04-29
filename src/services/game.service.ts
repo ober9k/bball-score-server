@@ -134,9 +134,7 @@ export async function save(data: GameData): Promise<Game | null> {
     data: { ...data },
   });
 
-  return (item)
-    ? toGame(item)
-    : null;
+  return findById(item.id); /* TODO: just get a new one for now */
 }
 
 export async function saveById(id: number, data: GameData): Promise<Game | null> {
@@ -145,7 +143,5 @@ export async function saveById(id: number, data: GameData): Promise<Game | null>
     where: { id },
   });
 
-  return (item)
-    ? toGame(item)
-    : null;
+  return findById(item.id); /* TODO: just get a new one for now */
 }
