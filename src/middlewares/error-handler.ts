@@ -53,6 +53,8 @@ export function errorHandler(
   }
 
   // default fall back handling
+  console.error(err);
+
   return res
     .status(StatusCodes.INTERNAL_SERVER_ERROR)
     .json(err.message);

@@ -49,15 +49,15 @@ export async function _findAll(brief?: boolean): Promise<any[]> {
   });
 }
 
-export async function findAll(brief?: boolean): Promise<Player[]> {
-  const items: any[] = await _findAll(brief);
+export async function findAll(): Promise<Player[]> {
+  const items: any[] = await _findAll();
 
   return items
     .map(toPlayer);
 }
 
-export async function findBriefAll(brief?: boolean): Promise<BriefPlayer[]> {
-  const items: any[] = await _findAll(brief);
+export async function findBriefAll(): Promise<BriefPlayer[]> {
+  const items: any[] = await _findAll(true);
 
   return items
     .map(toBriefPlayer);
@@ -72,16 +72,16 @@ async function _findById(id: number, brief?: boolean): Promise<any> {
   });
 }
 
-export async function findById(id: number, brief?: boolean): Promise<Player | null> {
-  const item: any = await _findById(id, brief);
+export async function findById(id: number): Promise<Player | null> {
+  const item: any = await _findById(id);
 
   return (item)
     ? toPlayer(item)
     : null;
 }
 
-export async function findBriefById(id: number, brief?: boolean): Promise<BriefPlayer | null> {
-  const item: any = await _findById(id, brief);
+export async function findBriefById(id: number): Promise<BriefPlayer | null> {
+  const item: any = await _findById(id, true);
 
   return (item)
     ? toBriefPlayer(item)

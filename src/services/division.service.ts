@@ -47,15 +47,15 @@ export async function _findAll(brief?: boolean): Promise<any[]> {
   });
 }
 
-export async function findAll(brief?: boolean): Promise<Division[]> {
-  const items: any[] = await _findAll(brief);
+export async function findAll(): Promise<Division[]> {
+  const items: any[] = await _findAll();
 
   return items
     .map(toDivision);
 }
 
-export async function findBriefAll(brief?: boolean): Promise<BriefDivision[]> {
-  const items: any[] = await _findAll(brief);
+export async function findBriefAll(): Promise<BriefDivision[]> {
+  const items: any[] = await _findAll(true);
 
   return items
     .map(toBriefDivision);
@@ -70,16 +70,16 @@ async function _findById(id: number, brief?: boolean): Promise<any> {
   });
 }
 
-export async function findById(id: number, brief?: boolean): Promise<Division | null> {
-  const item: any = await _findById(id, brief);
+export async function findById(id: number): Promise<Division | null> {
+  const item: any = await _findById(id);
 
   return (item)
     ? toDivision(item)
     : null;
 }
 
-export async function findBriefById(id: number, brief?: boolean): Promise<BriefDivision | null> {
-  const item: any = await _findById(id, brief);
+export async function findBriefById(id: number): Promise<BriefDivision | null> {
+  const item: any = await _findById(id, true);
 
   return (item)
     ? toBriefDivision(item)

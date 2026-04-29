@@ -1,5 +1,15 @@
-import { createPlayer, getPlayer, getPlayers, getPlayerStatisticsAverages, getPlayerStatisticsGames, getPlayerStatisticsTotals, getPlayerTeams, updatePlayer } from "@/controllers/players.controller";
-import { getTeamStatisticsAverages, getTeamStatisticsTotals } from "@/controllers/teams.controller";
+import {
+  createPlayer,
+  getBriefPlayer,
+  getBriefPlayers,
+  getPlayer,
+  getPlayers,
+  getPlayerStatisticsAverages,
+  getPlayerStatisticsGames,
+  getPlayerStatisticsTotals,
+  getPlayerTeams,
+  updatePlayer
+} from "@/controllers/players.controller";
 import { isAuthorizedRole } from "@/middlewares/auth-role";
 import { isAuthenticated } from "@/middlewares/auth-token";
 import { validateIdHandler } from "@/middlewares/validate-id-handler";
@@ -18,8 +28,10 @@ const router = Router()
   .get("/players/:id/statistics/averages", [validateIdHandler], getPlayerStatisticsAverages)
   .get("/players/:id/statistics/totals", [validateIdHandler], getPlayerStatisticsTotals)
   .get("/players/:id/statistics/games", [validateIdHandler], getPlayerStatisticsGames)
-  // players (create/update)
-  .post("/players", [...authorizedPaths, playerValidationHandler()], createPlayer)
-  .put("/players/:id", [...authorizedPaths, validateIdHandler, playerValidationHandler()], updatePlayer);
+  // players/manage (create/update)
+  .get("/manage/players", [...authorizedPaths], getBriefPlayers)
+  .get("/manage/players/:id", [...authorizedPaths, validateIdHandler], getBriefPlayer)
+  .post("/manage/players", [...authorizedPaths, playerValidationHandler()], createPlayer)
+  .put("/manage/players/:id", [...authorizedPaths, validateIdHandler, playerValidationHandler()], updatePlayer);
 
 export { router as playersRoutes };

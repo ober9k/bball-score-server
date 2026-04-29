@@ -15,4 +15,4 @@ export type BriefSeason = {
 
 export type SeasonData = Omit<Season, "id">;
 
-export type BriefSeasonData = Omit<Season, "id">;
+export type BriefSeasonData = Omit<BriefSeason, "id">;

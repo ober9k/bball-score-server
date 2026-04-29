@@ -1,5 +1,5 @@
 import { getLocalLeague } from "@/services/league.service";
-import { findAll, findAllAsOptions, findById, findDivisionsBySeasonId, save, saveById } from "@/services/season.service";
+import { findAll, findAllAsOptions, findBriefAll, findBriefById, findById, findDivisionsBySeasonId, save, saveById } from "@/services/season.service";
 import type { SeasonData } from "@/types/season";
 import type { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
@@ -38,6 +38,22 @@ export async function getSeasonsOptions(req: Request, res: Response) {
     .status(StatusCodes.OK)
     .json(
       await findAllAsOptions()
+    );
+}
+
+export async function getBriefSeasons(req: Request, res: Response) {
+  return res
+    .status(StatusCodes.OK)
+    .json(
+      await findBriefAll()
+    );
+}
+
+export async function getBriefSeason(req: Request, res: Response) {
+  return res
+    .status(StatusCodes.OK)
+    .json(
+      await findBriefById(getSeasonId(req))
     );
 }
 

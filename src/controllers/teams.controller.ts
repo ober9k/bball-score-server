@@ -1,7 +1,7 @@
 import { getLocalLeague } from "@/services/league.service";
 import { generateStatisticsLogsByTeamId, type StatisticsMode } from "@/services/statistics.service";
 import { findPlayersByTeamId } from "@/services/team-player.service";
-import { findAll, findAllAsOptions, findById, save, saveById } from "@/services/team.service";
+import { findAll, findAllAsOptions, findBriefAll, findBriefById, findById, save, saveById } from "@/services/team.service";
 import type { TeamData } from "@/types/team";
 import type { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
@@ -40,6 +40,22 @@ export async function getTeamsOptions(req: Request, res: Response) {
     .status(StatusCodes.OK)
     .json(
       await findAllAsOptions()
+    );
+}
+
+export async function getBriefTeams(req: Request, res: Response) {
+  return res
+    .status(StatusCodes.OK)
+    .json(
+      await findBriefAll()
+    );
+}
+
+export async function getBriefTeam(req: Request, res: Response) {
+  return res
+    .status(StatusCodes.OK)
+    .json(
+      await findBriefById(getTeamId(req))
     );
 }
 

@@ -1,4 +1,15 @@
-import { createTeam, getTeam, getTeamPlayers, getTeams, getTeamsOptions, getTeamStatisticsAverages, getTeamStatisticsTotals, updateTeam } from "@/controllers/teams.controller";
+import {
+  createTeam,
+  getBriefTeam,
+  getBriefTeams,
+  getTeam,
+  getTeamPlayers,
+  getTeams,
+  getTeamsOptions,
+  getTeamStatisticsAverages,
+  getTeamStatisticsTotals,
+  updateTeam
+} from "@/controllers/teams.controller";
 import { isAuthorizedRole } from "@/middlewares/auth-role";
 import { isAuthenticated } from "@/middlewares/auth-token";
 import { validateIdHandler } from "@/middlewares/validate-id-handler";
@@ -17,8 +28,10 @@ const router = Router()
   .get("/teams/:id/players", [validateIdHandler], getTeamPlayers)
   .get("/teams/:id/statistics/averages", [validateIdHandler], getTeamStatisticsAverages)
   .get("/teams/:id/statistics/totals", [validateIdHandler], getTeamStatisticsTotals)
-  // teams (create/update)
-  .post("/teams", [...authorizedPaths, teamValidationHandler()], createTeam)
-  .put("/teams/:id", [...authorizedPaths, validateIdHandler, teamValidationHandler()], updateTeam)
+  // teams/manage (create/update)
+  .get("/manage/teams", [...authorizedPaths], getBriefTeams)
+  .get("/manage/teams/:id", [...authorizedPaths, validateIdHandler], getBriefTeam)
+  .post("/manage/teams", [...authorizedPaths, teamValidationHandler()], createTeam)
+  .put("/manage/teams/:id", [...authorizedPaths, validateIdHandler, teamValidationHandler()], updateTeam)
 
 export { router as teamsRoutes };

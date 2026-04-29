@@ -43,15 +43,15 @@ export async function _findAll(brief?: boolean): Promise<any[]> {
   });
 }
 
-export async function findAll(brief?: boolean): Promise<Season[]> {
-  const items: any[] = await _findAll(brief);
+export async function findAll(): Promise<Season[]> {
+  const items: any[] = await _findAll();
 
   return items
     .map(toSeason);
 }
 
-export async function findBriefAll(brief?: boolean): Promise<BriefSeason[]> {
-  const items: any[] = await _findAll(brief);
+export async function findBriefAll(): Promise<BriefSeason[]> {
+  const items: any[] = await _findAll(true);
 
   return items
     .map(toBriefSeason);
@@ -66,16 +66,16 @@ async function _findById(id: number, brief?: boolean): Promise<any> {
   });
 }
 
-export async function findById(id: number, brief?: boolean): Promise<Season | null> {
-  const item: any = await _findById(id, brief);
+export async function findById(id: number): Promise<Season | null> {
+  const item: any = await _findById(id);
 
   return (item)
     ? toSeason(item)
     : null;
 }
 
-export async function findBriefById(id: number, brief?: boolean): Promise<BriefSeason | null> {
-  const item: any = await _findById(id, brief);
+export async function findBriefById(id: number): Promise<BriefSeason | null> {
+  const item: any = await _findById(id, true);
 
   return (item)
     ? toBriefSeason(item)

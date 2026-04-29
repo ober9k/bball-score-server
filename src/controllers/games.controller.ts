@@ -1,4 +1,4 @@
-import { findAll, findById, save, saveById } from "@/services/game.service";
+import { findAll, findBriefAll, findBriefById, findById, save, saveById } from "@/services/game.service";
 import { getLocalLeague } from "@/services/league.service";
 import type { GameData } from "@/types/game";
 import type { Request, Response } from "express";
@@ -31,6 +31,22 @@ export async function getGame(req: Request, res: Response) {
     .status(StatusCodes.OK)
     .json(
       await findById(getGameId(req))
+    );
+}
+
+export async function getBriefGames(req: Request, res: Response) {
+  return res
+    .status(StatusCodes.OK)
+    .json(
+      await findBriefAll()
+    );
+}
+
+export async function getBriefGame(req: Request, res: Response) {
+  return res
+    .status(StatusCodes.OK)
+    .json(
+      await findBriefById(getGameId(req))
     );
 }
 
