@@ -1,6 +1,7 @@
-import type { Division } from "@/types/division";
+import type { Activatable, Archivable } from "@/types/base";
+import type { BriefDivision, Division } from "@/types/division";
 import type { Player } from "@/types/player";
-import type { Season } from "@/types/season";
+import type { BriefSeason, Season } from "@/types/season";
 import type { Stats } from "@/types/stats";
 import type { Team } from "@/types/team";
 
@@ -34,7 +35,20 @@ export type Game = {
   teamLogs:   TeamLog[],
 };
 
+export type BriefGame = {
+  id:         number,
+  date:       Date,
+  phase:      PhaseType,
+  round:      number,
+  seasonId:   number,
+  season:     BriefSeason,
+  divisionId: number,
+  division:   BriefDivision,
+} & Activatable & Archivable;
+
 export type GameData = Omit<Game, "id" | "teamLogs">;
+
+export type BriefGameData = Omit<BriefGame, "id">;
 
 export type TeamLog = {
   id:         number,
