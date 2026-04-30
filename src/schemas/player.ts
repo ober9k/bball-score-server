@@ -1,6 +1,6 @@
 import { maxLengthMessage, minLengthMessage } from "@/lib/messages";
 import { validationHandler } from "@/middlewares/validation-handler";
-import { withActivatable, withArchived } from "@/schemas/schemas";
+import { withActivatable, withArchivable } from "@/schemas/schemas";
 import { Position, type PositionType } from "@/types/player/position";
 import { z } from "zod";
 
@@ -34,7 +34,7 @@ const zPlayer = z.object({
     .min(HeightMinLength, minLengthMessage(HeightLabel, HeightMinLength))
     .regex(HeightRegex, heightFormatMessage(HeightLabel)),
   ...withActivatable,
-  ...withArchived,
+  ...withArchivable,
 });
 
 export function playerValidationHandler() {
