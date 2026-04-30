@@ -48,6 +48,7 @@ export class SeasonService extends BaseService<Season, BriefSeason, BriefSeasonD
       name:     true,
       active:   true,
       archived: true,
+      leagueId: true,
     };
   }
 

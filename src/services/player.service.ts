@@ -53,6 +53,7 @@ export class PlayerService extends BaseService<Player, BriefPlayer, BriefPlayerD
       height:   true,
       active:   true,
       archived: true,
+      leagueId: true,
     };
   }
 

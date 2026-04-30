@@ -52,6 +52,7 @@ export class DivisionService extends BaseService<Division, BriefDivision, BriefD
       season:   { select: SeasonService.BriefSelectColumns() },
       active:   true,
       archived: true,
+      leagueId: true,
     };
   }
 

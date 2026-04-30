@@ -19,6 +19,12 @@ function withArchivable(data: any): Archivable {
   };
 }
 
+function withLeagueId(data: any): { leagueId: number } {
+  return {
+    leagueId: data.leagueId, /* todo: to be renamed */
+  };
+}
+
 export function toSeason(data: any): Season {
   return {
     id:       data.id,
@@ -35,6 +41,7 @@ export function toBriefSeason(data: any): BriefSeason {
     name:      data.name,
     ...withActivatable(data),
     ...withArchivable(data),
+    ...withLeagueId(data),
   };
 }
 
@@ -57,6 +64,7 @@ export function toBriefDivision(data: any): BriefDivision {
     season:   toBriefSeason(data.season),
     ...withActivatable(data),
     ...withArchivable(data),
+    ...withLeagueId(data),
   };
 }
 
@@ -81,6 +89,7 @@ export function toBriefTeam(data: any): BriefTeam {
     division:   toBriefDivision(data.division),
     ...withActivatable(data),
     ...withArchivable(data),
+    ...withLeagueId(data),
   };
 }
 
@@ -106,6 +115,7 @@ export function toBriefPlayer(data: any): BriefPlayer {
     height:   data.height,
     ...withActivatable(data),
     ...withArchivable(data),
+    ...withLeagueId(data),
   };
 }
 
@@ -138,6 +148,7 @@ export function toBriefGame(data: any): BriefGame {
     division:   toBriefDivision(data.division),
     ...withActivatable(data),
     ...withArchivable(data),
+    ...withLeagueId(data),
   };
 }
 

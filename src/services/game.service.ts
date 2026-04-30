@@ -106,6 +106,7 @@ export class GameService extends BaseService<Game, BriefGame, BriefGameData, Gam
       division:   { select: DivisionService.BriefSelectColumns() },
       active:     true,
       archived:   true,
+      leagueId:   true,
     };
   }
 

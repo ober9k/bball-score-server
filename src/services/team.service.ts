@@ -53,6 +53,7 @@ export class TeamService extends BaseService<Team, BriefTeam, BriefTeamData, Tea
       division:   { select: DivisionService.BriefSelectColumns() },
       active:     true,
       archived:   true,
+      leagueId:   true,
     };
   }
 
