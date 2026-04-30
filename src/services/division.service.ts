@@ -1,6 +1,6 @@
 import { toBriefDivision, toDivision, toOption, toTeam } from "@/lib/converters";
 import { prisma } from "@/lib/prisma";
-import { seasonBriefSelect } from "@/services/season.service";
+import { SeasonService } from "@/services/season.service";
 import type { BriefDivision, Division, DivisionData } from "@/types/division";
 import type { Option } from "@/types/option";
 import type { Team } from "@/types/team";
@@ -23,7 +23,7 @@ function briefSelect(): DivisionSelect {
     id:       true,
     name:     true,
     seasonId: true,
-    season:   { select: seasonBriefSelect() },
+    season:   { select: SeasonService.BriefSelectColumns() },
     active:   true,
     archived: true,
   };

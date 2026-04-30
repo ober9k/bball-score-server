@@ -2,7 +2,7 @@ import { toBriefGame, toGame } from "@/lib/converters";
 import { prisma } from "@/lib/prisma";
 import { divisionBriefSelect, divisionDefaultSelect } from "@/services/division.service";
 import { playerDefaultSelect } from "@/services/player.service";
-import { seasonBriefSelect, seasonDefaultSelect } from "@/services/season.service";
+import { SeasonService } from "@/services/season.service";
 import { teamDefaultSelect } from "@/services/team.service";
 import type { BriefGame, Game, GameData } from "@/types/game";
 import { type GameOrderByWithRelationInput, SortOrder } from "@prisma/generated/internal/prismaNamespace";
@@ -16,7 +16,7 @@ function defaultSelect(): GameSelect {
     round:      true,
     seasonId:   true,
     season: {
-      select: seasonDefaultSelect(), /* TBD... some sort of select/hydration condition */
+      select: SeasonService.SelectColumns(), /* TBD... some sort of select/hydration condition */
     },
     divisionId: true,
     division: {
@@ -74,7 +74,7 @@ function briefSelect(): GameSelect {
     phase:      true,
     round:      true,
     seasonId:   true,
-    season:     { select: seasonBriefSelect() },
+    season:     { select: SeasonService.BriefSelectColumns() },
     divisionId: true,
     division:   { select: divisionBriefSelect() },
     active:     true,
