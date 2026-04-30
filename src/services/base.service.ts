@@ -57,7 +57,7 @@ export abstract class BaseService<T, TBrief, TBriefData, TDelegate, TSelect, TOr
   }
 
   public async findOptions(): Promise<Option[]> {
-    const items: any[] = this.getDelegate().findMany({
+    const items: any[] = await this.getDelegate().findMany({
       select:  { id: true, name: true },
       orderBy: this.getOrderByColumns(),
     });
