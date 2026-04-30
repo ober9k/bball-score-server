@@ -48,7 +48,7 @@ export type BriefGame = {
 
 export type GameData = Omit<Game, "id" | "teamLogs">;
 
-export type BriefGameData = Omit<BriefGame, "id">;
+export type BriefGameData = Omit<BriefGame, "id" | "season" | "division">;
 
 export type TeamLog = {
   id:         number,
