@@ -21,4 +21,4 @@ export type BriefTeam = {
 
 export type TeamData = Omit<Team, "id">;
 
-export type BriefTeamData = Omit<BriefTeam, "id">;
+export type BriefTeamData = Omit<BriefTeam, "id" | "division">;

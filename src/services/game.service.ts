@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { DivisionService } from "@/services/division.service";
 import { playerDefaultSelect } from "@/services/player.service";
 import { SeasonService } from "@/services/season.service";
-import { teamDefaultSelect } from "@/services/team.service";
+import { TeamService } from "@/services/team.service";
 import type { BriefGame, Game, GameData } from "@/types/game";
 import { type GameOrderByWithRelationInput, SortOrder } from "@prisma/generated/internal/prismaNamespace";
 import type { GameSelect } from "@prisma/generated/models/Game";
@@ -34,7 +34,7 @@ function defaultSelect(): GameSelect {
         gameId:     true,
         teamId:     true,
         team: {
-          select: teamDefaultSelect(),
+          select: TeamService.SelectColumns(),
         },
         playerLogs: {
           select: {
@@ -96,7 +96,7 @@ function simpleSelect(): GameSelect {
         byPeriod:   true,
         teamId:     true,
         team: {
-          select: teamDefaultSelect(),
+          select: TeamService.BriefSelectColumns(),
         },
         playerLogs: {
           select: {

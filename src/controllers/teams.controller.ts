@@ -1,8 +1,8 @@
 import { getLocalLeague } from "@/services/league.service";
 import { generateStatisticsLogsByTeamId, type StatisticsMode } from "@/services/statistics.service";
 import { findPlayersByTeamId } from "@/services/team-player.service";
-import { findAll, findAllAsOptions, findBriefAll, findBriefById, findById, save, saveById } from "@/services/team.service";
-import type { TeamData } from "@/types/team";
+import { TeamService } from "@/services/team.service";
+import type { BriefTeamData } from "@/types/team";
 import type { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
@@ -10,12 +10,12 @@ function getTeamId(req: Request): number {
   return +req.params.id;
 }
 
-function getTeamData(req: Request, res: Response): TeamData {
-  const { name, shortName, divisionId, active, archived } = req.body;
+function getTeamData(req: Request, res: Response): BriefTeamData {
+  const { name, shortName, divisionId, activated, archived } = req.body;
   const { id: leagueId } = getLocalLeague(res);
 
   return {
-    name, shortName, divisionId, active, archived, leagueId,
+    name, shortName, divisionId, activated, archived,
   };
 }
 
@@ -23,7 +23,7 @@ export async function getTeams(req: Request, res: Response) {
   return res
     .status(StatusCodes.OK)
     .json(
-      await findAll()
+      await (new TeamService()).findAll()
     );
 }
 
@@ -31,7 +31,7 @@ export async function getTeam(req: Request, res: Response) {
   return res
     .status(StatusCodes.OK)
     .json(
-      await findById(getTeamId(req))
+      await (new TeamService()).findById(getTeamId(req))
     );
 }
 
@@ -39,7 +39,7 @@ export async function getTeamsOptions(req: Request, res: Response) {
   return res
     .status(StatusCodes.OK)
     .json(
-      await findAllAsOptions()
+      await (new TeamService()).findOptions()
     );
 }
 
@@ -47,7 +47,7 @@ export async function getBriefTeams(req: Request, res: Response) {
   return res
     .status(StatusCodes.OK)
     .json(
-      await findBriefAll()
+      await (new TeamService()).findAll(true)
     );
 }
 
@@ -55,7 +55,7 @@ export async function getBriefTeam(req: Request, res: Response) {
   return res
     .status(StatusCodes.OK)
     .json(
-      await findBriefById(getTeamId(req))
+      await (new TeamService()).findById(getTeamId(req), true)
     );
 }
 
@@ -63,7 +63,7 @@ export async function createTeam(req: Request, res: Response) {
   return res
     .status(StatusCodes.CREATED)
     .json(
-      await save(getTeamData(req, res))
+      await (new TeamService()).save(getTeamData(req, res))
     );
 }
 
@@ -71,12 +71,12 @@ export async function updateTeam(req: Request, res: Response) {
   return res
     .status(StatusCodes.OK)
     .json(
-      await saveById(getTeamId(req), getTeamData(req, res))
+      await (new TeamService()).saveById(getTeamId(req), getTeamData(req, res))
     );
 }
 
 export async function getTeamPlayers(req: Request, res: Response) {
-  await findById(getTeamId(req)); /* trigger an initial failure if not found */
+  await (new TeamService()).findById(getTeamId(req)); /* trigger an initial failure if not found */
 
   return res
     .status(StatusCodes.OK)
@@ -86,7 +86,7 @@ export async function getTeamPlayers(req: Request, res: Response) {
 }
 
 async function getTeamStatistics(req: Request, res: Response, mode: StatisticsMode) {
-  await findById(getTeamId(req)); /* trigger an initial failure if not found */
+  await (new TeamService()).findById(getTeamId(req)); /* trigger an initial failure if not found */
 
   return res
     .status(StatusCodes.OK)

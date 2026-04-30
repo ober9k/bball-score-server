@@ -1,116 +1,65 @@
-import { toBriefTeam, toOption, toTeam } from "@/lib/converters";
+import { toBriefTeam, toTeam } from "@/lib/converters";
 import { prisma } from "@/lib/prisma";
+import { BaseService } from "@/services/base.service";
 import { DivisionService } from "@/services/division.service";
-import type { Option } from "@/types/option";
-import type { BriefTeam, Team, TeamData } from "@/types/team";
-import { SortOrder, type TeamOrderByWithRelationInput } from "@prisma/generated/internal/prismaNamespace";
-import type { TeamSelect } from "@prisma/generated/models/Team";
+import type { BriefTeam, BriefTeamData, Team } from "@/types/team";
+import { SortOrder } from "@prisma/generated/internal/prismaNamespace";
+import type { TeamDelegate, TeamOrderByWithRelationInput, TeamSelect } from "@prisma/generated/models/Team";
 
-function defaultSelect(): TeamSelect {
-  return {
-    id:         true,
-    name:       true,
-    shortName:  true,
-    divisionId: true,
-    active:     true,
-    archived:   true,
-    leagueId:   true,
-  };
-}
+export class TeamService extends BaseService<Team, BriefTeam, BriefTeamData, TeamDelegate, TeamSelect, TeamOrderByWithRelationInput>{
 
-function briefSelect(): TeamSelect {
-  return {
-    id:         true,
-    name:       true,
-    shortName:  true,
-    divisionId: true,
-    division:   { select: DivisionService.BriefSelectColumns() },
-    active:     true,
-    archived:   true,
-  };
-}
+  public getDelegate(): TeamDelegate {
+    return prisma.team;
+  }
 
-export { defaultSelect as teamDefaultSelect };
-export { briefSelect as teamBriefSelect };
+  protected toItem(data: any): Team {
+    return toTeam(data);
+  }
 
-function defaultOrderBy(): TeamOrderByWithRelationInput {
-  return {
-    name: SortOrder.asc,
-  };
-}
+  protected toBriefItem(data: any): BriefTeam {
+    return toBriefTeam(data);
+  }
 
-export { defaultOrderBy as teamDefaultOrderBy };
+  protected getSelectColumns(): TeamSelect {
+    return TeamService.SelectColumns();
+  }
 
-export async function _findAll(brief?: boolean): Promise<any[]> {
-  return prisma.team.findMany({
-    select:  (brief)
-      ? briefSelect()
-      : defaultSelect(),
-    orderBy: defaultOrderBy(),
-  });
-}
+  protected getBriefSelectColumns(): TeamSelect {
+    return TeamService.BriefSelectColumns();
+  }
 
-export async function findAll(): Promise<Team[]> {
-  const items: any[] = await _findAll();
+  protected getOrderByColumns(): TeamOrderByWithRelationInput {
+    return TeamService.OrderByColumns();
+  }
 
-  return items
-    .map(toTeam);
-}
+  public static SelectColumns(): TeamSelect {
+    return {
+      id:         true,
+      name:       true,
+      shortName:  true,
+      divisionId: true,
+      active:     true,
+      archived:   true,
+      leagueId:   true,
+    };
+  }
 
-export async function findBriefAll(): Promise<BriefTeam[]> {
-  const items: any[] = await _findAll(true);
+  public static BriefSelectColumns(): TeamSelect {
+    return {
+      id:         true,
+      name:       true,
+      shortName:  true,
+      divisionId: true,
+      division:   { select: DivisionService.BriefSelectColumns() },
+      active:     true,
+      archived:   true,
+    };
+  }
 
-  return items
-    .map(toBriefTeam);
-}
+  public static OrderByColumns(): TeamOrderByWithRelationInput {
+    return {
+      name: SortOrder.asc,
+    };
+  }
 
-async function _findById(id: number, brief?: boolean): Promise<any> {
-  return prisma.team.findUniqueOrThrow({
-    select: (brief)
-      ? briefSelect()
-      : defaultSelect(),
-    where:  { id },
-  });
-}
-
-export async function findById(id: number): Promise<Team | null> {
-  const item: any = await _findById(id);
-
-  return (item)
-    ? toTeam(item)
-    : null;
-}
-
-export async function findBriefById(id: number): Promise<BriefTeam | null> {
-  const item: any = await _findById(id, true);
-
-  return (item)
-    ? toBriefTeam(item)
-    : null;
-}
-
-export async function findAllAsOptions(): Promise<Option[]> {
-  return (await findAll())
-    .map(toOption);
-}
-
-export async function save(data: TeamData): Promise<Team | null> {
-  const item: any = await prisma.team.create({
-    data: { ...data },
-  });
-
-  return (item)
-    ? toTeam(item)
-    : null;
-}
-
-export async function saveById(id: number, data: TeamData): Promise<Team | null> {
-  const item: any = prisma.team.update({
-    data:  { ...data },
-    where: { id },
-  });
-
-  return (item)
-    ? toTeam(item)
-    : null;
 }
