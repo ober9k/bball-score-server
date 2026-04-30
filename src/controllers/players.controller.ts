@@ -1,11 +1,13 @@
+import { created, ok } from "@/controllers/base.controller";
 import { getLocalLeague } from "@/services/league.service";
 import { PlayerService } from "@/services/player.service";
 import type { StatisticsMode } from "@/services/statistics.service";
 import { generateStatisticsLogsByPlayerId } from "@/services/statistics.service";
 import { findTeamsByPlayerId } from "@/services/team-player.service";
-import type { BriefPlayerData } from "@/types/player";
+import type { BriefPlayer, BriefPlayerData, Player } from "@/types/player";
+import type { StatisticsLog } from "@/types/statistics-log";
+import type { Team } from "@/types/team";
 import type { Request, Response } from "express";
-import { StatusCodes } from "http-status-codes";
 
 function getPlayerId(req: Request): number {
   return +req.params.id;
@@ -21,71 +23,47 @@ function getPlayerData(req: Request, res: Response): BriefPlayerData {
 }
 
 export async function getPlayers(req: Request, res: Response) {
-  return res
-    .status(StatusCodes.OK)
-    .json(
-      await (new PlayerService()).findAll()
-    );
+  const data = await (new PlayerService()).findAll() as Player[];
+  return ok<Player[]>(res, data);
 }
 
 export async function getPlayer(req: Request, res: Response) {
-  return res
-    .status(StatusCodes.OK)
-    .json(
-      await (new PlayerService()).findById(getPlayerId(req))
-    );
+  const data = await (new PlayerService()).findById(getPlayerId(req)) as Player;
+  return ok<Player>(res, data);
 }
 
 export async function getBriefPlayers(req: Request, res: Response) {
-  return res
-    .status(StatusCodes.OK)
-    .json(
-      await (new PlayerService()).findAll(true)
-    );
+  const data = await (new PlayerService()).findAll(true) as BriefPlayer[];
+  return ok<BriefPlayer[]>(res, data);
 }
 
 export async function getBriefPlayer(req: Request, res: Response) {
-  return res
-    .status(StatusCodes.OK)
-    .json(
-      await (new PlayerService()).findById(getPlayerId(req), true)
-    );
+  const data = await (new PlayerService()).findById(getPlayerId(req), true) as BriefPlayer;
+  return ok<BriefPlayer>(res, data);
 }
 
 export async function createPlayer(req: Request, res: Response) {
-  return res
-    .status(StatusCodes.CREATED)
-    .json(
-      await (new PlayerService()).save(getPlayerData(req, res))
-    );
+  const data = await (new PlayerService()).save(getPlayerData(req, res));
+  return created<BriefPlayer>(res, data);
 }
 
 export async function updatePlayer(req: Request, res: Response) {
-  return res
-    .status(StatusCodes.OK)
-    .json(
-      await (new PlayerService()).saveById(getPlayerId(req), getPlayerData(req, res))
-    );
+  const data = await (new PlayerService()).saveById(getPlayerId(req), getPlayerData(req, res));
+  return ok<BriefPlayer>(res, data);
 }
 
 export async function getPlayerTeams(req: Request, res: Response) {
   await (new PlayerService()).findById(getPlayerId(req)); /* trigger an initial failure if not found */
 
-  return res
-    .status(StatusCodes.OK)
-    .json(
-      await findTeamsByPlayerId(getPlayerId(req))
-    );
+  const data = await findTeamsByPlayerId(getPlayerId(req));
+  return ok<Team[]>(res, data);
 }
 
 async function getPlayerStatistics(req: Request, res: Response, mode: StatisticsMode) {
   await (new PlayerService()).findById(getPlayerId(req)); /* trigger an initial failure if not found */
 
-  return res
-    .status(StatusCodes.OK)
-    .json(
-      await generateStatisticsLogsByPlayerId(getPlayerId(req), mode)
-    )
+  const data = await generateStatisticsLogsByPlayerId(getPlayerId(req), mode);
+  return ok<StatisticsLog[]>(res, data);
 }
 
 export async function getPlayerStatisticsAverages(req: Request, res: Response) {

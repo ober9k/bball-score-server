@@ -1,8 +1,8 @@
+import { created, ok } from "@/controllers/base.controller";
 import { GameService } from "@/services/game.service";
 import { getLocalLeague } from "@/services/league.service";
-import type { BriefGameData } from "@/types/game";
+import type { BriefGame, BriefGameData, Game } from "@/types/game";
 import type { Request, Response } from "express";
-import { StatusCodes } from "http-status-codes";
 
 function getGameId(req: Request): number {
   return +req.params.id;
@@ -18,50 +18,31 @@ function getGameData(req: Request, res: Response): BriefGameData {
 }
 
 export async function getGames(req: Request, res: Response) {
-  return res
-    .status(StatusCodes.OK)
-    .json(
-      await (new GameService()).findAll()
-    );
+  const data = await (new GameService()).findAll() as Game[];
+  return ok<Game[]>(res, data);
 }
 
 export async function getGame(req: Request, res: Response) {
-  /* a bit ugly for now */
-  return res
-    .status(StatusCodes.OK)
-    .json(
-      await (new GameService()).findById(getGameId(req))
-    );
+  const data = await (new GameService()).findById(getGameId(req)) as Game;
+  return ok<Game>(res, data);
 }
 
 export async function getBriefGames(req: Request, res: Response) {
-  return res
-    .status(StatusCodes.OK)
-    .json(
-      await (new GameService()).findAll(true)
-    );
+  const data = await (new GameService()).findAll(true) as BriefGame[];
+  return ok<BriefGame[]>(res, data);
 }
 
 export async function getBriefGame(req: Request, res: Response) {
-  return res
-    .status(StatusCodes.OK)
-    .json(
-      await (new GameService()).findById(getGameId(req), true)
-    );
+  const data = await (new GameService()).findById(getGameId(req), true) as BriefGame;
+  return ok<BriefGame>(res, data);
 }
 
 export async function createGame(req: Request, res: Response) {
-  return res
-    .status(StatusCodes.CREATED)
-    .json(
-      await (new GameService()).save(getGameData(req, res))
-    );
+  const data = await (new GameService()).save(getGameData(req, res));
+  return created<BriefGame>(res, data);
 }
 
 export async function updateGame(req: Request, res: Response) {
-  return res
-    .status(StatusCodes.OK)
-    .json(
-      await (new GameService()).saveById(getGameId(req), getGameData(req, res))
-    );
+  const data = await (new GameService()).saveById(getGameId(req), getGameData(req, res));
+  return ok<BriefGame>(res, data);
 }

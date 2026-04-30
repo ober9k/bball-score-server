@@ -1,10 +1,14 @@
+import { created, ok } from "@/controllers/base.controller";
+import { DivisionService } from "@/services/division.service";
 import { getLocalLeague } from "@/services/league.service";
 import { generateStatisticsLogsByTeamId, type StatisticsMode } from "@/services/statistics.service";
 import { findPlayersByTeamId } from "@/services/team-player.service";
 import { TeamService } from "@/services/team.service";
-import type { BriefTeamData } from "@/types/team";
+import type { Option } from "@/types/option";
+import type { Player } from "@/types/player";
+import type { StatisticsLog } from "@/types/statistics-log";
+import type { BriefTeam, BriefTeamData, Team } from "@/types/team";
 import type { Request, Response } from "express";
-import { StatusCodes } from "http-status-codes";
 
 function getTeamId(req: Request): number {
   return +req.params.id;
@@ -20,79 +24,52 @@ function getTeamData(req: Request, res: Response): BriefTeamData {
 }
 
 export async function getTeams(req: Request, res: Response) {
-  return res
-    .status(StatusCodes.OK)
-    .json(
-      await (new TeamService()).findAll()
-    );
+  const data = await (new TeamService()).findAll() as Team[];
+  return ok<Team[]>(res, data);
 }
 
 export async function getTeam(req: Request, res: Response) {
-  return res
-    .status(StatusCodes.OK)
-    .json(
-      await (new TeamService()).findById(getTeamId(req))
-    );
-}
-
-export async function getTeamsOptions(req: Request, res: Response) {
-  return res
-    .status(StatusCodes.OK)
-    .json(
-      await (new TeamService()).findOptions()
-    );
+  const data = await (new TeamService()).findById(getTeamId(req)) as Team;
+  return ok<Team>(res, data);
 }
 
 export async function getBriefTeams(req: Request, res: Response) {
-  return res
-    .status(StatusCodes.OK)
-    .json(
-      await (new TeamService()).findAll(true)
-    );
+  const data = await (new TeamService()).findAll(true) as BriefTeam[];
+  return ok<BriefTeam[]>(res, data);
 }
 
 export async function getBriefTeam(req: Request, res: Response) {
-  return res
-    .status(StatusCodes.OK)
-    .json(
-      await (new TeamService()).findById(getTeamId(req), true)
-    );
+  const data = await (new TeamService()).findById(getTeamId(req), true) as BriefTeam;
+  return ok<BriefTeam>(res, data);
 }
 
 export async function createTeam(req: Request, res: Response) {
-  return res
-    .status(StatusCodes.CREATED)
-    .json(
-      await (new TeamService()).save(getTeamData(req, res))
-    );
+  const data = await (new TeamService()).save(getTeamData(req, res));
+  return created<BriefTeam>(res, data);
 }
 
 export async function updateTeam(req: Request, res: Response) {
-  return res
-    .status(StatusCodes.OK)
-    .json(
-      await (new TeamService()).saveById(getTeamId(req), getTeamData(req, res))
-    );
+  const data = await (new TeamService()).saveById(getTeamId(req), getTeamData(req, res));
+  return ok<BriefTeam>(res, data);
+}
+
+export async function getTeamsOptions(req: Request, res: Response) {
+  const data = await (new TeamService()).findOptions();
+  return ok<Option[]>(res, data);
 }
 
 export async function getTeamPlayers(req: Request, res: Response) {
   await (new TeamService()).findById(getTeamId(req)); /* trigger an initial failure if not found */
 
-  return res
-    .status(StatusCodes.OK)
-    .json(
-      await findPlayersByTeamId(getTeamId(req))
-    );
+  const data = await findPlayersByTeamId(getTeamId(req));
+  return ok<Player[]>(res, data);
 }
 
 async function getTeamStatistics(req: Request, res: Response, mode: StatisticsMode) {
   await (new TeamService()).findById(getTeamId(req)); /* trigger an initial failure if not found */
 
-  return res
-    .status(StatusCodes.OK)
-    .json(
-      await generateStatisticsLogsByTeamId(getTeamId(req), mode)
-    )
+  const data = await generateStatisticsLogsByTeamId(getTeamId(req), mode)
+  return ok<StatisticsLog[]>(res, data);
 }
 
 export async function getTeamStatisticsAverages(req: Request, res: Response) {
