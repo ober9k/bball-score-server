@@ -237,7 +237,7 @@ export function toStats(data: any): Stats {
   };
 }
 
-export function toOption(data: { id: number, name: string }): Option {
+export function toOption(data: { id: number | string, name: string }): Option {
   return {
     value: data.id,
     label: data.name,
