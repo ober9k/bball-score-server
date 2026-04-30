@@ -19,4 +19,4 @@ export type BriefDivision = {
 
 export type DivisionData = Omit<Division, "id">;
 
-export type BriefDivisionData = Omit<BriefDivision, "id">;
+export type BriefDivisionData = Omit<BriefDivision, "id" | "season">;

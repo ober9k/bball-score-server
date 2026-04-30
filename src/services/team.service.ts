@@ -1,6 +1,6 @@
 import { toBriefTeam, toOption, toTeam } from "@/lib/converters";
 import { prisma } from "@/lib/prisma";
-import { divisionBriefSelect } from "@/services/division.service";
+import { DivisionService } from "@/services/division.service";
 import type { Option } from "@/types/option";
 import type { BriefTeam, Team, TeamData } from "@/types/team";
 import { SortOrder, type TeamOrderByWithRelationInput } from "@prisma/generated/internal/prismaNamespace";
@@ -24,7 +24,7 @@ function briefSelect(): TeamSelect {
     name:       true,
     shortName:  true,
     divisionId: true,
-    division:   { select: divisionBriefSelect() },
+    division:   { select: DivisionService.BriefSelectColumns() },
     active:     true,
     archived:   true,
   };
