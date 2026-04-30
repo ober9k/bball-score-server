@@ -10,10 +10,10 @@ function getDivisionId(req: Request): number {
 
 function getDivisionData(req: Request, res: Response): BriefDivisionData {
   const { name, seasonId, activated, archived } = req.body;
-  const { id: leagueId } = getLocalLeague(res);
+  const { id: leagueId } = getLocalLeague(res); /* overwrite any leagueId sent by the front-end data */
 
   return {
-    name, seasonId, activated, archived,
+    name, seasonId, activated, archived, leagueId,
   };
 }
 

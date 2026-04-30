@@ -13,10 +13,10 @@ function getPlayerId(req: Request): number {
 
 function getPlayerData(req: Request, res: Response): BriefPlayerData {
   const { name, position, number, height, activated, archived } = req.body;
-  const { id: leagueId } = getLocalLeague(res);
+  const { id: leagueId } = getLocalLeague(res); /* overwrite any leagueId sent by the front-end data */
 
   return {
-    name, position, number, height, activated, archived,
+    name, position, number, height, activated, archived, leagueId,
   };
 }
 

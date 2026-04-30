@@ -36,7 +36,7 @@ export abstract class BaseService<T, TBrief, TBriefData, TDelegate, TSelect, TOr
   }
 
   public async save(data: TBriefData): Promise<TBrief> {
-    const { activated, saveData } = data;
+    const { activated, ...saveData } = data;
 
     const item: any = await this.getDelegate().create({
       data: { ...saveData, active: activated }, /* temp: transform structure */
@@ -46,7 +46,7 @@ export abstract class BaseService<T, TBrief, TBriefData, TDelegate, TSelect, TOr
   }
 
   public async saveById(id: number, data: TBriefData): Promise<TBrief> {
-    const { activated, saveData } = data;
+    const { activated, ...saveData } = data;
 
     const item: any = await this.getDelegate().update({
       data: { ...saveData, active: activated }, /* temp: transform structure */

@@ -12,10 +12,10 @@ function getTeamId(req: Request): number {
 
 function getTeamData(req: Request, res: Response): BriefTeamData {
   const { name, shortName, divisionId, activated, archived } = req.body;
-  const { id: leagueId } = getLocalLeague(res);
+  const { id: leagueId } = getLocalLeague(res); /* overwrite any leagueId sent by the front-end data */
 
   return {
-    name, shortName, divisionId, activated, archived,
+    name, shortName, divisionId, activated, archived, leagueId,
   };
 }
 

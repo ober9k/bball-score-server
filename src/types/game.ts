@@ -44,6 +44,7 @@ export type BriefGame = {
   season:     BriefSeason,
   divisionId: number,
   division:   BriefDivision,
+  leagueId:   number,
 } & Activatable & Archivable;
 
 export type GameData = Omit<Game, "id" | "teamLogs">;

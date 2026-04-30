@@ -10,10 +10,10 @@ function getGameId(req: Request): number {
 
 function getGameData(req: Request, res: Response): BriefGameData {
   const { date, phase, round, seasonId, divisionId, activated, archived } = req.body;
-  const { id: leagueId } = getLocalLeague(res);
+  const { id: leagueId } = getLocalLeague(res); /* overwrite any leagueId sent by the front-end data */
 
   return {
-    date, phase, round, seasonId, divisionId, activated, archived,
+    date, phase, round, seasonId, divisionId, activated, archived, leagueId,
   };
 }
 

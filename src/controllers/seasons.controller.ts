@@ -10,10 +10,10 @@ function getSeasonId(req: Request): number {
 
 function getSeasonData(req: Request, res: Response): BriefSeasonData {
   const { name, activated, archived } = req.body;
-  const { id: leagueId } = getLocalLeague(res);
+  const { id: leagueId } = getLocalLeague(res); /* overwrite any leagueId sent by the front-end data */
 
   return {
-    name, activated, archived,
+    name, activated, archived, leagueId,
   };
 }
 

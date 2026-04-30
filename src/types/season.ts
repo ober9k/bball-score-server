@@ -11,6 +11,7 @@ export type Season = {
 export type BriefSeason = {
   id:       number,
   name:     string,
+  leagueId: number,
 } & Activatable & Archivable;
 
 export type SeasonData = Omit<Season, "id">;

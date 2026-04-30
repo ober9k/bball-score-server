@@ -18,6 +18,7 @@ export type BriefPlayer = {
   position: PositionType,
   number:   string,
   height:   string,
+  leagueId: number,
 } & Activatable & Archivable;
 
 export type PlayerData = Omit<Player, "id">;

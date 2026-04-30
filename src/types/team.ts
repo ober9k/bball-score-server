@@ -17,6 +17,7 @@ export type BriefTeam = {
   shortName:  string,
   divisionId: number,
   division:   BriefDivision,
+  leagueId: number,
 } & Activatable & Archivable;
 
 export type TeamData = Omit<Team, "id">;
