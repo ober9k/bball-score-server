@@ -1,7 +1,7 @@
 import { toBriefGame, toGame } from "@/lib/converters";
 import { prisma } from "@/lib/prisma";
 import { DivisionService } from "@/services/division.service";
-import { playerDefaultSelect } from "@/services/player.service";
+import { PlayerService } from "@/services/player.service";
 import { SeasonService } from "@/services/season.service";
 import { TeamService } from "@/services/team.service";
 import type { BriefGame, Game, GameData } from "@/types/game";
@@ -58,7 +58,7 @@ function defaultSelect(): GameSelect {
             technicalFouls: true,
             playerId:       true,
             player: {
-              select: playerDefaultSelect(),
+              select: PlayerService.SelectColumns(),
             },
           },
         },
@@ -103,7 +103,7 @@ function simpleSelect(): GameSelect {
             /* need to redo this */
             playerId: true,
             player: {
-              select: playerDefaultSelect(),
+              select: PlayerService.SelectColumns(),
             },
           },
         },

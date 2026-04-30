@@ -1,110 +1,65 @@
 import { toBriefPlayer, toPlayer } from "@/lib/converters";
 import { prisma } from "@/lib/prisma";
-import type { BriefPlayer, Player, PlayerData } from "@/types/player";
-import { type PlayerOrderByWithRelationInput, SortOrder } from "@prisma/generated/internal/prismaNamespace";
-import type { PlayerSelect } from "@prisma/generated/models/Player";
+import { BaseService } from "@/services/base.service";
+import type { BriefPlayer, BriefPlayerData, Player } from "@/types/player";
+import { SortOrder } from "@prisma/generated/internal/prismaNamespace";
+import type { PlayerDelegate, PlayerOrderByWithRelationInput, PlayerSelect } from "@prisma/generated/models/Player";
 
-function defaultSelect(): PlayerSelect {
-  return {
-    id:       true,
-    name:     true,
-    position: true,
-    number:   true,
-    height:   true,
-    active:   true,
-    archived: true,
-    leagueId: true,
-  };
-}
+export class PlayerService extends BaseService<Player, BriefPlayer, BriefPlayerData, PlayerDelegate, PlayerSelect, PlayerOrderByWithRelationInput>{
 
-function briefSelect(): PlayerSelect {
-  return {
-    id:       true,
-    name:     true,
-    position: true,
-    number:   true,
-    height:   true,
-    active:   true,
-    archived: true,
-  };
-}
+  public getDelegate(): PlayerDelegate {
+    return prisma.player;
+  }
 
-export { defaultSelect as playerDefaultSelect };
-export { briefSelect as playerBriefSelect };
+  protected toItem(data: any): Player {
+    return toPlayer(data);
+  }
 
-function defaultOrderBy(): PlayerOrderByWithRelationInput {
-  return {
-    name: SortOrder.asc,
-  };
-}
+  protected toBriefItem(data: any): BriefPlayer {
+    return toBriefPlayer(data);
+  }
 
-export { defaultOrderBy as playerDefaultOrderBy };
+  protected getSelectColumns(): PlayerSelect {
+    return PlayerService.SelectColumns();
+  }
 
-export async function _findAll(brief?: boolean): Promise<any[]> {
-  return prisma.player.findMany({
-    select:  (brief)
-      ? briefSelect()
-      : defaultSelect(),
-    orderBy: defaultOrderBy(),
-  });
-}
+  protected getBriefSelectColumns(): PlayerSelect {
+    return PlayerService.BriefSelectColumns();
+  }
 
-export async function findAll(): Promise<Player[]> {
-  const items: any[] = await _findAll();
+  protected getOrderByColumns(): PlayerOrderByWithRelationInput {
+    return PlayerService.OrderByColumns();
+  }
 
-  return items
-    .map(toPlayer);
-}
+  public static SelectColumns(): PlayerSelect {
+    return {
+      id:       true,
+      name:     true,
+      position: true,
+      number:   true,
+      height:   true,
+      active:   true,
+      archived: true,
+      leagueId: true,
+    };
+  }
 
-export async function findBriefAll(): Promise<BriefPlayer[]> {
-  const items: any[] = await _findAll(true);
+  public static BriefSelectColumns(): PlayerSelect {
+    return {
+      id:       true,
+      name:     true,
+      position: true,
+      number:   true,
+      height:   true,
+      active:   true,
+      archived: true,
+    };
+  }
 
-  return items
-    .map(toBriefPlayer);
-}
+  public static OrderByColumns(): PlayerOrderByWithRelationInput {
+    return {
+      name: SortOrder.asc,
+    };
+  }
 
-async function _findById(id: number, brief?: boolean): Promise<any> {
-  return prisma.player.findUniqueOrThrow({
-    select: (brief)
-      ? briefSelect()
-      : defaultSelect(),
-    where:  { id },
-  });
-}
-
-export async function findById(id: number): Promise<Player | null> {
-  const item: any = await _findById(id);
-
-  return (item)
-    ? toPlayer(item)
-    : null;
-}
-
-export async function findBriefById(id: number): Promise<BriefPlayer | null> {
-  const item: any = await _findById(id, true);
-
-  return (item)
-    ? toBriefPlayer(item)
-    : null;
-}
-
-export async function save(data: PlayerData): Promise<Player | null> {
-  const item: any = await prisma.player.create({
-    data: { ...data },
-  });
-
-  return (item)
-    ? toPlayer(item)
-    : null;
-}
-
-export async function saveById(id: number, data: PlayerData): Promise<Player | null> {
-  const item: any = await prisma.player.update({
-    data:  { ...data },
-    where: { id },
-  });
-
-  return (item)
-    ? toPlayer(item)
-    : null;
 }

@@ -1,6 +1,6 @@
 import { toPlayer, toTeam } from "@/lib/converters";
 import { prisma } from "@/lib/prisma";
-import { playerDefaultOrderBy, playerDefaultSelect } from "@/services/player.service";
+import { PlayerService } from "@/services/player.service";
 import { TeamService } from "@/services/team.service";
 import type { Player } from "@/types/player";
 import type { Team } from "@/types/team";
@@ -17,7 +17,7 @@ function defaultSelectForTeam(): TeamPlayerSelect {
 function defaultSelectForPlayer(): TeamPlayerSelect {
   return {
     player: {
-      select: playerDefaultSelect(),
+      select: PlayerService.SelectColumns(),
     },
   };
 }
@@ -41,7 +41,7 @@ export async function findPlayersByTeamId(teamId: number): Promise<Player[]> {
     select:  defaultSelectForPlayer(),
     where:   { teamId },
     orderBy: {
-      player: playerDefaultOrderBy(),
+      player: PlayerService.OrderByColumns(),
     },
   });
 

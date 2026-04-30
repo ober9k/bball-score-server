@@ -1,9 +1,9 @@
 import { getLocalLeague } from "@/services/league.service";
-import { findAll, findBriefAll, findBriefById, findById, save, saveById } from "@/services/player.service";
+import { PlayerService } from "@/services/player.service";
 import type { StatisticsMode } from "@/services/statistics.service";
 import { generateStatisticsLogsByPlayerId } from "@/services/statistics.service";
 import { findTeamsByPlayerId } from "@/services/team-player.service";
-import type { PlayerData } from "@/types/player";
+import type { BriefPlayerData } from "@/types/player";
 import type { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
@@ -11,12 +11,12 @@ function getPlayerId(req: Request): number {
   return +req.params.id;
 }
 
-function getPlayerData(req: Request, res: Response): PlayerData {
-  const { name, position, number, height, active, archived } = req.body;
+function getPlayerData(req: Request, res: Response): BriefPlayerData {
+  const { name, position, number, height, activated, archived } = req.body;
   const { id: leagueId } = getLocalLeague(res);
 
   return {
-    name, position, number, height, active, archived, leagueId,
+    name, position, number, height, activated, archived,
   };
 }
 
@@ -24,7 +24,7 @@ export async function getPlayers(req: Request, res: Response) {
   return res
     .status(StatusCodes.OK)
     .json(
-      await findAll()
+      await (new PlayerService()).findAll()
     );
 }
 
@@ -32,7 +32,7 @@ export async function getPlayer(req: Request, res: Response) {
   return res
     .status(StatusCodes.OK)
     .json(
-      await findById(getPlayerId(req))
+      await (new PlayerService()).findById(getPlayerId(req))
     );
 }
 
@@ -40,7 +40,7 @@ export async function getBriefPlayers(req: Request, res: Response) {
   return res
     .status(StatusCodes.OK)
     .json(
-      await findBriefAll()
+      await (new PlayerService()).findAll(true)
     );
 }
 
@@ -48,7 +48,7 @@ export async function getBriefPlayer(req: Request, res: Response) {
   return res
     .status(StatusCodes.OK)
     .json(
-      await findBriefById(getPlayerId(req))
+      await (new PlayerService()).findById(getPlayerId(req), true)
     );
 }
 
@@ -56,7 +56,7 @@ export async function createPlayer(req: Request, res: Response) {
   return res
     .status(StatusCodes.CREATED)
     .json(
-      await save(getPlayerData(req, res))
+      await (new PlayerService()).save(getPlayerData(req, res))
     );
 }
 
@@ -64,12 +64,12 @@ export async function updatePlayer(req: Request, res: Response) {
   return res
     .status(StatusCodes.OK)
     .json(
-      await saveById(getPlayerId(req), getPlayerData(req, res))
+      await (new PlayerService()).saveById(getPlayerId(req), getPlayerData(req, res))
     );
 }
 
 export async function getPlayerTeams(req: Request, res: Response) {
-  await findById(getPlayerId(req)); /* trigger an initial failure if not found */
+  await (new PlayerService()).findById(getPlayerId(req)); /* trigger an initial failure if not found */
 
   return res
     .status(StatusCodes.OK)
@@ -79,7 +79,7 @@ export async function getPlayerTeams(req: Request, res: Response) {
 }
 
 async function getPlayerStatistics(req: Request, res: Response, mode: StatisticsMode) {
-  await findById(getPlayerId(req)); /* trigger an initial failure if not found */
+  await (new PlayerService()).findById(getPlayerId(req)); /* trigger an initial failure if not found */
 
   return res
     .status(StatusCodes.OK)
