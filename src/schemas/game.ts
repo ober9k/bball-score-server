@@ -1,5 +1,6 @@
 import { minLengthMessage } from "@/lib/messages";
 import { validationHandler } from "@/middlewares/validation-handler";
+import { withActivatable, withArchived } from "@/schemas/schemas";
 import { Phase, type PhaseType } from "@/types/game";
 import type { NextFunction, Request, Response } from "express";
 import { z } from "zod";
@@ -16,8 +17,8 @@ export const zGame = z.object({
     .min(RoundMinLength, minLengthMessage(RoundLabel, RoundMinLength)),
   seasonId: z.number(),
   divisionId: z.number(),
-  active: z.boolean(),
-  archived: z.boolean(),
+  ...withActivatable,
+  ...withArchived,
 });
 
 

@@ -1,5 +1,6 @@
 import { maxLengthMessage, minLengthMessage } from "@/lib/messages";
 import { validationHandler } from "@/middlewares/validation-handler";
+import { withActivatable, withArchived } from "@/schemas/schemas";
 import { z } from "zod";
 
 const NameLabel = "Name";
@@ -10,8 +11,8 @@ const zSeason = z.object({
   name: z.string()
     .min(NameMinLength, minLengthMessage(NameLabel, NameMinLength))
     .max(NameMaxLength, maxLengthMessage(NameLabel, NameMaxLength)),
-  active: z.boolean(),
-  archived: z.boolean(),
+  ...withActivatable,
+  ...withArchived,
 });
 
 export function seasonValidationHandler() {

@@ -1,5 +1,6 @@
 import { maxLengthMessage, minLengthMessage } from "@/lib/messages";
 import { validationHandler } from "@/middlewares/validation-handler";
+import { withActivatable, withArchived } from "@/schemas/schemas";
 import { z } from "zod";
 
 const NameLabel = "Name";
@@ -17,9 +18,9 @@ const zTeam = z.object({
   shortName: z.string()
     .min(ShortNameMinLength, minLengthMessage(ShortNameLabel, ShortNameMinLength))
     .max(ShortNameMaxLength, maxLengthMessage(ShortNameLabel, ShortNameMaxLength)),
-  active: z.boolean(),
-  archived: z.boolean(),
   divisionId: z.number(),
+  ...withActivatable,
+  ...withArchived,
 });
 
 export function teamValidationHandler() {
