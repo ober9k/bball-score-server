@@ -1,11 +1,11 @@
-import { BaseController, created, ok } from "@/controllers/base.controller";
+import { BaseEntityController, created, ok } from "@/controllers/base.controller";
 import { findDivisionsBySeasonId, SeasonService } from "@/services/season.service";
 import type { Division } from "@/types/division";
 import type { Option } from "@/types/option";
 import type { BriefSeason, BriefSeasonData, Season } from "@/types/season";
 import type { Request, Response } from "express";
 
-export class SeasonsController extends BaseController<BriefSeasonData> {
+export class SeasonsController extends BaseEntityController<BriefSeasonData> {
 
   private seasonService = new SeasonService();
 

@@ -14,14 +14,18 @@ export function created<T>(res: Response, data: T) {
     .json(data);
 }
 
-export abstract class BaseController<TBriefData> {
-
-  protected getId(req: Request): number {
-    return +req.params.id;
-  }
+export abstract class BaseController {
 
   protected getLeagueId(res: Response): number {
     return getLocalLeague(res).id;
+  }
+
+}
+
+export abstract class BaseEntityController<TBriefData> extends BaseController {
+
+  protected getId(req: Request): number {
+    return +req.params.id;
   }
 
   protected abstract getBriefData(req: Request, res: Response): TBriefData;

@@ -1,9 +1,9 @@
-import { BaseController, created, ok } from "@/controllers/base.controller";
+import { BaseEntityController, created, ok } from "@/controllers/base.controller";
 import { GameService } from "@/services/game.service";
 import type { BriefGame, BriefGameData, Game } from "@/types/game";
 import type { Request, Response } from "express";
 
-export class GamesController extends BaseController<BriefGameData> {
+export class GamesController extends BaseEntityController<BriefGameData> {
 
   private gameService = new GameService();
 

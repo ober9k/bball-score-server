@@ -1,4 +1,4 @@
-import { BaseController, created, ok } from "@/controllers/base.controller";
+import { BaseEntityController, created, ok } from "@/controllers/base.controller";
 import { PlayerService } from "@/services/player.service";
 import { generateStatisticsLogsByPlayerId } from "@/services/statistics.service";
 import { findTeamsByPlayerId } from "@/services/team-player.service";
@@ -7,7 +7,7 @@ import type { StatisticsLog } from "@/types/statistics-log";
 import type { Team } from "@/types/team";
 import type { Request, Response } from "express";
 
-export class PlayersController extends BaseController<BriefPlayerData> {
+export class PlayersController extends BaseEntityController<BriefPlayerData> {
 
   private playerService = new PlayerService();
 

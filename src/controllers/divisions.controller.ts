@@ -1,11 +1,11 @@
-import { BaseController, created, ok } from "@/controllers/base.controller";
+import { BaseEntityController, created, ok } from "@/controllers/base.controller";
 import { DivisionService, findTeamsByDivisionId } from "@/services/division.service";
 import type { BriefDivision, BriefDivisionData, Division } from "@/types/division";
 import type { Option } from "@/types/option";
 import type { Team } from "@/types/team";
 import type { Request, Response } from "express";
 
-export class DivisionsController extends BaseController<BriefDivisionData> {
+export class DivisionsController extends BaseEntityController<BriefDivisionData> {
 
   private divisionService = new DivisionService();
 
