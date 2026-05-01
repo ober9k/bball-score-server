@@ -1,62 +1,63 @@
-import { created, ok } from "@/controllers/base.controller";
-import { getLocalLeague } from "@/services/league.service";
+import { BaseController, created, ok } from "@/controllers/base.controller";
 import { findDivisionsBySeasonId, SeasonService } from "@/services/season.service";
 import type { Division } from "@/types/division";
 import type { Option } from "@/types/option";
 import type { BriefSeason, BriefSeasonData, Season } from "@/types/season";
 import type { Request, Response } from "express";
 
-function getSeasonId(req: Request): number {
-  return +req.params.id;
-}
+export class SeasonsController extends BaseController<BriefSeasonData> {
 
-function getSeasonData(req: Request, res: Response): BriefSeasonData {
-  const { name, activated, archived } = req.body;
-  const { id: leagueId } = getLocalLeague(res); /* overwrite any leagueId sent by the front-end data */
+  private seasonService = new SeasonService();
 
-  return {
-    name, activated, archived, leagueId,
-  };
-}
+  public async getSeasons(req: Request, res: Response) {
+    const data = await this.seasonService.findAll() as Season[];
+    return ok<Season[]>(res, data);
+  }
 
-export async function getSeasons(req: Request, res: Response) {
-  const data = await (new SeasonService()).findAll() as Season[];
-  return ok<Season[]>(res, data);
-}
+  public async getSeason(req: Request, res: Response) {
+    const data = await this.seasonService.findById(this.getId(req)) as Season;
+    return ok<Season>(res, data);
+  }
 
-export async function getSeason(req: Request, res: Response) {
-  const data = await (new SeasonService()).findById(getSeasonId(req)) as Season;
-  return ok<Season>(res, data);
-}
+  public async getBriefSeasons(req: Request, res: Response) {
+    const data = await this.seasonService.findAll(true) as BriefSeason[];
+    return ok<BriefSeason[]>(res, data);
+  }
 
-export async function getBriefSeasons(req: Request, res: Response) {
-  const data = await (new SeasonService()).findAll(true) as BriefSeason[];
-  return ok<BriefSeason[]>(res, data);
-}
+  public async getBriefSeason(req: Request, res: Response) {
+    const data = await this.seasonService.findById(this.getId(req), true) as BriefSeason;
+    return ok<BriefSeason>(res, data);
+  }
 
-export async function getBriefSeason(req: Request, res: Response) {
-  const data = await (new SeasonService()).findById(getSeasonId(req), true) as BriefSeason;
-  return ok<BriefSeason>(res, data);
-}
+  public async createSeason(req: Request, res: Response) {
+    const data = await this.seasonService.save(this.getBriefData(req, res));
+    return created<BriefSeason>(res, data);
+  }
 
-export async function createSeason(req: Request, res: Response) {
-  const data = await (new SeasonService()).save(getSeasonData(req, res));
-  return created<BriefSeason>(res, data);
-}
+  public async updateSeason(req: Request, res: Response) {
+    const data = await this.seasonService.saveById(this.getId(req), this.getBriefData(req, res));
+    return ok<BriefSeason>(res, data);
+  }
 
-export async function updateSeason(req: Request, res: Response) {
-  const data = await (new SeasonService()).saveById(getSeasonId(req), getSeasonData(req, res));
-  return ok<BriefSeason>(res, data);
-}
+  public async getSeasonsOptions(req: Request, res: Response) {
+    const data = await this.seasonService.findOptions();
+    return ok<Option[]>(res, data);
+  }
 
-export async function getSeasonsOptions(req: Request, res: Response) {
-  const data = await (new SeasonService()).findOptions();
-  return ok<Option[]>(res, data);
-}
+  public async getSeasonDivisions(req: Request, res: Response) {
+    await this.seasonService.findById(this.getId(req)); /* trigger an initial failure if not found */
 
-export async function getSeasonDivisions(req: Request, res: Response) {
-  await (new SeasonService()).findById(getSeasonId(req)); /* trigger an initial failure if not found */
+    const data = await findDivisionsBySeasonId(this.getId(req));
+    return ok<Division[]>(res, data);
+  }
 
-  const data = await findDivisionsBySeasonId(getSeasonId(req));
-  return ok<Division[]>(res, data);
+  protected getBriefData(req: Request, res: Response): BriefSeasonData {
+    const { name, activated, archived } = req.body;
+    const leagueId = this.getLeagueId(res); /* overwrite any leagueId sent by the front-end data */
+
+    return {
+      name, activated, archived, leagueId,
+    };
+  }
+
 }
