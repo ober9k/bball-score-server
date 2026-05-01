@@ -1,10 +1,9 @@
 import { authRoutes } from "@/routes/auth.routes";
 import { divisionsRoutes } from "@/routes/divisions.routes";
 import { gamesRoutes } from "@/routes/games.routes";
+import { leaguesRoutes } from "@/routes/league.routes";
 import { playersRoutes } from "@/routes/players.routes";
 import { seasonsRoutes } from "@/routes/seasons.routes";
-import { standingsRoutes } from "@/routes/standings.routes";
-import { statisticsRoutes } from "@/routes/statistics.routes";
 import { teamsRoutes } from "@/routes/teams.routes";
 
 export const routes = [
@@ -12,11 +11,10 @@ export const routes = [
 ];
 
 export const leagueRoutes = [
+  leaguesRoutes,
   divisionsRoutes,
   gamesRoutes,
   playersRoutes,
   seasonsRoutes,
-  standingsRoutes,
-  statisticsRoutes,
   teamsRoutes,
 ];
