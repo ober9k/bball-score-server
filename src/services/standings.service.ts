@@ -32,6 +32,7 @@ export async function generateStandings(): Promise<StandingsLog[]> {
   const teamStandingsLog = generateStandingsLogs(games);
 
   games
+    .filter((g) => g.teamLogs.length > 0) /* disregard empty logs */
     .forEach((g) => {
       const [ awayTeamLog, homeTeamLog ] = g.teamLogs as any[];
       const { team: awayTeam } = awayTeamLog;
