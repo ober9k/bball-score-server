@@ -1,8 +1,9 @@
-import { getBaseLeagueUrl, getBaseUrl } from "@/lib/urls";
+import { getBaseLeagueUrl, getBaseManageUrl, getBaseUrl } from "@/lib/urls";
 import { errorHandler } from "@/middlewares/error-handler";
 import { leagueHandler } from "@/middlewares/league-handler";
 import { passportHandler } from "@/middlewares/passport-handler";
 import { leagueRoutes, routes } from "@/routes";
+import { manageRoutes } from "@/routes/manage.routes";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
@@ -29,6 +30,8 @@ leagueRoutes.forEach((r) => {
   // handle league specific URLs
   app.use(getBaseLeagueUrl(), r);
 });
+
+app.use(getBaseManageUrl(), manageRoutes);
 
 /* init error handler (last) */
 app.use(errorHandler);
