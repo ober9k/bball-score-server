@@ -1,7 +1,6 @@
 import { created, ok } from "@/controllers/base.controller";
 import { getLocalLeague } from "@/services/league.service";
 import { PlayerService } from "@/services/player.service";
-import type { StatisticsMode } from "@/services/statistics.service";
 import { generateStatisticsLogsByPlayerId } from "@/services/statistics.service";
 import { findTeamsByPlayerId } from "@/services/team-player.service";
 import type { BriefPlayer, BriefPlayerData, Player } from "@/types/player";
@@ -59,21 +58,17 @@ export async function getPlayerTeams(req: Request, res: Response) {
   return ok<Team[]>(res, data);
 }
 
-async function getPlayerStatistics(req: Request, res: Response, mode: StatisticsMode) {
+export async function getPlayerStatistics(req: Request, res: Response) {
   await (new PlayerService()).findById(getPlayerId(req)); /* trigger an initial failure if not found */
+  const mode = req.params.mode;
 
-  const data = await generateStatisticsLogsByPlayerId(getPlayerId(req), mode);
-  return ok<StatisticsLog[]>(res, data);
-}
-
-export async function getPlayerStatisticsAverages(req: Request, res: Response) {
-  return getPlayerStatistics(req, res, "averages");
-}
-
-export async function getPlayerStatisticsTotals(req: Request, res: Response) {
-  return getPlayerStatistics(req, res, "totals");
-}
-
-export async function getPlayerStatisticsGames(req: Request, res: Response) {
-  return getPlayerStatistics(req, res, "games");
+  switch (mode) {
+    case "averages":
+    case "totals":
+    case "games":
+      const data = await generateStatisticsLogsByPlayerId(getPlayerId(req), mode);
+      return ok<StatisticsLog[]>(res, data);
+    default:
+      throw Error("Unable to handle requested `mode` for statistics.");
+  }
 }

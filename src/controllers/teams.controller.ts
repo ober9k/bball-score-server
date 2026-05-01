@@ -65,17 +65,16 @@ export async function getTeamPlayers(req: Request, res: Response) {
   return ok<Player[]>(res, data);
 }
 
-async function getTeamStatistics(req: Request, res: Response, mode: StatisticsMode) {
+export async function getTeamStatistics(req: Request, res: Response) {
   await (new TeamService()).findById(getTeamId(req)); /* trigger an initial failure if not found */
+  const mode = req.params.mode;
 
-  const data = await generateStatisticsLogsByTeamId(getTeamId(req), mode)
-  return ok<StatisticsLog[]>(res, data);
-}
-
-export async function getTeamStatisticsAverages(req: Request, res: Response) {
-  return getTeamStatistics(req, res, "averages");
-}
-
-export async function getTeamStatisticsTotals(req: Request, res: Response) {
-  return getTeamStatistics(req, res, "totals");
+  switch (mode) {
+    case "averages":
+    case "totals":
+      const data = await generateStatisticsLogsByTeamId(getTeamId(req), mode);
+      return ok<StatisticsLog[]>(res, data);
+    default:
+      throw Error("Unable to handle requested `mode` for statistics.");
+  }
 }
