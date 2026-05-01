@@ -20,7 +20,3 @@ export const leagueRoutes = [
   statisticsRoutes,
   teamsRoutes,
 ];
-
-export const manageRoute = [
-  /* TBD */
-];

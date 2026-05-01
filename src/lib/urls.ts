@@ -19,3 +19,7 @@ export function getBaseUrl(): string {
 export function getBaseLeagueUrl(): string {
   return buildApiUrl([getBaseUrl(), "leagues", ":leagueId"]);
 }
+
+export function getBaseManageUrl(): string {
+  return buildApiUrl([getBaseLeagueUrl(), "manage"]);
+}
