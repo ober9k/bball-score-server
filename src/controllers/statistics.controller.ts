@@ -1,20 +1,17 @@
-import { generateStatisticsLogs, type StatisticsMode } from "@/services/statistics.service";
+import { ok } from "@/controllers/base.controller";
+import { generateStatisticsLogs } from "@/services/statistics.service";
+import type { StatisticsLog } from "@/types/statistics-log";
 import type { Request, Response } from "express";
-import { StatusCodes } from "http-status-codes";
 
-const getStatistics = async(req: Request, res: Response, mode: StatisticsMode) => {
-  return res
-    .status(StatusCodes.OK)
-    .json(
-      await generateStatisticsLogs(mode)
-    );
+export const getStatistics = async(req: Request, res: Response) => {
+  const mode = req.params.mode;
+
+  switch (mode) {
+    case "averages":
+    case "totals":
+      const data = await generateStatisticsLogs(mode);
+      return ok<StatisticsLog[]>(res, data);
+    default:
+      throw Error("Unable to handle requested `mode` for statistics.");
+  }
 }
-
-export const getStatisticsAverages = async (req: Request, res: Response) => {
-  return getStatistics(req, res, "averages");
-}
-
-export const getStatisticsTotals = async (req: Request, res: Response) => {
-  return getStatistics(req, res, "totals");
-}
-
