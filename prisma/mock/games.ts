@@ -100,7 +100,7 @@ export const mockGameTeams: MockTeamLog[] = [
       { playerId: 15, started: false, ...mapStats([ 968, 1,  3, 0, 2, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 5, 0]) },
       { playerId: 16, started: false, ...mapStats([   0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]) },
     ] },
-  { teamId: 1, side: "AWAY_TEAM", score: 56, byPeriod: [], playerLogs: [
+  { teamId: 1, side: "AWAY_TEAM", score: 56, byPeriod: [16,10,17,13], playerLogs: [
       { playerId:  1, started: true,  ...mapStats([1421, 8, 13, 2, 5, 0, 1, 0, 4, 0, 0, 0, 2, 0, 0, 2, 0]) },
       { playerId:  2, started: true,  ...mapStats([1453, 2,  8, 1, 5, 2, 3, 0, 0, 3, 0, 2, 0, 1, 2, 3, 0]) },
       { playerId:  3, started: true,  ...mapStats([1646, 1,  5, 0, 0, 0, 2, 0, 2, 5, 0, 1, 1, 0, 2, 4, 0]) },
@@ -110,7 +110,7 @@ export const mockGameTeams: MockTeamLog[] = [
       { playerId:  7, started: false, ...mapStats([1314, 2,  9, 1, 3, 0, 0, 0, 1, 3, 0, 2, 3, 0, 0, 1, 0]) },
       { playerId:  8, started: false, ...mapStats([1259, 4, 10, 0, 0, 1, 3, 0, 3, 7, 0, 0, 0, 0, 0, 0, 0]) },
     ] },
-  { teamId: 3, side: "HOME_TEAM", score: 51, byPeriod: [], playerLogs: [
+  { teamId: 3, side: "HOME_TEAM", score: 51, byPeriod: [15,11,15,10], playerLogs: [
       { playerId: 17, started: true,  ...mapStats([2183, 4,  7, 2, 4, 1, 2, 0, 3, 2, 0, 3, 2, 0, 3, 3, 0]) },
       { playerId: 18, started: true,  ...mapStats([1565, 1,  4, 1, 3, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0]) },
       { playerId: 19, started: true,  ...mapStats([   0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]) },
@@ -120,7 +120,7 @@ export const mockGameTeams: MockTeamLog[] = [
       { playerId: 23, started: false, ...mapStats([1796, 2,  5, 0, 2, 0, 0, 0, 3, 0, 0, 3, 4, 0, 1, 1, 0]) },
       { playerId: 24, started: false, ...mapStats([1656, 2,  5, 0, 0, 0, 0, 0, 1, 2, 0, 0, 1, 0, 1, 4, 0]) },
     ] },
-  { teamId: 2, side: "AWAY_TEAM", score: 59, byPeriod: [], playerLogs: [
+  { teamId: 2, side: "AWAY_TEAM", score: 59, byPeriod: [16,12,18,13], playerLogs: [
       { playerId:  9, started: true,  ...mapStats([1676, 2,  6, 1, 4, 0, 0, 0, 1, 1, 0, 0, 2, 0, 0, 0, 0]) },
       { playerId: 10, started: true,  ...mapStats([ 810, 0,  1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0]) },
       { playerId: 11, started: true,  ...mapStats([1771, 9, 20, 1, 6, 1, 4, 0, 2, 3, 0, 4, 2, 0, 2, 1, 0]) },
@@ -130,7 +130,7 @@ export const mockGameTeams: MockTeamLog[] = [
       { playerId: 15, started: false, ...mapStats([1258, 0,  2, 0, 0, 1, 2, 0, 5, 3, 0, 0, 0, 0, 1, 2, 0]) },
       { playerId: 16, started: false, ...mapStats([1341, 0,  0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 1, 0, 3, 4, 0]) },
     ] },
-  { teamId: 3, side: "HOME_TEAM", score: 69, byPeriod: [], playerLogs: [
+  { teamId: 3, side: "HOME_TEAM", score: 69, byPeriod: [16,14,20,19], playerLogs: [
       { playerId: 17, started: true,  ...mapStats([1612, 3, 11, 0, 7, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2, 0]) },
       { playerId: 18, started: true,  ...mapStats([1129, 1,  5, 0, 2, 0, 0, 0, 2, 3, 0, 1, 1, 0, 1, 1, 0]) },
       { playerId: 19, started: true,  ...mapStats([2266, 3,  9, 0, 1, 3, 4, 0, 4, 3, 0, 9, 2, 0, 3, 2, 0]) },
@@ -141,27 +141,27 @@ export const mockGameTeams: MockTeamLog[] = [
       { playerId: 24, started: false, ...mapStats([1918, 4, 10, 0, 0, 1, 1, 0, 0, 3, 0, 0, 0, 1, 1, 2, 0]) },
     ] },
 
-  { teamId: 2, side: "AWAY_TEAM", score: 64, byPeriod: [], playerLogs: [
+  { teamId: 2, side: "AWAY_TEAM", score: 68, byPeriod: [15,18,19,12,4], playerLogs: [ // experimental OT game
       { playerId:  9, started: true,  ...mapStats([1730,  5, 11, 1,  3,  0,  0, 0, 2, 1, 3, 2, 0, 0, 1, 1, 0]) },
       { playerId: 10, started: true,  ...mapStats([1227,  2,  7, 2,  6,  0,  0, 0, 2, 2, 1, 0, 0, 0, 1, 1, 0]) },
-      { playerId: 11, started: true,  ...mapStats([1044,  0,  4, 0,  4,  0,  0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0]) },
+      { playerId: 11, started: true,  ...mapStats([1044,  1,  4, 1,  4,  1,  2, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0]) },
       { playerId: 12, started: true,  ...mapStats([1498,  9, 15, 1,  4,  0,  1, 0, 1, 2, 3, 1, 0, 0, 2, 0, 0]) },
       { playerId: 13, started: true,  ...mapStats([1686,  4,  9, 0,  2,  0,  0, 0, 1, 4, 3, 5, 0, 0, 3, 3, 0]) },
       { playerId: 14, started: false, ...mapStats([1060,  1,  4, 0,  2,  0,  0, 0, 1, 2, 0, 4, 1, 2, 3, 1, 0]) },
       { playerId: 15, started: false, ...mapStats([1086,  4,  7, 0,  0,  1,  2, 0, 1, 4, 0, 3, 2, 0, 1, 2, 0]) },
       { playerId: 16, started: false, ...mapStats([2146,  4,  9, 1,  1,  0,  0, 0, 3, 3, 1, 2, 1, 1, 1, 5, 0]) },
     ] },
-  { teamId: 1, side: "HOME_TEAM", score: 50, byPeriod: [], playerLogs: [
-      { playerId:  1, started: true,  ...mapStats([1612,  3, 11, 0,  7,  1,  2, 0, 1, 2, 1, 2, 0, 0, 1, 2, 0]) },
+  { teamId: 1, side: "HOME_TEAM", score: 69, byPeriod: [18,16,15,15,5], playerLogs: [ // experimental OT game
+      { playerId:  1, started: true,  ...mapStats([1612,  4, 11, 2,  7,  1,  2, 0, 1, 2, 1, 2, 0, 0, 1, 2, 0]) },
       { playerId:  2, started: true,  ...mapStats([1129,  1,  5, 0,  2,  0,  0, 0, 2, 3, 1, 1, 0, 1, 1, 1, 0]) },
-      { playerId:  3, started: true,  ...mapStats([2266,  3,  9, 0,  1,  3,  4, 0, 4, 3, 9, 2, 0, 0, 3, 2, 0]) },
-      { playerId:  4, started: true,  ...mapStats([1401,  0,  3, 0,  1,  0,  0, 0, 0, 5, 3, 0, 0, 1, 1, 1, 0]) },
-      { playerId:  5, started: true,  ...mapStats([1939,  6, 15, 1,  6,  3,  4, 0, 3, 3, 3, 2, 0, 2, 3, 1, 0]) },
+      { playerId:  3, started: true,  ...mapStats([2266,  4,  9, 0,  1,  3,  4, 0, 4, 3, 9, 2, 0, 0, 3, 2, 0]) },
+      { playerId:  4, started: true,  ...mapStats([1401,  2,  4, 1,  1,  2,  2, 0, 0, 5, 3, 0, 0, 1, 1, 1, 0]) },
+      { playerId:  5, started: true,  ...mapStats([1939,  7, 15, 2,  6,  4,  6, 0, 3, 3, 3, 2, 0, 2, 3, 1, 0]) },
       { playerId:  6, started: false, ...mapStats([1249,  3,  5, 1,  2,  0,  0, 0, 1, 2, 0, 2, 0, 0, 0, 0, 0]) },
       { playerId:  7, started: false, ...mapStats([ 486,  0,  4, 0,  0,  0,  0, 0, 2, 0, 0, 1, 0, 0, 2, 1, 0]) },
-      { playerId:  8, started: false, ...mapStats([1918,  4, 10, 0,  0,  1,  1, 0, 0, 3, 0, 0, 1, 1, 1, 2, 0]) },
+      { playerId:  8, started: false, ...mapStats([1918,  5, 11, 0,  0,  1,  1, 0, 0, 3, 0, 0, 1, 1, 1, 2, 0]) },
     ] },
-  { teamId: 3, side: "AWAY_TEAM", score: 71, byPeriod: [], playerLogs: [
+  { teamId: 3, side: "AWAY_TEAM", score: 71, byPeriod: [18,16,15,22], playerLogs: [
       { playerId: 17, started: true,  ...mapStats([2400, 10, 15,  0,  3,  3,  7, 0, 4, 1, 3, 4, 0, 0, 1, 1, 0]) },
       { playerId: 18, started: true,  ...mapStats([2175,  2,  8,  0,  0,  1,  2, 0, 2, 7, 7, 0, 0, 1, 5, 0, 0]) },
       { playerId: 19, started: true,  ...mapStats([1735,  4, 15,  4, 14,  0,  0, 0, 2, 2, 2, 0, 0, 2, 1, 1, 0]) },
@@ -171,7 +171,7 @@ export const mockGameTeams: MockTeamLog[] = [
       { playerId: 23, started: false, ...mapStats([   0,  0,  0,  0,  0,  0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]) },
       { playerId: 24, started: false, ...mapStats([   0,  0,  0,  0,  0,  0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]) },
     ] },
-  { teamId: 1, side: "HOME_TEAM", score: 52, byPeriod: [], playerLogs: [
+  { teamId: 1, side: "HOME_TEAM", score: 52, byPeriod: [14,13,15,10], playerLogs: [
       { playerId:  1, started: true,  ...mapStats([1568,  3,  8,  1,  4,  0,  0, 0, 2, 1, 1, 0, 0, 1, 0, 0, 0]) },
       { playerId:  2, started: true,  ...mapStats([1327,  0,  9,  0,  6,  1,  2, 0, 0, 3, 1, 1, 0, 0, 1, 0, 0]) },
       { playerId:  3, started: true,  ...mapStats([1803,  1,  3,  0,  0,  0,  1, 0, 1, 9, 8, 0, 1, 2, 3, 2, 0]) },
@@ -181,7 +181,7 @@ export const mockGameTeams: MockTeamLog[] = [
       { playerId:  7, started: false, ...mapStats([1644,  2,  5,  0,  1,  0,  0, 0, 3, 8, 0, 0, 0, 3, 0, 3, 0]) },
       { playerId:  8, started: false, ...mapStats([1421,  4, 10,  0,  1,  2,  2, 0, 1, 6, 0, 1, 0, 1, 0, 2, 0]) },
     ] },
-  { teamId: 3, side: "AWAY_TEAM", score: 47, byPeriod: [], playerLogs: [
+  { teamId: 3, side: "AWAY_TEAM", score: 47, byPeriod: [10,10,12,15], playerLogs: [
       { playerId: 17, started: true,  ...mapStats([1375,  2,  6,  2,  6,  0,  0, 0, 0, 2, 0, 1, 0, 0, 1, 2, 0]) },
       { playerId: 18, started: true,  ...mapStats([ 892,  0,  4,  0,  4,  0,  0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0]) },
       { playerId: 19, started: true,  ...mapStats([1855,  8, 17,  5, 10,  3,  4, 0, 1, 3, 2, 1, 0, 0, 1, 3, 0]) },
@@ -191,7 +191,7 @@ export const mockGameTeams: MockTeamLog[] = [
       { playerId: 23, started: false, ...mapStats([1128,  2,  3,  0,  0,  0,  0, 0, 1, 1, 0, 0, 0, 0, 2, 0, 0]) },
       { playerId: 24, started: false, ...mapStats([1430,  3,  7,  1,  1,  0,  2, 0, 2, 2, 0, 2, 0, 0, 1, 3, 0]) },
     ] },
-  { teamId: 2, side: "HOME_TEAM", score: 51, byPeriod: [], playerLogs: [
+  { teamId: 2, side: "HOME_TEAM", score: 51, byPeriod: [10,17,11,13], playerLogs: [
       { playerId:  9, started: true,  ...mapStats([2257,  4, 12,  0,  1,  1,  2, 0, 4, 5, 6, 1, 0, 1, 2, 1, 0]) },
       { playerId: 10, started: true,  ...mapStats([ 952,  1,  9,  1,  9,  0,  0, 0, 0, 3, 1, 0, 0, 0, 0, 0, 0]) },
       { playerId: 11, started: true,  ...mapStats([1699,  5, 19,  1, 10,  0,  0, 0, 2, 3, 4, 3, 0, 4, 1, 0, 0]) },
