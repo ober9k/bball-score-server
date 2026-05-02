@@ -1,3 +1,4 @@
+import { toBasicTeam } from "@/lib/converters";
 import { GameService } from "@/services/game.service";
 import type { Game, TeamLog } from "@/types/game";
 import type { StandingsLog } from "@/types/standings-log";
@@ -47,6 +48,7 @@ export class StandingsService {
     const score = log.score;
     const opposingScore = opposingLog.score;
 
+    const team          = toBasicTeam(log.team); /* todo: limit query too */
     const played        = 1;
     const wins          = +(score > opposingScore);
     const losses        = +(score < opposingScore);
@@ -56,7 +58,7 @@ export class StandingsService {
     const pointsFor     = score;
     const pointsAgainst = opposingScore;
 
-    return { id: log.team.id, team: log.team, played, wins, losses, draws, byes, forfeits, pointsFor, pointsAgainst };
+    return { id: log.team.id, team, played, wins, losses, draws, byes, forfeits, pointsFor, pointsAgainst };
   }
 
   /**

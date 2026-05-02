@@ -5,7 +5,7 @@ import type { Option } from "@/types/option";
 import type { BriefPlayer, Player } from "@/types/player";
 import type { BriefSeason, Season } from "@/types/season";
 import type { Stats } from "@/types/stats";
-import type { BriefTeam, Team } from "@/types/team";
+import type { BasicTeam, BriefTeam, Team } from "@/types/team";
 
 function withActivatable(data: any): Activatable {
   return {
@@ -90,6 +90,14 @@ export function toBriefTeam(data: any): BriefTeam {
     ...withActivatable(data),
     ...withArchivable(data),
     ...withLeagueId(data),
+  };
+}
+
+export function toBasicTeam(data: any): BasicTeam {
+  return {
+    id:        data.id,
+    name:      data.name,
+    shortName: data.shortName,
   };
 }
 

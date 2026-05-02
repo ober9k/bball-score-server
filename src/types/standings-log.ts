@@ -1,8 +1,8 @@
-import type { Team } from "@/types/team.ts";
+import type { BasicTeam } from "@/types/team.ts";
 
 export type StandingsLog = {
   id:            number,
-  team:          Team,
+  team:          BasicTeam,
   played:        number,
   wins:          number,
   losses:        number,
