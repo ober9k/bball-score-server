@@ -1,7 +1,6 @@
 import { GameService } from "@/services/game.service";
-import type { Game } from "@/types/game";
+import type { Game, TeamLog } from "@/types/game";
 import type { StandingsLog } from "@/types/standings-log";
-import { accumulateForGame, generateStandingsLogs } from "@/utils/standings-utils";
 
 /* todo: non-linked for now (no database) */
 export class StandingsService {
@@ -10,20 +9,75 @@ export class StandingsService {
 
   public async generate(): Promise<StandingsLog[]> {
     const games = await this.gameService.findAll() as Game[];
-    const teamStandingsLog = generateStandingsLogs(games);
 
-    games
-      .filter((g) => g.teamLogs.length > 0) /* disregard empty logs */
-      .forEach((g) => {
-        const [ awayTeamLog, homeTeamLog ] = g.teamLogs as any[];
-        const { team: awayTeam } = awayTeamLog;
-        const { team: homeTeam } = homeTeamLog;
+    return games
+      .filter(StandingsService.filterEmpty)
+      .map(StandingsService.fromGame)
+      .flat()
+      .reduce(StandingsService.accumulateByTeam, []);
+  }
 
-        accumulateForGame(teamStandingsLog.get(awayTeam.id)!, awayTeamLog.score, homeTeamLog.score);
-        accumulateForGame(teamStandingsLog.get(homeTeam.id)!, homeTeamLog.score, awayTeamLog.score);
-      });
+  /**
+   * Apply a reducer to accumulate logs for the same teams.
+   * @private
+   */
+  private static accumulateByTeam(acc: StandingsLog[], cur: StandingsLog): StandingsLog[] {
+    const log = acc.find((log) => log.id === cur.id);
 
-    return [ ...teamStandingsLog.values() ];
+    if (log) {
+      log.played        += cur.played;
+      log.wins          += cur.wins;
+      log.losses        += cur.losses;
+      log.draws         += cur.draws;
+      log.byes          += cur.byes;
+      log.forfeits      += cur.forfeits;
+      log.pointsFor     += cur.pointsFor;
+      log.pointsAgainst += cur.pointsAgainst;
+      return acc;
+    }
+
+    return [ ...acc, cur ]; /* push new value */
+  }
+
+  /**
+   * Generate initial log tied to a team's outcome against the opposing team.
+   * @private
+   */
+  private static fromLog(log: TeamLog, opposingLog: TeamLog): StandingsLog {
+    const score = log.score;
+    const opposingScore = opposingLog.score;
+
+    const played        = 1;
+    const wins          = +(score > opposingScore);
+    const losses        = +(score < opposingScore);
+    const draws         = +(score === opposingScore);
+    const byes          = 0; /* todo: not yet factored in */
+    const forfeits      = 0; /* todo: not yet factored in */
+    const pointsFor     = score;
+    const pointsAgainst = opposingScore;
+
+    return { id: log.team.id, team: log.team, played, wins, losses, draws, byes, forfeits, pointsFor, pointsAgainst };
+  }
+
+  /**
+   * Generate standings logs for both the home and away teams.
+   * @private
+   */
+  private static fromGame(game: Game): StandingsLog[] {
+    const [ awayTeamLog, homeTeamLog ] = game.teamLogs;
+
+    return [
+      StandingsService.fromLog(awayTeamLog, homeTeamLog),
+      StandingsService.fromLog(homeTeamLog, awayTeamLog),
+    ].flat();
+  }
+
+  /**
+   * Games without team logs can just be disregarded.
+   * @private
+   */
+  private static filterEmpty(game: Game): boolean {
+    return game.teamLogs.length > 0;
   }
 
 }
