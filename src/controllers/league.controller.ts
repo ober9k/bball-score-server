@@ -1,5 +1,5 @@
 import { BaseController, ok } from "@/controllers/base.controller";
-import { generateStandings } from "@/services/standings.service";
+import { StandingsService } from "@/services/standings.service";
 import { generateStatisticsLogs } from "@/services/statistics.service";
 import type { StandingsLog } from "@/types/standings-log";
 import type { StatisticsLog } from "@/types/statistics-log";
@@ -7,8 +7,10 @@ import type { Request, Response } from "express";
 
 export class LeagueController extends BaseController {
 
+  private standingsService = new StandingsService();
+
   public async getStandings(req: Request, res: Response) {
-    const data = await generateStandings();
+    const data = await this.standingsService.generate();
     return ok<StandingsLog[]>(res, data);
   }
 

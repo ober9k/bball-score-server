@@ -3,22 +3,27 @@ import type { Game } from "@/types/game";
 import type { StandingsLog } from "@/types/standings-log";
 import { accumulateForGame, generateStandingsLogs } from "@/utils/standings-utils";
 
-export async function generateStandings(): Promise<StandingsLog[]> {
-  const gameService = new GameService();
-  const games = await gameService.findAll() as Game[];
+/* todo: non-linked for now (no database) */
+export class StandingsService {
 
-  const teamStandingsLog = generateStandingsLogs(games);
+  private gameService = new GameService();
 
-  games
-    .filter((g) => g.teamLogs.length > 0) /* disregard empty logs */
-    .forEach((g) => {
-      const [ awayTeamLog, homeTeamLog ] = g.teamLogs as any[];
-      const { team: awayTeam } = awayTeamLog;
-      const { team: homeTeam } = homeTeamLog;
+  public async generate(): Promise<StandingsLog[]> {
+    const games = await this.gameService.findAll() as Game[];
+    const teamStandingsLog = generateStandingsLogs(games);
 
-      accumulateForGame(teamStandingsLog.get(awayTeam.id)!, awayTeamLog.score, homeTeamLog.score);
-      accumulateForGame(teamStandingsLog.get(homeTeam.id)!, homeTeamLog.score, awayTeamLog.score);
-    });
+    games
+      .filter((g) => g.teamLogs.length > 0) /* disregard empty logs */
+      .forEach((g) => {
+        const [ awayTeamLog, homeTeamLog ] = g.teamLogs as any[];
+        const { team: awayTeam } = awayTeamLog;
+        const { team: homeTeam } = homeTeamLog;
 
-  return [ ...teamStandingsLog.values() ];
+        accumulateForGame(teamStandingsLog.get(awayTeam.id)!, awayTeamLog.score, homeTeamLog.score);
+        accumulateForGame(teamStandingsLog.get(homeTeam.id)!, homeTeamLog.score, awayTeamLog.score);
+      });
+
+    return [ ...teamStandingsLog.values() ];
+  }
+
 }
