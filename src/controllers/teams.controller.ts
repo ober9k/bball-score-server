@@ -1,5 +1,5 @@
 import { BaseEntityController, created, ok } from "@/controllers/base.controller";
-import { generateStatisticsLogsByTeamId } from "@/services/statistics.service";
+import { StatisticsService } from "@/services/statistics.service";
 import { findPlayersByTeamId } from "@/services/team-player.service";
 import { TeamService } from "@/services/team.service";
 import type { Option } from "@/types/option";
@@ -11,6 +11,7 @@ import type { Request, Response } from "express";
 export class TeamsController extends BaseEntityController<BriefTeamData> {
 
   private teamService = new TeamService();
+  private statisticsService = new StatisticsService();
 
   public async getTeams(req: Request, res: Response) {
     const data = await this.teamService.findAll() as Team[];
@@ -61,7 +62,7 @@ export class TeamsController extends BaseEntityController<BriefTeamData> {
     switch (mode) {
       case "averages":
       case "totals":
-        const data = await generateStatisticsLogsByTeamId(this.getId(req), mode);
+        const data = await this.statisticsService.generateByTeam(this.getId(req), mode);
         return ok<StatisticsLog[]>(res, data);
       default:
         throw Error("Unable to handle requested `mode` for statistics.");
