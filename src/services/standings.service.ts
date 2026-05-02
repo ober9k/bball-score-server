@@ -1,33 +1,11 @@
-import { prisma } from "@/lib/prisma";
+import { GameService } from "@/services/game.service";
+import type { Game } from "@/types/game";
 import type { StandingsLog } from "@/types/standings-log";
 import { accumulateForGame, generateStandingsLogs } from "@/utils/standings-utils";
 
-/**
- * TODO: this is temporary, need to work out a tidier way to handle all of this
- */
-const reducer = (acc, cur: string) => ({ ...acc, [cur]: true });
-const getColumns = (columns: string[]) => columns.reduce(reducer, {});
-
-const gameCols = getColumns(["id", "date", "phase", "round"]);
-const teamLogCols = getColumns(["id", "side", "score", "byPeriod"]);
-const teamCols = getColumns(["id", "name", "shortName"]);
-
 export async function generateStandings(): Promise<StandingsLog[]> {
-  const games: any[] = await prisma.game.findMany({
-    select: {
-      ...gameCols,
-      teamLogs: {
-        select: {
-          ...teamLogCols,
-          team: {
-            select: {
-              ...teamCols,
-            },
-          },
-        },
-      },
-    },
-  });
+  const gameService = new GameService();
+  const games = await gameService.findAll() as Game[];
 
   const teamStandingsLog = generateStandingsLogs(games);
 
