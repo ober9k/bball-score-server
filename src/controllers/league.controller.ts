@@ -28,4 +28,28 @@ export class LeagueController extends BaseController {
     }
   }
 
+  public async getLeaders(req: Request, res: Response) {
+    const players = await this.statisticsService.generate("averages");
+
+    const getLeaderFor = (key: string) => {
+      return players.reduce((acc, cur) => {
+        return (cur.stats[key] > acc.stats[key])
+          ? cur
+          : acc;
+      }, players[0]); /* work with first player as default */
+    };
+
+    return ok<any>(res, {
+      leaders: {
+        points:        getLeaderFor("points"),
+        rebounds:      getLeaderFor("rebounds"),
+        assists:       getLeaderFor("assists"),
+        steals:        getLeaderFor("steals"),
+        blocks:        getLeaderFor("blocks"),
+        turnovers:     getLeaderFor("turnovers"),
+        personalFouls: getLeaderFor("personalFouls"),
+      }
+    });
+  }
+
 }
