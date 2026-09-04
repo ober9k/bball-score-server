@@ -35,4 +35,13 @@ export const mockPlayers: MockPlayer[] = [
   { name: "G. Marcon",     position: Position.POWER_FORWARD,  number: "9",   height: `6'3"`   },
   { name: "R. Walker",     position: Position.POWER_FORWARD,  number: "2",   height: `5'8"`   },
   { name: "R. Moreira",    position: Position.CENTER,         number: "12",  height: `6'0"`   },
+  // Edmondson Park Eagles
+  { name: "A. Al-Khoury",  position: Position.POINT_GUARD,    number: "02",   height: `5'8"`  },
+  { name: "L. Silva",      position: Position.POINT_GUARD,    number: "10",   height: `5'9"`  },
+  { name: "M. Rodriguez",  position: Position.SHOOTING_GUARD, number: "11",   height: `6'2"`  },
+  { name: "D. Müller",     position: Position.SHOOTING_GUARD, number: "07",   height: `6'1"`  },
+  { name: "K. Nguyen",     position: Position.SMALL_FORWARD,  number: "23",   height: `6'4"`  },
+  { name: "J. Tanaka",     position: Position.POWER_FORWARD,  number: "4",    height: `5'11"` },
+  { name: "S. O'Connor",   position: Position.POWER_FORWARD,  number: "14",   height: `6'3"`  },
+  { name: "T. Chang",      position: Position.CENTER,         number: "33",   height: `6'4"`  },
 ];
