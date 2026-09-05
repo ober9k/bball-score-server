@@ -49,7 +49,7 @@ function calculateTotals(log: StatisticsLog, stats: Stats): Stats {
  */
 function calculateAverages(log: StatisticsLog): Stats {
   return statsKeys.reduce((acc, key) => ({
-    ...acc, [key]: log.stats[key] / log.played,
+    ...acc, [key]: +(log.stats[key] / log.played).toFixed(1),
   }), log.stats) as Stats;
 }
 
