@@ -8,8 +8,8 @@ export type MockTeam = {
 };
 
 export const mockTeams: MockTeam[] = [
-  { name: "Campbelltown Carabaos", shortName: "CAC", players: [ ...mockPlayers.slice( 0,  8) ] },
-  { name: "Liverpool Lions",       shortName: "LVL", players: [ ...mockPlayers.slice( 8, 16) ] },
-  { name: "Mount Druitt Maniyaks", shortName: "MDM", players: [ ...mockPlayers.slice(16, 24) ] },
-  { name: "Edmondson Park Eagles", shortName: "EPE", players: [ ...mockPlayers.slice(24, 32) ] },
+  { name: "Carabaos", shortName: "CAC", players: [ ...mockPlayers.slice( 0,  8) ] }, /* Campbelltown */
+  { name: "Lions",    shortName: "LVL", players: [ ...mockPlayers.slice( 8, 16) ] }, /* Liverpool */
+  { name: "Maniyaks", shortName: "MDM", players: [ ...mockPlayers.slice(16, 24) ] }, /* Mount Druitt */
+  { name: "Eagles",   shortName: "EPE", players: [ ...mockPlayers.slice(24, 32) ] }, /* Edmondson Park */
 ];
