@@ -32,12 +32,20 @@ export class StandingsService {
       log.draws         += cur.draws;
       log.byes          += cur.byes;
       log.forfeits      += cur.forfeits;
-      log.pointsFor     += cur.pointsFor;
-      log.pointsAgainst += cur.pointsAgainst;
+      log.points        += cur.points;
+      log.differential  += cur.differential;
       return acc;
     }
 
     return [ ...acc, cur ]; /* push new value */
+  }
+
+  /**
+   * Calculate total points based on game outcome.
+   * @private
+   */
+  private static calculatePoints(wins: number, losses: number, draws: number, byes: number): number {
+    return (wins * 3) + (losses) + (draws * 2) + (byes);
   }
 
   /**
@@ -55,10 +63,10 @@ export class StandingsService {
     const draws         = +(score === opposingScore);
     const byes          = 0; /* todo: not yet factored in */
     const forfeits      = 0; /* todo: not yet factored in */
-    const pointsFor     = score;
-    const pointsAgainst = opposingScore;
+    const points        = StandingsService.calculatePoints(wins, losses, draws, byes);
+    const differential  = score - opposingScore;
 
-    return { id: log.team.id, team, played, wins, losses, draws, byes, forfeits, pointsFor, pointsAgainst };
+    return { id: log.team.id, team, played, wins, losses, draws, byes, forfeits, points, differential };
   }
 
   /**

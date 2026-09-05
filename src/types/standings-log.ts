@@ -9,6 +9,6 @@ export type StandingsLog = {
   draws:         number,
   byes:          number,
   forfeits:      number,
-  pointsFor:     number,
-  pointsAgainst: number,
+  points:        number,
+  differential:  number,
 };
